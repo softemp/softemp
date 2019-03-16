@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Models\Base\Auth;
 
+use App\Models\Base\User\Physical;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,12 +12,17 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'password', 'physical_id'
     ];
 
     /**
@@ -36,4 +42,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function physical(){
+        return $this->belongsTo(Physical::class,'physical_id','id');
+    }
 }
