@@ -1,7 +1,7 @@
 <li class="dropdown user user-menu">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <img src="{{asset('softemp/images/temp/panel/img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
-        <span class="hidden-xs">{{ Auth::user()->physical->name }}</span>
+        <span class="hidden-xs">{{ Auth::user()->user_name }}</span>
     </a>
     <ul class="dropdown-menu">
         {{-- User image --}}
@@ -10,7 +10,7 @@
                  alt="User Image">
 
             <p>
-                {{ Auth::user()->name }} - Web Developer
+                {{ Auth::user()->user->name }} - Web Developer
                 <small>Member since Nov. 2012</small>
             </p>
         </li>
@@ -35,13 +35,13 @@
                 <a href="#" class="btn btn-default btn-flat">Profile</a>
             </div>
             <div class="pull-right">
-                <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
+                <a class="btn btn-default btn-flat" href="{{ route('auth.logout') }}"
                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                 </a>
 
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
             </div>

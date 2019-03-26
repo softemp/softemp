@@ -6,25 +6,36 @@
  */
 $modules = [
     'base',
-    'product'
+    'mkauth'=>[
+        'db_host'=>'_MKAUTH',
+        'db_database'=>'_MKAUTH',
+        'db_username'=>'_MKAUTH',
+        'db_password'=>'_MKAUTH',
+        'strict' =>'_MKAUTH',
+    ]
 ];
 
 $connections = array();
-foreach ($modules as $module) {
+foreach ($modules as $module => $value) {
+    if(!is_array($value)) {$module = $value;};
+    //if(is_array($value)) {
+        //print_r('DB_USERNAME'.mb_strtoupper('_'.$module));
+    //};
 
     $connections["mysql_" . $module] = [
         'driver' => 'mysql',
-        'host' => env('DB_HOST', '127.0.0.1'),
-        'port' => env('DB_PORT', '3306'),
-        'database' => env('DB_PREFIX', '') . "_" . $module,
-        'username' => env('DB_USERNAME', 'forge'),
-        'password' => env('DB_PASSWORD', ''),
+        'host' => env('DB_HOST'.(is_array($value)?mb_strtoupper('_'.$module):''), '127.0.0.2'),
+        'port' => env('DB_PORT'.(is_array($value)?mb_strtoupper('_'.$module):''), '3306'),
+        'database' => (is_array($value)?env(mb_strtoupper('DB_DATABASE_'.$module)):env('DB_PREFIX', '') . "_" . $module),
+        'username' => env('DB_USERNAME'.(is_array($value)?mb_strtoupper('_'.$module):''), 'forge'),
+        'password' => env('DB_PASSWORD'.(is_array($value)?mb_strtoupper('_'.$module):''), ''),
         'unix_socket' => env('DB_SOCKET', ''),
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
         'prefix' => '',
         'prefix_indexes' => true,
-        'strict' => true,
+        //'strict' => (!$value['strict']? $value['strict']:true),
+        'strict' => (is_array($value)?env(mb_strtoupper('DB_STRICT_'.$module)):true),
         'engine' => null,
     ];
 }
