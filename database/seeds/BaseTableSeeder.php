@@ -40,7 +40,7 @@ class BaseTableSeeder extends Seeder
             $objOccupation_1 =  $objRole_1->occupation()->whereName('Gerente de Rede')->firstOrFail();
         $objCompanyUserRole_1->occupations()->attach($objOccupation_1->id);
 
-        dd($objOccupation_1);
+//        dd($objOccupation_1);
 
 //
 //

@@ -6,6 +6,7 @@
  */
 $modules = [
     'base',
+    'stockcontrol',
     'mkauth'=>[
         'db_host'=>'_MKAUTH',
         'db_database'=>'_MKAUTH',

@@ -87,6 +87,24 @@
         </li>
         {{--end MkAuths--}}
 
+        {{--StockControl--}}
+        <li class="treeview {{(Request::is('painel/stockcontrol*')?'active':'')}}">
+            <a href="#"><i class="fa fa-server"></i> <span>Controle Estoque</span>
+                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="{{(Request::is('painel')?'active':'')}}"><a href="{{route('panel.stockcontrol.equipment.index')}}"><i
+                            class="fa fa-circle-o"></i> Estoque</a></li>
+                <li class="{{(Request::is('painel/v2')?'active':'')}}"><a href="{{route('panel.index2')}}"><i
+                            class="fa fa-circle-o"></i> Ordens de serviço</a></li>
+                <li class="{{(Request::is('painel/usuario/colaborador*')?'active':'')}}"><a href="{{route('panel.user.employee.index')}}"><i
+                            class="fa fa-circle-o"></i> Colaboradores</a></li>
+            </ul>
+        </li>
+        {{--end StockControl--}}
+
+
+
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-files-o"></i>

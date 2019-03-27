@@ -11,6 +11,25 @@
 |
 */
 
+
+// Provisional routes of the stock control system;
+Route::get('/equipamentos', 'Softemp\Panel\StockControl\EquipmentController@index')->name('equipment.index');
+Route::get('/equipamentos/editar/{id}', 'Softemp\Panel\StockControl\EquipmentController@edit')->name('equipment.edit');
+Route::put('/equipamentos/{id}', 'Softemp\Panel\StockControl\EquipmentController@update')->name('equipment.update');
+Route::get('/equipamentos/novo', 'Softemp\Panel\StockControl\EquipmentController@create')->name('equipment.create');
+Route::post('/equipamentos', 'Softemp\Panel\StockControl\EquipmentController@store')->name('equipment.store');
+
+
+Route::get('/equipamentos/modelos', 'EquipmentModelController@index')->name('equipment.models.index');
+Route::get('/equipamentos/modelos/editar/{id}', 'EquipmentModelController@edit')->name('equipment.models.edit');
+Route::put('/equipamentos/modelos/{id}', 'EquipmentModelController@update')->name('equipment.models.update');
+Route::get('/equipamentos/modelos/novo', 'EquipmentModelController@create')->name('equipment.models.create');
+Route::post('/equipamentos/modelos', 'EquipmentModelController@store')->name('equipment.models.store');
+
+// end of provisional routes
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -119,6 +138,16 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                     // end Support
                 });
                 //end Directoy MkAuth
+
+                // Directory stock control
+                Route::group(['namespace' => 'StockControl'], function () {
+                    //Equipamentos
+                Route::group(['prefix' => '/estoque', 'as' => 'stockcontrol.'], function (){
+                    Route::get('/equipamentos', 'EquipmentController@index')->name('equipment.index');
+
+                });
+                });
+                //end directory stock control
 
             });
             // end Painel de administração
