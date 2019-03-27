@@ -48,7 +48,8 @@
                                 class="fa fa-circle-o"></i> Clientes</a></li>
                 <li class="{{(Request::is('painel/v2')?'active':'')}}"><a href="{{route('panel.index2')}}"><i
                                 class="fa fa-circle-o"></i> Fornecedores</a></li>
-                <li class="{{(Request::is('painel/usuario/colaborador*')?'active':'')}}"><a href="{{route('panel.user.employee.index')}}"><i
+                <li class="{{(Request::is('painel/usuario/colaborador*')?'active':'')}}"><a
+                            href="{{route('panel.user.employee.index')}}"><i
                                 class="fa fa-circle-o"></i> Colaboradores</a></li>
             </ul>
         </li>
@@ -65,7 +66,8 @@
             <ul class="treeview-menu">
                 <li class="{{(Request::is('painel')?'active':'')}}"><a href="{{route('panel.index')}}"><i
                                 class="fa fa-circle-o"></i> Permissões</a></li>
-                <li class="{{(Request::is('painel/controle/acesso/papeis*')?'active':'')}}"><a href="{{route('panel.access.control.role.index')}}"><i
+                <li class="{{(Request::is('painel/controle/acesso/papeis*')?'active':'')}}"><a
+                            href="{{route('panel.access.control.role.index')}}"><i
                                 class="fa fa-circle-o"></i> Papéis</a></li>
             </ul>
         </li>
@@ -73,16 +75,48 @@
 
         {{--MkAuth--}}
         <li class="treeview {{(Request::is('painel/mkauth*')?'active':'')}}">
-            <a href="#"><i class="fa fa-users"></i> <span>MkAuth</span>
+            <a href="#"><i class="fa fa-random"></i> <span>MkAuth</span>
                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
             </a>
             <ul class="treeview-menu">
-                <li class="{{(Request::is('painel')?'active':'')}}"><a href="{{route('panel.mkauth.table.index')}}"><i
-                                class="fa fa-circle-o"></i> Tabelas</a></li>
-                <li class="{{(Request::is('painel/v2')?'active':'')}}"><a href="{{route('panel.index2')}}"><i
-                                class="fa fa-circle-o"></i> Ordens de serviço</a></li>
-                <li class="{{(Request::is('painel/usuario/colaborador*')?'active':'')}}"><a href="{{route('panel.user.employee.index')}}"><i
-                                class="fa fa-circle-o"></i> Colaboradores</a></li>
+                <li class="{{(Request::is('painel/mkauth/tabelas*')?'active':'')}}">
+                    <a href="{{route('panel.mkauth.table.index')}}">
+                        <i class="fa fa-circle-o"></i> Tabelas
+                    </a>
+                </li>
+                <li class="{{(Request::is('painel/mkauth/cto*')?'active':'')}}">
+                    <a href="{{route('panel.mkauth.cto.index')}}">
+                        <i class="fa fa-circle-o"></i> CTOs
+                    </a>
+                </li>
+
+                <li class="treeview {{(Request::is('painel/mkauth/cliente*')?'active':'')}}">
+                    <a href="#"><i class="fa fa-users"></i> Clientes
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{(Request::is('painel/mkauth/cliente/ativo')?'active':'')}}">
+                            <a href="{{ route('panel.mkauth.client.active') }}">
+                                <i class="fa fa-circle-o text-success"></i> Ativos
+                            </a>
+                        </li>
+                        <li class="{{(Request::is('painel/mkauth/cliente/bloqueado')?'active':'')}}">
+                            <a href="{{ route('panel.mkauth.client.blocked') }}">
+                                <i class="fa fa-circle-o text-warning"></i> Bloqueados
+                            </a>
+                        </li>
+                        <li class="{{(Request::is('painel/mkauth/cliente/desativado')?'active':'')}}">
+                            <a href="{{ route('panel.mkauth.client.disabled') }}">
+                                <i class="fa fa-circle-o text-danger"></i> Desativados
+                            </a>
+                        </li>
+                        <li class="{{(Request::is('painel/mkauth/cliente')?'active':'')}}">
+                            <a href="{{ route('panel.mkauth.client.index') }}">
+                                <i class="fa fa-circle-o text-blue"></i> Todos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </li>
         {{--end MkAuths--}}
@@ -208,25 +242,19 @@
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-share"></i> <span>Multilevel</span>
-                <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
             </a>
             <ul class="treeview-menu">
                 <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
                 <li class="treeview">
                     <a href="#"><i class="fa fa-circle-o"></i> Level One
-                        <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
                         <li class="treeview">
                             <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                                <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>

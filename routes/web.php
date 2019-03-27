@@ -111,6 +111,24 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                         Route::get('/{table}', 'TableController@show')->name('show');
                     });
                     // end Tables
+
+                    // CTOs
+                    Route::group(['namespace' => 'Cto','prefix' => '/cto', 'as' => 'cto.'], function () {
+                        Route::get('/', 'CtoController@index')->name('index');
+                        Route::get('/{cto}', 'CtoController@show')->name('show');
+                    });
+                    // end CTOs
+
+                    // CTOs
+                    Route::group(['namespace' => 'Client','prefix' => '/cliente', 'as' => 'client.'], function () {
+                        Route::get('/', 'ClientController@index')->name('index');
+                        Route::get('/ativo', 'ClientController@active')->name('active');
+                        Route::get('/bloqueado', 'ClientController@blocked')->name('blocked');
+                        Route::get('/desativado', 'ClientController@disabled')->name('disabled');
+                        Route::get('/{client}', 'ClientController@show')->name('show');
+                    });
+                    // end CTOs
+
                     // Support
                     Route::group(['prefix' => '/suporte', 'as' => 'supports.', 'namespace' => 'Supports'], function () {
                         Route::get('/', 'SupportsController@index')->name('index');
