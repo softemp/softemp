@@ -4,13 +4,39 @@ namespace App\Models\Base\AccessControl;
 
 use App\Models\Base\Company\Company;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Module extends Model
 {
-    /**
-     * @var string
-     */
     protected $table = 'modules';
+    protected $fillable = [
+        'name','database'
+    ];
+
+    /**
+     * @return array
+     */
+    public function rules (){
+        return [
+            'name'=>'required|min:4|unique:modules,name,[id]',
+            'database'=>'required|min:4'
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function messages (){
+        return [];
+    }
+
+    /**
+     * @param $value
+     */
+    public function setDatabaseAttribute($value)
+    {
+        $this->attributes['database'] = Str::slug($value);
+    }
 
     public function permission(){
         return $this->hasOne(User::class,'physical_id','id');

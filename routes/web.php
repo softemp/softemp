@@ -87,7 +87,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
 
                     Route::get('/', 'DashBoardController@index')->name('index');
 
-                    //usuários
+                    // Directory users
                     Route::group(['namespace' => 'User'], function () {
                         Route::group(['prefix' => '/usuario', 'as' => 'user.'], function () {
 
@@ -99,12 +99,38 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                             //end colaborador
                         });
                     });
+                    // end Directory users
 
-                    // Access Control
+                    // Directory Access Control
                     Route::group(['namespace' => 'AccessControl'], function () {
+                        // Module Accesss Control
                         Route::group(['prefix' => '/controle/acesso', 'as' => 'access.control.'], function () {
 
-                            //Colaborador
+                            // module
+                            Route::group(['prefix' => trans('panel/accesscontrol/module.url_prefix'), 'as' => 'module.'], function () {
+                                Route::get('/', 'ModuleController@index')->name('index');
+                                Route::get('/cadastrar', 'ModuleController@create')->name('create');
+                                Route::post('/salvar', 'ModuleController@store')->name('store');
+                                Route::get('/show/{role}', 'ModuleController@show')->name('show');
+                                Route::get('/editar/{role}', 'ModuleController@edit')->name('edit');
+                                Route::put('/alterar/{role}', 'ModuleController@update')->name('update');
+                                Route::delete('/remover/{role}', 'ModuleController@destroy')->name('destroy');
+                            });
+                            //end module
+
+                            // permission
+                            Route::group(['prefix' => 'permissao', 'as' => 'permission.'], function () {
+                                Route::get('/', 'PermissionController@index')->name('index');
+                                Route::get('/cadastrar', 'PermissionController@create')->name('create');
+                                Route::post('/salvar', 'PermissionController@store')->name('store');
+                                Route::get('/show/{role}', 'PermissionController@show')->name('show');
+                                Route::get('/editar/{role}', 'PermissionController@edit')->name('edit');
+                                Route::put('/alterar/{role}', 'PermissionController@update')->name('update');
+                                Route::delete('/remover/{role}', 'PermissionController@destroy')->name('destroy');
+                            });
+                            //end permission
+
+                            // roles
                             Route::group(['prefix' => '/papeis', 'as' => 'role.'], function () {
                                 Route::get('/', 'RoleController@index')->name('index');
                                 Route::get('/cadastrar', 'RoleController@create')->name('create');
@@ -114,10 +140,11 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                                 Route::put('/alterar/{role}', 'RoleController@update')->name('update');
                                 Route::delete('/remover/{role}', 'RoleController@destroy')->name('destroy');
                             });
-                            //end colaborador
+                            //end roles
                         });
+                        // end Module Accesss Control
                     });
-                    // end Access Control
+                    // end Directory Access Control
 
                 });
                 // end Directory Base
@@ -149,10 +176,10 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                     // end CTOs
 
                     // Support
-                    Route::group(['prefix' => '/suporte', 'as' => 'supports.', 'namespace' => 'Supports'], function () {
-                        Route::get('/', 'SupportsController@index')->name('index');
-
-                    });
+//                    Route::group(['prefix' => '/suporte', 'as' => 'supports.', 'namespace' => 'Supports'], function () {
+//                        Route::get('/', 'SupportsController@index')->name('index');
+//
+//                    });
                     // end Support
                 });
                 //end Directoy MkAuth

@@ -1,85 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\SoftEmp\Panel\AccessControl;
+namespace App\Http\Controllers\SoftEmp\Panel\Base\AccessControl;
 
-use App\Models\AccessControll\Permission;
+use App\Http\Controllers\SoftEmp\Panel\CrudController;
+use App\Models\Base\AccessControl\Permission;
 use Illuminate\Http\Request;
 
-class PermissionController extends Controller
+class PermissionController extends CrudController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\AccessControll\Permission  $permission
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Permission $permission)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\AccessControll\Permission  $permission
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Permission $permission)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AccessControll\Permission  $permission
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Permission $permission)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\AccessControll\Permission  $permission
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Permission $permission)
-    {
-        //
+        $this->model = new Permission;
+        //$this->request = $request;
+        $this->pathView = 'softemp.panel.base.access_control.permission';
+        $this->groupRoute = 'panel.access.control.permission';
     }
 }

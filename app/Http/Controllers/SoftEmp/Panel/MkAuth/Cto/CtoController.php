@@ -28,7 +28,6 @@ class CtoController extends Controller
 
     public function show($caixa_herm)
     {
-
         $data = $this->model->where('caixa_herm', $caixa_herm)
             ->get([
                 'login',

@@ -3,14 +3,21 @@
 namespace App\Http\Controllers\SoftEmp\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Base\User\User;
 use Illuminate\Http\Request;
 
-class CrudController extends Controller
+/**
+ * Class CrudController
+ * @package App\Http\Controllers\SoftEmp\Panel
+ */
+abstract class CrudController extends Controller
 {
     protected $model;
     protected $request;
     protected $pathView;
     protected $groupRoute;
+
+    abstract public function __construct();
 
     /**
      * Display a listing of the resource.
@@ -20,8 +27,6 @@ class CrudController extends Controller
     public function index()
     {
         $data = $this->model->all();
-
-        //return $data;
         return view("{$this->pathView}.index", compact('data'));
     }
 

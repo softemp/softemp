@@ -11,16 +11,16 @@
         </div>
     @endif
 </div>
-<div class="form-group  has-feedback {{ $errors->has('description') ? ' has-error has-danger' : '' }}">
-    <label for="description">Descrição</label>
+<div class="form-group  has-feedback {{ $errors->has('database') ? ' has-error has-danger' : '' }}">
+    <label for="database">Base de Dados</label>
     <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-asterisk"></i> </span>
-        {!! Form::text('description', null, ['class'=>'form-control', 'data-minlength'=>'4', 'maxlength'=>'255',
-        'placeholder'=>'Descrição do Papél']) !!}
+        {!! Form::text('database', null, ['class'=>'form-control', 'data-minlength'=>'4', 'maxlength'=>'150',
+        'placeholder'=>'Bae de dados','required']) !!}
     </div>
-    @if ($errors->has('description'))
+    @if ($errors->has('database'))
         <div class="help-block">
-            <label class="error">{{ $errors->first('description') }}</label>
+            <label class="error">{{ $errors->first('database') }}</label>
         </div>
     @endif
 </div>

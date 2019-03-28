@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Novo Papél
+    Editar Modulo
     @parent
 @stop
 
@@ -12,17 +12,16 @@
 
 {{-- Page header --}}
 @section('content-header')
-    <h1>
-        Novo Papél
-        <small>Cadastrar novo Papél</small>
+    <h1>Alterar Modulo
+        <small>alterar o nome do Modulo</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="{{ route('panel.index') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="{{ route('panel.access.control.role.index') }}">Roles</a></li>
-        <li class="active">Cadastrar</li>
+        <li><a href="{{ route('panel.index') }}"><i
+                        class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="{{ route('panel.access.control.module.index') }}">Modulo</a></li>
+        <li class="active">Alterar</li>
     </ol>
 @stop
-
 
 {{-- Page content --}}
 @section('content')
@@ -33,28 +32,30 @@
             <!-- general form elements -->
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Novo Papél</h3>
+                    <h3 class="box-title">Alterar Modulo</h3>
                 </div>
                 <!-- /.box-header -->
 
                 <!-- form start -->
-                {!! Form::open(['route'=>'panel.access.control.role.store', 'role'=>'form', 'data-toggle'=>'validator']) !!}
-
+            {!! Form::model($data, ['route'=>['panel.access.control.module.update', $data->id],
+        'method'=>'put', 'role'=>'form', 'data-toggle'=>"validator"]) !!}
+            <!-- box-body -->
                 <div class="box-body">
 
-                    @include('softemp.panel.base.accesscontrol.role._form')
+                    @include('softemp.panel.base.access_control.module._form')
 
                 </div>
                 <!-- /.box-body -->
 
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Salvar</button>
-                    <a class="btn btn-default" href="{{ route('panel.access.control.role.index') }}">Cancelar</a>
+                    <a class="btn btn-default"
+                       href="{{ route('panel.access.control.module.index') }}">Cancelar</a>
                 </div>
 
                 {!! Form::close() !!}
             </div>
-            <!-- /.box -->
+            <!-- general form elements -->
         </div>
         <!-- /.left column -->
     </div>
