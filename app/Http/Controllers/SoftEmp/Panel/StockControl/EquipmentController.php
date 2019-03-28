@@ -11,15 +11,27 @@ use App\Http\Controllers\SoftEmp\Panel\CrudController;
 
 class EquipmentController extends CrudController
 {
+<<<<<<< HEAD
     private $equipment;
+=======
+    protected $model;
+    protected $pathView;
+    protected $groupRoute;
+
+>>>>>>> c774f674b20b225f2b50fd27306333cf98070ba1
     private $equipmentModel;
-    private $destination;
 
     public function __construct(Equipment $equipment, equipmentDestination $equipmentDestination, EquipmentModel $equipmentModel)
     {
+<<<<<<< HEAD
         $pathView = 'softemp.panel.stockcontrol.equipment.';
         $this->equipment = $equipment;
         $this->destination = $equipmentDestination;
+=======
+        $this->model = $equipment;
+        $this->pathView = 'softemp.panel.stockcontrol.equipment.';
+        $this->groupRoute = 'panel.stockcontrol.equipment';
+>>>>>>> c774f674b20b225f2b50fd27306333cf98070ba1
         $this->equipmentModel = $equipmentModel;
 
         parent::__construct($equipment, $groupRoute, $pathView);
@@ -32,21 +44,9 @@ class EquipmentController extends CrudController
         return view($this->pathView.'create', compact('data'));
     }
 
-//    public function show($id)
-//    {
-//        //
-//    }
-
-//    public function edit($id)
-//    {
-//        $data = $this->equipment->find($id);
-//
-//        return view('equipment.edit', compact('data'));
-//    }
-
     public function giveback(Request $request)
     {
-        $this->equipment->upStatus($request->equipmentid, 1);
+        $this->model->upStatus($request->equipmentid, 1);
 
         return redirect()->route('orderouts.show', $request->orderid)->with('success', 'Equipamento devolvido');
 
@@ -54,7 +54,7 @@ class EquipmentController extends CrudController
 
     public function equipDown(Request $request)
     {
-        $this->equipment->upStatus($request->equipmentid, 3);
+        $this->model->upStatus($request->equipmentid, 3);
 
         $this->destination->create
         ([
@@ -73,19 +73,19 @@ class EquipmentController extends CrudController
         return view('equipments.inuse', compact('equipments'));
     }
 
-    public function putStock(Request $request)
+    public function putStock($id)
     {
-        $this->equipment->upStatus($request->equipmentid, 1);
+        $this->model->putStock($id);
 
-        return redirect()->route('equipments.index')->with('success', 'Equipamento de volta ao estoque');
+        return redirect()->route($this->groupRoute.'.index')->with('success', 'Equipamento de volta ao estoque');
 
     }
 
     public function putTrash($id)
     {
-        $this->equipment->upStatus($id, 4);
+        $this->model->putTrash($id);
 
-        return redirect()->route('equipments.index')->with('success', 'Equipamento movido para o lixo');
+        return redirect()->route($this->groupRoute.'.index')->with('success', 'Equipamento movido para o lixo');
     }
 
     public function showInTrash()
