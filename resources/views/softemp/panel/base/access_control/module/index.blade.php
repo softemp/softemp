@@ -135,7 +135,6 @@
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     {{--@endcan--}}
-                                    @if($module->slug != "root" && $module->id != env('ROLES_EMPLOYEE_ID'))
                                         {{--@can('role-view-permissions')--}}
                                         {{--<a href="{{ route('panel.access.control.module.permissions.edit',['role_id'=>$module->id]) }}"--}}
                                         {{--title="Permissões" class="btn btn-xs btn-default">--}}
@@ -149,7 +148,6 @@
                                             <i class="fa fa-remove"></i>
                                         </a>
                                         {{--@endcan--}}
-                                    @endif
                                 </td>
                                 {{--@endcan--}}
                             </tr>

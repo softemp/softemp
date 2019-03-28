@@ -158,7 +158,6 @@
         var csrf = $('#token').val();
 
         $.ajax({
-            //method: "POST",
             url: urlDestroy,
             type: 'delete',
             data: {'_token': csrf},

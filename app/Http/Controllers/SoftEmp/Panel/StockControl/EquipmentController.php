@@ -11,21 +11,18 @@ use App\Http\Controllers\SoftEmp\Panel\CrudController;
 
 class EquipmentController extends CrudController
 {
-    protected $model;
-    protected $pathView;
-    protected $groupRoute;
-
     private $equipment;
     private $equipmentModel;
     private $destination;
 
     public function __construct(Equipment $equipment, equipmentDestination $equipmentDestination, EquipmentModel $equipmentModel)
     {
-        $this->model = $equipment;
-        $this->pathView = 'softemp.panel.stockcontrol.equipment.';
+        $pathView = 'softemp.panel.stockcontrol.equipment.';
         $this->equipment = $equipment;
         $this->destination = $equipmentDestination;
         $this->equipmentModel = $equipmentModel;
+
+        parent::__construct($equipment, $groupRoute, $pathView);
     }
 
     public function create()
