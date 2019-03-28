@@ -40,12 +40,12 @@ class EquipmentController extends CrudController
 //        //
 //    }
 
-    public function edit($id)
-    {
-        $data = $this->equipment->find($id);
-
-        return view('equipment.edit', compact('data'));
-    }
+//    public function edit($id)
+//    {
+//        $data = $this->equipment->find($id);
+//
+//        return view('equipment.edit', compact('data'));
+//    }
 
     public function giveback(Request $request)
     {

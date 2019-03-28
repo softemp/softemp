@@ -11,7 +11,22 @@ class Equipment extends Model
 {
     protected $connection = 'mysql_stockcontrol';
     protected $table = 'equipment';
-    protected $guarded = [];
+//    protected $guarded = [];
+
+    public function rules (){
+        return [
+            'ns'=>'required|min:7|unique:equipment,ns,[id]',
+            'mac'=>'',
+            'purchase_date'=>'',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function messages (){
+        return [];
+    }
 
     public function insert($request)
     {
