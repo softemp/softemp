@@ -17,8 +17,6 @@ class EquipmentController extends CrudController
 
     public function __construct(Equipment $equipment, equipmentDestination $equipmentDestination, EquipmentModel $equipmentModel)
     {
-
-        $this->model = $equipment;
         $pathView = 'softemp.panel.stockcontrol.equipment.';
         $groupRoute = 'panel.stockcontrol.equipment';
 
