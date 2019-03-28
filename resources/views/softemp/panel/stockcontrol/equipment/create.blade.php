@@ -1,0 +1,85 @@
+@extends('softemp.panel.layouts.app')
+
+@section('title')
+    Blank
+    @parent
+@stop
+
+@section('content-header')
+    <h1>
+        Novo Equipamento
+        <small>Editando...</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{{route('panel.index')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Formulário de edição</li>
+    </ol>
+@endsection
+
+@section('content')
+    {{-- Default box --}}
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Formulário de cadastro</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                        title="Collapse">
+                    <i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="card-body">
+                <form action="{{route('panel.stockcontrol.equipment.store')}}" method="post">
+                    @csrf
+                    <div class="form-group row">
+                        <label for="equipment_model_id" class="col-md-4 col-form-label text-md-right">Modelo do equipamento</label>
+                        <div class="col-md-6">
+                            <select class="form-control select-container" name="equipment_model_id" id="equipment_model_id" required>
+                                <option>Selecione o modelo de equipamento</option>
+                                @foreach($data as $equipmentModel)
+                                    <option value="{{$equipmentModel->id}}">{{$equipmentModel->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="mac" class="col-md-4 col-form-label text-md-right">End. Mac</label>
+                        <div class="col-md-6">
+                            <input class="form-control" type="text" id="mac" name="mac">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="ns" class="col-md-4 col-form-label text-md-right">Número de Série</label>
+                        <div class="col-md-6">
+                            <input class="form-control" type="text" id="ns" name="ns">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="purchase_date" class="col-md-4 col-form-label text-md-right">Data de Compra</label>
+                        <div class="col-md-6">
+                            <input class="form-control" type="date" id="purchase_date" name="purchase_date">
+                        </div>
+                    </div>
+                    <input type="hidden" value="1" name="status">
+
+                    <button class="btn btn-success">Cadastrar</button>
+
+                    {{--<input type="text" name="ns" value="{{$data->ns}}">--}}
+                    {{--<input type="date" name="purchase_date" value="{{$data->purchase_date}}">>--}}
+                </form>
+            </div>
+        </div>
+        {{-- /.box-body --}}
+        <div class="box-footer">
+            Footer
+        </div>
+        {{-- /.box-footer --}}
+    </div>
+    {{-- /.box --}}
+@endsection

@@ -15,13 +15,13 @@
 
 @section('content-header')
     <h1>
-        Controle de Estoque
+        Técnicos
         <small>Tudo começa aqui</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('panel.index')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('panel.pages.blank')}}">ControlerEstoque</a></li>
-        <li class="active">Equipamentos</li>
+        <li><a href="{{route('panel.pages.blank')}}">Blank</a></li>
+        <li class="active">Data Tables</li>
     </ol>
 @endsection
 
@@ -29,7 +29,7 @@
     {{-- Default box --}}
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Equipamentos cadastrados</h3>
+            <h3 class="box-title">Técnicos cadastrados</h3>
 
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -39,49 +39,24 @@
                     <i class="fa fa-times"></i></button>
             </div>
         </div>
-        <div class="box-body float-left">
-            <a class="btn btn-primary" href="{{route('panel.stockcontrol.equipment.create')}}">Cadastrar Equipamento</a>
-            {{--<a class="btn btn-primary" href="{{route('panel.stockcontrol.equipment.create')}}">Cadastrar Equipamento</a>--}}
+        <div class="box-body">
+            <a class="btn btn-success" href="{{route('panel.stockcontrol.technical.create')}}">Cadastrar Técnico</a>
         </div>
         <div class="box-body">
             <table id="table1" class="display responsive nowrap dataTable no-footer dtr-inline collapsed" style="width: 100%;" role="grid">
                 <thead>
                 <tr>
-                    <th>Modelo</th>
-                    <th>Data de compra</th>
-                    <th>Numero de série</th>
-                    <th>Numero Mac</th>
-                    <th>Destino</th>
+                    <th>Nome</th>
+                    <th>Telefone</th>
                     <th>Ação</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($data as $equipment)
+                @foreach($data as $technical)
                     <tr>
-                        <td>{{$equipment->equipmentModel->name}}</td>
-                        <td>{{$equipment->purchase_date}}</td>
-                        <td>{{$equipment->ns}}</td>
-                        <td>{{$equipment->mac}}</td>
-                        <td>
-                            @if($equipment->status == 1)
-                                Em estoque
-                            @elseif($equipment->status == 2)
-                                Equipamento com técnico
-                            @elseif($equipment->status == 3)
-                                {{$equipment->lastDestination($equipment)->destination}}
-                            @elseif($equipment->status == 4)
-                                Equipamento no lixo
-                            @endif
-                        </td>
-                        <td>
-                            @if($equipment->status == 4)
-                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>
-                                <a href="{{route('panel.stockcontrol.equipment.putstock', $equipment->id)}}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon glyphicon-open"></i></a>
-                                @else
-                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>
-                                <a href="{{route('panel.stockcontrol.equipment.puttrash', $equipment->id)}}" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></a>
-                            @endif
-                        </td>
+                        <td>{{$technical->name}}</td>
+                        <td>{{$technical->fone}}</td>
+                        <td><a href="{{route('panel.stockcontrol.technical.edit', $technical->id)}}" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></a></td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -89,7 +64,7 @@
         </div>
         {{-- /.box-body --}}
         <div class="box-footer">
-            Footer
+            Floripa Server || Norte Server || Gbit Telecom
         </div>
         {{-- /.box-footer --}}
     </div>

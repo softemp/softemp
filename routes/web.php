@@ -95,7 +95,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                             Route::group(['prefix' => '/colaborador', 'as' => 'employee.'], function () {
                                 Route::get('/', 'EmployeeController@index')->name('index');
                             });
-                           // Route::resource('employees', 'EmployeeController');
+                            // Route::resource('employees', 'EmployeeController');
                             //end colaborador
                         });
                     });
@@ -159,13 +159,33 @@ Route::group(['namespace' => 'SoftEmp'], function () {
 
                 // Directory stock control
                 Route::group(['namespace' => 'StockControl'], function () {
-                    //Equipamentos
-                Route::group(['prefix' => '/estoque', 'as' => 'stockcontrol.'], function (){
-                    Route::get('/equipamentos', 'EquipmentController@index')->name('equipment.index');
-                    Route::get('/equipamentos/editar/{id}', 'EquipmentController@edit')->name('equipment.edit');
-                    Route::put('/equipamentos/update/{id}', 'EquipmentController@update')->name('equipment.update');
 
-                });
+                    Route::group(['prefix' => 'controleestoque'], function (){
+
+                        //Equipamentos
+                        Route::group(['prefix' => '/equipamentos', 'as' => 'stockcontrol.'], function (){
+                            Route::get('/', 'EquipmentController@index')->name('equipment.index');
+                            Route::get('/editar/{id}', 'EquipmentController@edit')->name('equipment.edit');
+                            Route::put('/update/{id}', 'EquipmentController@update')->name('equipment.update');
+                            Route::get('/cadastrar', 'EquipmentController@create')->name('equipment.create');
+                            Route::post('/cadastrar/novo', 'EquipmentController@store')->name('equipment.store');
+                            Route::get('/lixeira/{id}', 'EquipmentController@putTrash')->name('equipment.puttrash');
+                            Route::get('/estoque/{id}', 'EquipmentController@putStock')->name('equipment.putstock');
+                        });
+                        //end equipamentos
+
+                        // Técnicos
+                        Route::group(['prefix' => '/tecnicos', 'as' => 'stockcontrol.'], function (){
+                            Route::get('/', 'TechnicalController@index')->name('technical.index');
+                            Route::get('/editar/{id}', 'TechnicalController@edit')->name('technical.edit');
+                            Route::put('/update/{id}', 'TechnicalController@update')->name('technical.update');
+                            Route::get('/cadastrar', 'TechnicalController@create')->name('technical.create');
+                            Route::post('/cadastrar/novo', 'TechnicalController@store')->name('technical.store');
+                        });
+                        // end tecnicos
+
+                    });
+
                 });
                 //end directory stock control
 
