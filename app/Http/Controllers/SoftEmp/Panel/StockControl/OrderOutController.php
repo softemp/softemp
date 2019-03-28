@@ -11,20 +11,18 @@ use App\Http\Controllers\Controller;
 
 class OrderOutController extends Controller
 {
-    private $orderOut;
     private $equipment;
     private $technical;
 
     public function __construct(OrderOut $orderOut, Equipment $equipment, Technical $technical)
     {
-        $this->orderOut = $orderOut;
         $this->equipment = $equipment;
         $this->technical = $technical;
-    }
 
-    public function index( )
-    {
-        //
+        $pathView = 'softemp.panel.';
+        $groupRoute = 'panel.access.';
+
+        parent::__construct($orderOut, $groupRoute, $pathView);
     }
 
     public function create()

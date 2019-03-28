@@ -11,28 +11,19 @@ use App\Http\Controllers\SoftEmp\Panel\CrudController;
 
 class EquipmentController extends CrudController
 {
-<<<<<<< HEAD
-    private $equipment;
-=======
-    protected $model;
-    protected $pathView;
-    protected $groupRoute;
 
->>>>>>> c774f674b20b225f2b50fd27306333cf98070ba1
     private $equipmentModel;
+    private $destination;
 
     public function __construct(Equipment $equipment, equipmentDestination $equipmentDestination, EquipmentModel $equipmentModel)
     {
-<<<<<<< HEAD
-        $pathView = 'softemp.panel.stockcontrol.equipment.';
-        $this->equipment = $equipment;
-        $this->destination = $equipmentDestination;
-=======
+
         $this->model = $equipment;
-        $this->pathView = 'softemp.panel.stockcontrol.equipment.';
-        $this->groupRoute = 'panel.stockcontrol.equipment';
->>>>>>> c774f674b20b225f2b50fd27306333cf98070ba1
+        $pathView = 'softemp.panel.stockcontrol.equipment.';
+        $groupRoute = 'panel.stockcontrol.equipment';
+
         $this->equipmentModel = $equipmentModel;
+        $this->destination = $equipmentDestination;
 
         parent::__construct($equipment, $groupRoute, $pathView);
     }
@@ -90,7 +81,7 @@ class EquipmentController extends CrudController
 
     public function showInTrash()
     {
-        $equipments = $this->equipment->where('equipment_status', 4)->get();
+        $equipments = $this->model->where('equipment_status', 4)->get();
 
         return view('equipments.intrash', compact('equipments'));
     }
