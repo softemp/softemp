@@ -8,16 +8,22 @@ use Illuminate\Http\Request;
 
 class RoleController extends CrudController
 {
-
-
-    public function __construct(Role $role)
+    /**
+     * RoleController constructor.
+     * @param Role $role
+     */
+    public function __construct()
     {
-        $this->model = $role;
+        $this->model = new Role;
         //$this->request = $request;
-        $this->pathView = 'softemp.panel.base.accesscontrol.role';
+        $this->pathView = 'softemp.panel.base.access_control.role';
         $this->groupRoute = 'panel.access.control.role';
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
        $request['slug'] = $request->name;

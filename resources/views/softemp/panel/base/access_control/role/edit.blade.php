@@ -42,7 +42,7 @@
             <!-- box-body -->
                 <div class="box-body">
 
-                    @include('softemp.panel.base.accesscontrol.role._form')
+                    @include('softemp.panel.base.access_control.role._form')
 
                 </div>
                 <!-- /.box-body -->

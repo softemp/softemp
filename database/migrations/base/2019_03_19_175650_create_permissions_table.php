@@ -17,7 +17,7 @@ class CreatePermissionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('slug');
-            $table->text('description')->nullable();
+            $table->string('description')->nullable();
 
             $table->unsignedBigInteger('module_id');
             $table->foreign('module_id')->references('id')->on('modules')->onDelete('restrict');

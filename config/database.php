@@ -18,9 +18,6 @@ $modules = [
 $connections = array();
 foreach ($modules as $module => $value) {
     if(!is_array($value)) {$module = $value;};
-    //if(is_array($value)) {
-        //print_r('DB_USERNAME'.mb_strtoupper('_'.$module));
-    //};
 
     $connections["mysql_" . $module] = [
         'driver' => 'mysql',
@@ -34,7 +31,6 @@ foreach ($modules as $module => $value) {
         'collation' => 'utf8mb4_unicode_ci',
         'prefix' => '',
         'prefix_indexes' => true,
-        //'strict' => (!$value['strict']? $value['strict']:true),
         'strict' => (is_array($value)?env(mb_strtoupper('DB_STRICT_'.$module)):true),
         'engine' => null,
     ];
