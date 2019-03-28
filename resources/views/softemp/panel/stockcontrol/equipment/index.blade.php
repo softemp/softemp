@@ -12,7 +12,7 @@
 
 @section('content-header')
     <h1>
-        Blank page
+        Controle de Estoque
         <small>Tudo começa aqui</small>
     </h1>
     <ol class="breadcrumb">
@@ -26,7 +26,7 @@
     {{-- Default box --}}
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Title</h3>
+            <h3 class="box-title">Equipamentos cadastrados</h3>
 
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -54,7 +54,7 @@
                     <td>{{$equipment->purchase_date}}</td>
                     <td>{{$equipment->ns}}</td>
                     <td>{{$equipment->mac}}</td>
-                    <td>ação</td>
+                    <td><a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}"><i class="fa fa-edit"></i></a> </td>
                     </tr>
                 @endforeach
                 </tbody>

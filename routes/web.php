@@ -189,6 +189,8 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                     //Equipamentos
                 Route::group(['prefix' => '/estoque', 'as' => 'stockcontrol.'], function (){
                     Route::get('/equipamentos', 'EquipmentController@index')->name('equipment.index');
+                    Route::get('/equipamentos/editar/{id}', 'EquipmentController@edit')->name('equipment.edit');
+                    Route::put('/equipamentos/update/{id}', 'EquipmentController@update')->name('equipment.update');
 
                 });
                 });
