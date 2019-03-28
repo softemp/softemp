@@ -64,13 +64,6 @@
             </span>
             </a>
             <ul class="treeview-menu">
-<<<<<<< HEAD
-                <li class="{{(Request::is('painel')?'active':'')}}"><a href="{{route('panel.index')}}"><i
-                                class="fa fa-circle-o"></i> Permissões</a></li>
-                <li class="{{(Request::is('painel/controle/acesso/papeis*')?'active':'')}}"><a
-                            href="{{route('panel.access.control.role.index')}}"><i
-                                class="fa fa-circle-o"></i> Papéis</a></li>
-=======
                 <li class="{{(Request::is('painel/controle/acesso/permissao*')?'active':'')}}">
                     <a href="{{route('panel.access.control.permission.index')}}">
                         <i class="fa fa-circle-o"></i> Permissões
@@ -86,7 +79,6 @@
                         <i class="fa fa-circle-o"></i> Modulos
                     </a>
                 </li>
->>>>>>> modelagem
             </ul>
         </li>
         {{--end access control--}}

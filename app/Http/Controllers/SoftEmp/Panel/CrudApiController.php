@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Response;
 
 /**
  * Class CrudController
@@ -17,23 +18,10 @@ class CrudController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected $model;
+    //protected $model;
     protected $request;
     protected $pathView;
     protected $groupRoute;
-
-    /**
-     * CrudController constructor.
-     * @param object $model
-     * @param string $groupRoute
-     * @param string $pathView
-     */
-    public function __construct(object $model, string $groupRoute, string $pathView)
-    {
-        $this->model = $model;
-        $this->pathView = $pathView;
-        $this->groupRoute = $groupRoute;
-    }
 
     /**
      * Display a listing of the resource.
@@ -42,8 +30,8 @@ class CrudController extends BaseController
      */
     public function index()
     {
-        $data = $this->model->all();
-        return view("{$this->pathView}.index", compact('data'));
+        $data = $this->search();
+        return Response::json($data, 200);
     }
 
     /**

@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 
 class PermissionController extends CrudController
 {
-    public function __construct()
+    public function __construct(Permission $permission)
     {
-        $this->model = new Permission;
-        //$this->request = $request;
-        $this->pathView = 'softemp.panel.base.access_control.permission';
-        $this->groupRoute = 'panel.access.control.permission';
+        $pathView = 'softemp.panel.base.access_control.permission';
+        $groupRoute = 'panel.access.control.permission';
+
+        parent::__construct($permission, $groupRoute, $pathView);
     }
 }
