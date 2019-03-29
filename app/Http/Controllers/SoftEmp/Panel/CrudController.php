@@ -22,8 +22,6 @@ class CrudController extends BaseController
     protected $pathView;
     protected $groupRoute;
 
-<<<<<<< HEAD
-=======
     /**
      * array com retorno nos metodos index, create, edit
      *
@@ -31,7 +29,6 @@ class CrudController extends BaseController
      */
     protected $arrayData = [];
 
->>>>>>> modelagem
     /**
      * CrudController constructor.
      * @param object $model
