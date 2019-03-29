@@ -49,8 +49,8 @@ class CrudController extends BaseController
      */
     public function index()
     {
-        $data = $this->model->all();
-        return view("{$this->pathView}.index", compact('data'));
+        $this->arrayData['data'] = $this->model->all();
+        return view("{$this->pathView}.index", $this->arrayData);
     }
 
     /**
@@ -60,7 +60,7 @@ class CrudController extends BaseController
      */
     public function create()
     {
-        return view("{$this->pathView}.create");
+        return view("{$this->pathView}.create", $this->arrayData);
     }
 
     /**
@@ -117,7 +117,9 @@ class CrudController extends BaseController
         $data = $this->model->find($id);
 
         if ($data) {
-            return view("{$this->pathView}.edit", compact('data'));
+
+            $this->arrayData['data'] = $data;
+            return view("{$this->pathView}.edit", $this->arrayData);
         }
 
         return redirect()->route("{$this->groupRoute}.index")->withErrors(['errors' => 'Registro não encontrado!']);
