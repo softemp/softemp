@@ -16,7 +16,6 @@ class CreateOccupationsTable extends Migration
         Schema::create('occupations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('slug');
             $table->string('description')->nullable();
 
             $table->unsignedBigInteger('role_id');

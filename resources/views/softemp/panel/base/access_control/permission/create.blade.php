@@ -41,6 +41,25 @@
                 {!! Form::open(['route'=>'panel.access.control.module.store', 'role'=>'form', 'data-toggle'=>'validator']) !!}
 
                 <div class="box-body">
+                    <!-- modules -->
+                    <div class="form-group has-feedback {{ $errors->has('module_id') ? ' has-error has-danger' : '' }}">
+                        <label for="module_id">Modulos</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-asterisk"></i> </span>
+                            <select class="form-control select2-container" name="module_id" id="module" required>
+                                <option></option>
+                                @foreach($modules as $module)
+                                    <option value="{{$module->id}}">{{$module->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @if ($errors->has('module_id'))
+                            <div class="help-block">
+                                <label class="error">{{ $errors->first('module_id') }}</label>
+                            </div>
+                        @endif
+                    </div>
+                    <!-- /.modules -->
 
                     @include('softemp.panel.base.access_control.permission._form')
 

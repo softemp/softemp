@@ -10,12 +10,7 @@ use Illuminate\Support\Str;
 
 class Role extends Model
 {
-    /**
-     * @var string
-     */
     protected $table = 'roles';
-
-    protected $guarded = [];
 
     protected $fillable = [
         'name', 'slug', 'description'

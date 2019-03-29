@@ -141,6 +141,18 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                                 Route::delete('/remover/{role}', 'RoleController@destroy')->name('destroy');
                             });
                             //end roles
+
+                            // occupation
+                            Route::group(['prefix' => '/ocupacao', 'as' => 'occupation.'], function () {
+                                Route::get('/', 'OccupationController@index')->name('index');
+                                Route::get('/cadastrar', 'OccupationController@create')->name('create');
+                                Route::post('/salvar', 'OccupationController@store')->name('store');
+                                Route::get('/show/{occupation}', 'OccupationController@show')->name('show');
+                                Route::get('/editar/{occupation}', 'OccupationController@edit')->name('edit');
+                                Route::put('/alterar/{occupation}', 'OccupationController@update')->name('update');
+                                Route::delete('/remover/{occupation}', 'OccupationController@destroy')->name('destroy');
+                            });
+                            //end occupation
                         });
                         // end Module Accesss Control
                     });

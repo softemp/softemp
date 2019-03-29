@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Response;
  * Class CrudController
  * @package App\Http\Controllers\SoftEmp\Panel
  */
-class CrudController extends BaseController
+class CrudApiController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 

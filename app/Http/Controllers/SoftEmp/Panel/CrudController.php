@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\SoftEmp\Panel;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller as BaseController;
 
 /**
  * Class CrudController
@@ -21,6 +21,8 @@ class CrudController extends BaseController
     protected $request;
     protected $pathView;
     protected $groupRoute;
+
+    protected $arrayData = [];
 
     /**
      * CrudController constructor.
@@ -42,8 +44,9 @@ class CrudController extends BaseController
      */
     public function index()
     {
-        $data = $this->model->all();
-        return view("{$this->pathView}.index", compact('data'));
+        $this->arrayData['data'] = $this->model->all();
+
+        return view("{$this->pathView}.index", $this->arrayData);
     }
 
     /**
@@ -53,13 +56,13 @@ class CrudController extends BaseController
      */
     public function create()
     {
-        return view("{$this->pathView}.create");
+        return view("{$this->pathView}.create", $this->arrayData);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -83,7 +86,7 @@ class CrudController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -102,7 +105,7 @@ class CrudController extends BaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -110,7 +113,9 @@ class CrudController extends BaseController
         $data = $this->model->find($id);
 
         if ($data) {
-            return view("{$this->pathView}.edit", compact('data'));
+            $this->arrayData['data'] = $data;
+
+            return view("{$this->pathView}.edit", $this->arrayData);
         }
 
         return redirect()->route("{$this->groupRoute}.index")->withErrors(['errors' => 'Registro não encontrado!']);
@@ -119,8 +124,8 @@ class CrudController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -146,12 +151,19 @@ class CrudController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        try {
+            $removed = $this->model->find($id);
+            $result = $removed->delete();
+
+            return 1;
+        } catch (QueryException $e) {
+            return response()->json(['message' => $e->errorInfo], 424);
+        }
     }
 
     /**
