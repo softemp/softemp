@@ -7,3 +7,7 @@ Para processar Modulos com database indivuais precisa deste parametro --database
 ```
 php artisan migrate --path=/database/migrations/post --database=mysql_post
 ```
+db:seeder
+```
+php artisan migrate:fresh --path=/database/migrations/base --database=mysql_base --seed
+```

@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
-    /**
-     * @var string
-     */
     protected $table = 'permissions';
 
     public function module(){

@@ -151,13 +151,7 @@ class CrudController extends BaseController
      */
     public function destroy($id)
     {
-        try {
-            $removed = $this->model->find($id);
-            $result = $removed->delete();
-            return 1;
-        } catch (QueryException $e) {
-            return response()->json(['message' => $e->errorInfo], 424);
-        }
+        //
     }
 
     /**

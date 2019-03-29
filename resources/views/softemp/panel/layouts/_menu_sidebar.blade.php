@@ -74,6 +74,11 @@
                         <i class="fa fa-circle-o"></i> Papéis
                     </a>
                 </li>
+                <li class="{{(Request::is('painel/controle/acesso/ocupacao*')?'active':'')}}">
+                    <a href="{{route('panel.access.control.occupation.index')}}">
+                        <i class="fa fa-circle-o"></i> Ocupações
+                    </a>
+                </li>
                 <li class="{{(Request::is('painel/controle/acesso/modulos*')?'active':'')}}">
                     <a href="{{route('panel.access.control.module.index')}}">
                         <i class="fa fa-circle-o"></i> Modulos

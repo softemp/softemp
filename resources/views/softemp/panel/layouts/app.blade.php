@@ -142,13 +142,13 @@
         $('#urlDestroy').val(urlDestroy);
         //alert(name);
         $('#destroyModal #name').html(name);
-
         //carrega o modal
         $('#destroyModal').modal();
     }
     $(".btn-close").click(function () {
         $('.errors-msg-destroy').hide();
     });
+
     $(".btn-confirm-destroy").click(function () {
 
         //recupera o valor do input
