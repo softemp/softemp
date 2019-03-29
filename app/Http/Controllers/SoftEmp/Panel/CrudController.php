@@ -22,6 +22,11 @@ class CrudController extends BaseController
     protected $pathView;
     protected $groupRoute;
 
+    /**
+     * array com retorno nos metodos index, create, edit
+     *
+     * @var array
+     */
     protected $arrayData = [];
 
     /**
