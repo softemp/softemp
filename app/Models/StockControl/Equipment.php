@@ -102,9 +102,9 @@ class Equipment extends Model
         return $this->hasMany(equipmentDestination::class, 'equipment_id', 'id');
     }
 
-    public function lastDestination(Equipment $equipment)
+    public function lastDestination()
     {
-        return $equipment->destinations()->latest()->first();
+        return $this->destinations()->latest()->first();
     }
 
     public function verifyExist($ns)

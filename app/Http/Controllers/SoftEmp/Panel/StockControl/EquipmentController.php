@@ -14,12 +14,14 @@ class EquipmentController extends CrudController
 
     private $equipmentModel;
     private $destination;
+    private $equipment;
 
     public function __construct(Equipment $equipment, equipmentDestination $equipmentDestination, EquipmentModel $equipmentModel)
     {
         $pathView = 'softemp.panel.stockcontrol.equipment.';
         $groupRoute = 'panel.stockcontrol.equipment';
 
+        $this->equipment = $equipment;
         $this->equipmentModel = $equipmentModel;
         $this->destination = $equipmentDestination;
 
@@ -35,7 +37,7 @@ class EquipmentController extends CrudController
 
     public function giveback(Request $request)
     {
-        $this->model->upStatus($request->equipmentid, 1);
+        $this->equipment->upStatus($request->equipmentid, 1);
 
         return redirect()->route('orderouts.show', $request->orderid)->with('success', 'Equipamento devolvido');
 
@@ -43,7 +45,7 @@ class EquipmentController extends CrudController
 
     public function equipDown(Request $request)
     {
-        $this->model->upStatus($request->equipmentid, 3);
+        $this->equipment->upStatus($request->equipmentid, 3);
 
         $this->destination->create
         ([
@@ -64,7 +66,7 @@ class EquipmentController extends CrudController
 
     public function putStock($id)
     {
-        $this->model->putStock($id);
+        $this->equipment->putStock($id);
 
         return redirect()->route($this->groupRoute.'.index')->with('success', 'Equipamento de volta ao estoque');
 
@@ -72,14 +74,14 @@ class EquipmentController extends CrudController
 
     public function putTrash($id)
     {
-        $this->model->putTrash($id);
+        $this->equipment->putTrash($id);
 
         return redirect()->route($this->groupRoute.'.index')->with('success', 'Equipamento movido para o lixo');
     }
 
     public function showInTrash()
     {
-        $equipments = $this->model->where('equipment_status', 4)->get();
+        $equipments = $this->equipment->where('equipment_status', 4)->get();
 
         return view('equipments.intrash', compact('equipments'));
     }
