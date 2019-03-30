@@ -63,23 +63,21 @@
                         <td>{{$equipment->ns}}</td>
                         <td>{{$equipment->mac}}</td>
                         <td>
-                            @if($equipment->status == 1)
-                                Em estoque
-                            @elseif($equipment->status == 2)
-                                Equipamento com técnico
-                            @elseif($equipment->status == 3)
-                                {{$equipment->lastDestination($equipment)->destination}}
-                            @elseif($equipment->status == 4)
-                                Equipamento no lixo
+                            @if($equipment->status == 1)Em estoque
+                            @elseif($equipment->status == 2)Equipamento com técnico
+                            @elseif($equipment->status == 3){{mb_strimwidth($equipment->lastDestination($equipment)->destination, 0, 20, "...")}}
+                            @elseif($equipment->status == 4)Equipamento no lixo
                             @endif
                         </td>
                         <td>
+                            <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-eye-open"></i></a>
+
                             @if($equipment->status == 4)
-                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>
-                                <a href="{{route('panel.stockcontrol.equipment.putstock', $equipment->id)}}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon glyphicon-open"></i></a>
-                                @else
-                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>
-                                <a href="{{route('panel.stockcontrol.equipment.puttrash', $equipment->id)}}" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></a>
+                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-pencil"></i> Editar</a>
+                                <a href="{{route('panel.stockcontrol.equipment.putstock', $equipment->id)}}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon glyphicon-open"></i> Mover para estoque</a>
+                            @else
+                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-pencil"></i> Editar</a>
+                                <a href="{{route('panel.stockcontrol.equipment.puttrash', $equipment->id)}}" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i> Mover para lixeira</a>
                             @endif
                         </td>
                     </tr>
@@ -131,28 +129,28 @@
             //});
         });
     </script>
-    <script>
-        $(function () {
-            $("td").dblclick(function () {
-                var conteudoOriginal = $(this).text();
+    {{--<script>--}}
+        {{--$(function () {--}}
+            {{--$("td").dblclick(function () {--}}
+                {{--var conteudoOriginal = $(this).text();--}}
 
-                $(this).addClass("celulaEmEdicao");
-                $(this).html("<input type='text' value='" + conteudoOriginal + "' />");
-                $(this).children().first().focus();
+                {{--$(this).addClass("celulaEmEdicao");--}}
+                {{--$(this).html("<input type='text' value='" + conteudoOriginal + "' />");--}}
+                {{--$(this).children().first().focus();--}}
 
-                $(this).children().first().keypress(function (e) {
-                    if (e.which == 13) {
-                        var novoConteudo = $(this).val();
-                        $(this).parent().text(novoConteudo);
-                        $(this).parent().removeClass("celulaEmEdicao");
-                    }
-                });
+                {{--$(this).children().first().keypress(function (e) {--}}
+                    {{--if (e.which == 13) {--}}
+                        {{--var novoConteudo = $(this).val();--}}
+                        {{--$(this).parent().text(novoConteudo);--}}
+                        {{--$(this).parent().removeClass("celulaEmEdicao");--}}
+                    {{--}--}}
+                {{--});--}}
 
-                $(this).children().first().blur(function(){
-                    $(this).parent().text(conteudoOriginal);
-                    $(this).parent().removeClass("celulaEmEdicao");
-                });
-            });
-        });
-    </script>
+                {{--$(this).children().first().blur(function(){--}}
+                    {{--$(this).parent().text(conteudoOriginal);--}}
+                    {{--$(this).parent().removeClass("celulaEmEdicao");--}}
+                {{--});--}}
+            {{--});--}}
+        {{--});--}}
+    {{--</script>--}}
 @stop

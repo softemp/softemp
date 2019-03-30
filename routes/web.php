@@ -198,6 +198,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                             Route::post('/cadastrar/novo', 'EquipmentController@store')->name('equipment.store');
                             Route::get('/lixeira/{id}', 'EquipmentController@putTrash')->name('equipment.puttrash');
                             Route::get('/estoque/{id}', 'EquipmentController@putStock')->name('equipment.putstock');
+                            Route::get('show/{id}', 'EquipmentController@show')->name('equipment.show');
                         });
                         //end equipamentos
 

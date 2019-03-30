@@ -91,7 +91,8 @@ class CrudController extends BaseController
         $data = $this->model->find($id);
 
         if ($data) {
-            return response()->json($data, 200);
+//            return response()->json($data, 200);
+            return view("{$this->pathView}.show", compact('data'));
         }
 
         $data = ['message' => 'Registro não encontrado!', 404];
