@@ -17,18 +17,6 @@ class Permission extends Model
     ];
 
     /**
-     * @return array
-     */
-    public function rules (){
-        return [
-            'name'=>'required|min:3|unique:permissions,name,[id]',
-            'slug'=>'',
-            'description'=>'',
-            'module_id'=>'required',
-        ];
-    }
-
-    /**
      * validação dos dados de um novo registro.
      *
      * @return array
@@ -49,13 +37,6 @@ class Permission extends Model
             'name'=>'required|min:3|unique:permissions,name,'.$id,
             'description'=>'',
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function messages (){
-        return [];
     }
 
     /**
