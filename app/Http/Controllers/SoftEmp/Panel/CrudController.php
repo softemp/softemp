@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\SoftEmp\Panel;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -168,7 +168,13 @@ class CrudController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        try {
+            $removed = $this->model->find($id);
+            $result = $removed->delete();
+            return 1;
+        } catch (QueryException $e) {
+            return response()->json(['message' => $e->errorInfo], 424);
+        }
     }
 
     /**
