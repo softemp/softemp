@@ -8,6 +8,7 @@
 
 {{-- page level styles --}}
 @section('page_styles')
+    <link rel="stylesheet" href="{{ asset('softemp/panel/vendors/select2/css/select2.css') }}">
 @stop
 
 {{-- Page header --}}
@@ -38,7 +39,7 @@
                 <!-- /.box-header -->
 
                 <!-- form start -->
-                {!! Form::open(['route'=>'panel.access.control.module.store', 'role'=>'form', 'data-toggle'=>'validator']) !!}
+                {!! Form::open(['route'=>'panel.access.control.permission.store', 'role'=>'form', 'data-toggle'=>'validator']) !!}
 
                 <div class="box-body">
                     <!-- modules -->
@@ -68,7 +69,7 @@
 
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Salvar</button>
-                    <a class="btn btn-default" href="{{ route('panel.access.control.module.index') }}">Cancelar</a>
+                    <a class="btn btn-default" href="{{ route('panel.access.control.permission.index') }}">Cancelar</a>
                 </div>
 
                 {!! Form::close() !!}
@@ -83,9 +84,16 @@
 {{-- page level scripts --}}
 @section('page_scripts')
     <!-- BootstrapValidators -->
+    <script src="{{ asset('softemp/panel/vendors/select2/js/select2.js') }}"></script>
     <script src="{{ asset('softemp/panel/vendors/bootstrap-validator/js/validator.js') }}"></script>
     <!-- page script -->
     <script>
+        $(document).ready(function() {
+            $('#module').select2({
+                placeholder: 'Selecione um Modulo',
+                allowClear: true
+            });
+        });
         $('form').validator();
     </script>
 
