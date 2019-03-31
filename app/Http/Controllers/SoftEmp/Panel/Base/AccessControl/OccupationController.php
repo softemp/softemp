@@ -14,9 +14,11 @@ use Illuminate\Http\Request;
 class OccupationController extends CrudController
 {
     private $role;
+
     /**
      * OccupationController constructor.
      * @param Occupation $occupation
+     * @param Role $role
      */
     public function __construct(Occupation $occupation, Role $role)
     {

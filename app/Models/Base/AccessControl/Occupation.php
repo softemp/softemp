@@ -2,10 +2,13 @@
 
 namespace App\Models\Base\AccessControl;
 
+use App\Models\ValidateTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Occupation extends Model
 {
+    use ValidateTrait;
+
     protected $table = 'occupations';
 
     protected $fillable = [
@@ -15,24 +18,28 @@ class Occupation extends Model
     /**
      * @return array
      */
-    public function rules (){
+    private function rulesStore()
+    {
         return [
-            'name'=>'required|min:4|unique:occupations,name,[id]',
+            'name'=>'required|min:3|unique:occupations',
             'description'=>'',
-            'role_id'=>'',
+            'role_id'=>'required',
         ];
     }
 
     /**
+     * @param $id
      * @return array
      */
-    public function messages (){
-        return [];
+    private function rulesUpdate($id)
+    {
+        return [
+            'name'=>'required|min:3|unique:occupations,name,'.$id,
+            'description'=>'',
+        ];
     }
 
     public function role(){
         return $this->belongsTo(Role::class,'role_id','id');
     }
-
-
 }
