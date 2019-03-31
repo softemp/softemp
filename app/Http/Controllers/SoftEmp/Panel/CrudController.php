@@ -71,7 +71,11 @@ class CrudController extends BaseController
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate($this->model->rules(), $this->model->messages());
+        if(!method_exists($this->model,'validateUpdate')) {
+            $validateData = $request->validate($this->$this->model->rules());
+        }else {
+            $validateData = $this->model->validateStore($request, $this->groupRoute . '.create');
+        }
 
         $obj = $this->model;
         $obj->fill($validateData);
@@ -135,10 +139,8 @@ class CrudController extends BaseController
      */
     public function update(Request $request, $id)
     {
-
         if(!method_exists($this->model,'validateUpdate')) {
-            $validateData = $request->validate($this->prepareRuleValidate($this->model->rules(), $id),
-                $this->model->messages());
+            $validateData = $request->validate($this->prepareRuleValidate($this->model->rules(), $id));
         }else {
             $validateData = $this->model->validateUpdate($request, $this->groupRoute . '.edit', $id);
         }
