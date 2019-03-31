@@ -21,18 +21,10 @@ class Role extends Model
      */
     public function rules (){
         return [
-            //'name'=>'required|min:3|unique:roles',
             'name'=>'required|min:3|unique:roles,name,[id]',
             'slug'=>'',
             'description'=>'',
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function messages (){
-        return [];
     }
 
     /**

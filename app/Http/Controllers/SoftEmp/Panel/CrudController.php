@@ -72,7 +72,7 @@ class CrudController extends BaseController
     public function store(Request $request)
     {
         if(!method_exists($this->model,'validateUpdate')) {
-            $validateData = $request->validate($this->$this->model->rules());
+            $validateData = $request->validate($this->model->rules());
         }else {
             $validateData = $this->model->validateStore($request, $this->groupRoute . '.create');
         }
