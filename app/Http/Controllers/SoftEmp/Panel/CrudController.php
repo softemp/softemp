@@ -134,8 +134,13 @@ class CrudController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        $validateData = $request->validate($this->prepareRuleValidate($this->model->rules(), $id),
-            $this->model->messages());
+
+        if(!method_exists($this->model,'validateUpdate')) {
+            $validateData = $request->validate($this->prepareRuleValidate($this->model->rules(), $id),
+                $this->model->messages());
+        }else {
+            $validateData = $this->model->validateUpdate($request, $this->groupRoute . '.edit', $id);
+        }
 
         $obj = $this->model->find($id);
         $obj->fill($validateData);

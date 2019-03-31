@@ -32,17 +32,17 @@
             <!-- general form elements -->
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Alterar Permissão</h3>
+                    <h3 class="box-title">Alterar Permissão do Modulo <b>{{ $data->module->name }}</b></h3>
                 </div>
                 <!-- /.box-header -->
 
                 <!-- form start -->
-            {!! Form::model($data, ['route'=>['panel.access.control.module.update', $data->id],
+            {!! Form::model($data, ['route'=>['panel.access.control.permission.update', $data->id],
         'method'=>'put', 'role'=>'form', 'data-toggle'=>"validator"]) !!}
             <!-- box-body -->
                 <div class="box-body">
 
-                    @include('softemp.panel.base.access_control.module._form')
+                    @include('softemp.panel.base.access_control.permission._form')
 
                 </div>
                 <!-- /.box-body -->
@@ -50,7 +50,7 @@
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Salvar</button>
                     <a class="btn btn-default"
-                       href="{{ route('panel.access.control.module.index') }}">Cancelar</a>
+                       href="{{ route('panel.access.control.permission.index') }}">Cancelar</a>
                 </div>
 
                 {!! Form::close() !!}
