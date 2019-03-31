@@ -24,18 +24,11 @@ class Module extends Model
     }
 
     /**
-     * @return array
-     */
-    public function messages (){
-        return [];
-    }
-
-    /**
      * @param $value
      */
     public function setDatabaseAttribute($value)
     {
-        $this->attributes['database'] = Str::slug($value);
+        $this->attributes['database'] = Str::slug($value,'_');
     }
 
     public function permission(){
