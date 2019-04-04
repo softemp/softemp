@@ -1,6 +1,3 @@
-{{--@foreach($data as $equipment)--}}
-{{--{{dd($equipment->lastDestination($equipment)->destination)}}--}}
-{{--@endforeach--}}
 @extends('softemp.panel.layouts.app')
 
 @section('title')
@@ -20,8 +17,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('panel.index')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('panel.pages.blank')}}">Blank</a></li>
-        <li class="active">Data Tables</li>
+        <li class="active">Ordens</li>
     </ol>
 @endsection
 
@@ -30,29 +26,33 @@
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Técnicos cadastrados</h3>
-            <a class="btn btn-primary btn-xs pull-right" href="{{route('panel.stockcontrol.technical.create')}}">Cadastrar Técnico</a>
+            <a class="btn btn-primary btn-xs pull-right" href="{{route('panel.stockcontrol.order.create')}}">Nova Ordem</a>
         </div>
         <div class="box-body">
             <table id="table1" class="display responsive nowrap dataTable no-footer dtr-inline collapsed" style="width: 100%;" role="grid">
                 <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Telefone</th>
+                    <th>ID</th>
+                    <th>Técnico responsável</th>
+                    <th>Equipamentos</th>
+                    <th>Data de abertura</th>
                     <th>Ação</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($data as $technical)
+                @foreach($data as $order)
                     <tr>
-                        <td>{{$technical->name}}</td>
-                        <td>{{$technical->fone}}</td>
+                        <td>{{$order->id}}</td>
+                        <td>{{$order->technicals->name}}</td>
+                        <td>{{count($order->equipment)}}</td>
+                        <td>{{$order->created_at}}</td>
                         <td>
-{{--                            <a href="{{route('panel.stockcontrol.technical.show', $technical->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>--}}
-                            <a href="{{route('panel.stockcontrol.technical.edit', $technical->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
-                            <a href="#"
-                               onclick="destroy('{{route('panel.stockcontrol.technical.destroy', $technical->id)}}', '{{$technical->name}}')" title="Deletar" class="btn btn-xs btn-danger">
-                                <i class="fa fa-remove"></i>
-                            </a>
+                            <a href="{{route('panel.stockcontrol.order.show', $order->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>
+                            {{--<a href="{{route('panel.stockcontrol.order.edit', $order->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>--}}
+                            {{--<a href="#"--}}
+                               {{--onclick="destroy('{{route('panel.stockcontrol.order.destroy', $order->id)}}', '{{$order->id}}')" title="Deletar" class="btn btn-xs btn-danger">--}}
+                                {{--<i class="fa fa-remove"></i>--}}
+                            {{--</a>--}}
                         </td>
                     </tr>
                 @endforeach

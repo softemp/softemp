@@ -12,6 +12,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('panel.index')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{route('panel.stockcontrol.model.index')}}"><i></i> Modelos de Equipamentos</a></li>
         <li class="active">Formulário de cadastro</li>
     </ol>
 @endsection
@@ -32,19 +33,12 @@
         </div>
         <div class="box-body">
             <div class="card-body">
-                <form action="{{route('panel.stockcontrol.technical.store')}}" method="post">
+                <form action="{{route('panel.stockcontrol.model.store')}}" method="post">
                     @csrf
                     <div class="form-group row">
                         <label for="name" class="col-md-4 col-form-label text-md-right">Nome completo</label>
                         <div class="col-md-6">
                             <input class="form-control" type="text" id="name" name="name" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="fone" class="col-md-4 col-form-label text-md-right">Telefone</label>
-                        <div class="col-md-6">
-                            <input class="form-control" type="text" id="fone" name="fone" maxlength="15" minlength="14" onkeyup="mascara(this, mtel)" required>
                         </div>
                     </div>
 
@@ -57,7 +51,7 @@
         </div>
         {{-- /.box-body --}}
         <div class="box-footer">
-            Footer
+            Floripa Server || Norte Server || Gbit Telecom
         </div>
         {{-- /.box-footer --}}
     </div>

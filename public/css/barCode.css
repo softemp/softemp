@@ -1,0 +1,11 @@
+.barcode{
+    padding: 20px;
+    width: 100%;
+}
+.barcode-container{
+    float: left;
+    width: 50%;
+}
+.barcode-align-center{
+    text-align: center
+}

@@ -4,7 +4,7 @@
 @extends('softemp.panel.layouts.app')
 
 @section('title')
-    Blank
+    Modelos de equipamentos
     @parent
 @stop
 
@@ -20,8 +20,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('panel.index')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('panel.pages.blank')}}">Blank</a></li>
-        <li class="active">Data Tables</li>
+        <li class="active">Modelos de Equipamentos</li>
     </ol>
 @endsection
 
@@ -29,28 +28,27 @@
     {{-- Default box --}}
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Técnicos cadastrados</h3>
-            <a class="btn btn-primary btn-xs pull-right" href="{{route('panel.stockcontrol.technical.create')}}">Cadastrar Técnico</a>
+            <h3 class="box-title">Modelos de equipamentos</h3>
+            <a class="btn btn-primary btn-xs pull-right" href="{{route('panel.stockcontrol.model.create')}}">Novo Modelo de Equipamento</a>
         </div>
         <div class="box-body">
             <table id="table1" class="display responsive nowrap dataTable no-footer dtr-inline collapsed" style="width: 100%;" role="grid">
                 <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Telefone</th>
+                    <th>Modelo</th>
+                    <th>Quantidade</th>
                     <th>Ação</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($data as $technical)
+                @foreach($data as $equipmentModel)
                     <tr>
-                        <td>{{$technical->name}}</td>
-                        <td>{{$technical->fone}}</td>
+                        <td>{{$equipmentModel->name}}</td>
+                        <td>{{count($equipmentModel->inStock)}}</td>
                         <td>
-{{--                            <a href="{{route('panel.stockcontrol.technical.show', $technical->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>--}}
-                            <a href="{{route('panel.stockcontrol.technical.edit', $technical->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
+                            <a href="{{route('panel.stockcontrol.model.edit', $equipmentModel->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
                             <a href="#"
-                               onclick="destroy('{{route('panel.stockcontrol.technical.destroy', $technical->id)}}', '{{$technical->name}}')" title="Deletar" class="btn btn-xs btn-danger">
+                               onclick="destroy('{{route('panel.stockcontrol.model.destroy', $equipmentModel->id)}}', '{{$equipmentModel->name}}')" title="Deletar" class="btn btn-xs btn-danger">
                                 <i class="fa fa-remove"></i>
                             </a>
                         </td>

@@ -6,5 +6,5 @@ php artisan db:seed --class={ classe Seeder com as classes TableSeeder}
 Após adicionar a pasta do módulo, indispensável popular o comando composer dump-autoload
 
 ```
-php artisan db:seed class=StockControlSeeder
+php artisan db:seed --class=StockControlSeeder
 ```

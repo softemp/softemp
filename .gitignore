@@ -1,3 +1,7 @@
+readme.md
+.gitignore
+package.json
+package-lock.json
 /node_modules
 /public/hot
 /public/storage

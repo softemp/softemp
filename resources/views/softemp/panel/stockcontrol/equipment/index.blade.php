@@ -1,10 +1,7 @@
-{{--@foreach($data as $equipment)--}}
-{{--{{dd($equipment->lastDestination($equipment)->destination)}}--}}
-{{--@endforeach--}}
 @extends('softemp.panel.layouts.app')
 
 @section('title')
-    Blank
+    Controle de estoque
     @parent
 @stop
 
@@ -20,7 +17,6 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('panel.index')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('panel.pages.blank')}}">ControlerEstoque</a></li>
         <li class="active">Equipamentos</li>
     </ol>
 @endsection
@@ -30,18 +26,7 @@
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Equipamentos cadastrados</h3>
-
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                        title="Collapse">
-                    <i class="fa fa-minus"></i></button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fa fa-times"></i></button>
-            </div>
-        </div>
-        <div class="box-body float-left">
-            <a class="btn btn-primary" href="{{route('panel.stockcontrol.equipment.create')}}">Cadastrar Equipamento</a>
-            {{--<a class="btn btn-primary" href="{{route('panel.stockcontrol.equipment.create')}}">Cadastrar Equipamento</a>--}}
+            <a class="btn btn-primary btn-xs pull-right" href="{{route('panel.stockcontrol.equipment.create')}}">Novo Equipamento</a>
         </div>
         <div class="box-body">
             <table id="table1" class="display responsive nowrap dataTable no-footer dtr-inline collapsed" style="width: 100%;" role="grid">
@@ -51,7 +36,7 @@
                     <th>Data de compra</th>
                     <th>Numero de série</th>
                     <th>Numero Mac</th>
-                    <th>Destino</th>
+                    <th>Status</th>
                     <th>Ação</th>
                 </tr>
                 </thead>
@@ -63,22 +48,44 @@
                         <td>{{$equipment->ns}}</td>
                         <td>{{$equipment->mac}}</td>
                         <td>
-                            @if($equipment->status == 1)Em estoque
-                            @elseif($equipment->status == 2)Equipamento com técnico
-                            @elseif($equipment->status == 3){{mb_strimwidth($equipment->lastDestination($equipment)->destination, 0, 20, "...")}}
-                            @elseif($equipment->status == 4)Equipamento no lixo
+                            @if($equipment->status == 1)<span class="label label-success">Em estoque</span>
+                            @elseif($equipment->status == 2)<span class="label label-warning">Está com </span>
+                            @elseif($equipment->status == 3)<span class="label label-info">Com cliente</span>
+                            @elseif($equipment->status == 4)<span class="label label-danger">Equipamento no lixo</span>
                             @endif
                         </td>
-                        <td>
-                            <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <td>@if ($equipment->status == 1)
+                                <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>
+                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
+                                <a href="#"
+                                   onclick="putTrash({{$equipment->id}})" title="Mover para Lixeira" class="btn btn-xs btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </a>
 
-                            @if($equipment->status == 4)
-                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-pencil"></i> Editar</a>
-                                <a href="{{route('panel.stockcontrol.equipment.putstock', $equipment->id)}}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon glyphicon-open"></i> Mover para estoque</a>
-                            @else
-                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-pencil"></i> Editar</a>
-                                <a href="{{route('panel.stockcontrol.equipment.puttrash', $equipment->id)}}" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i> Mover para lixeira</a>
+                            @elseif($equipment->status == 2)
+                                <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>
+                                <a href="#" onclick="putStock({{$equipment->id}})"
+                                   title="Devolver ao estoque" class="btn btn-xs btn-success">
+                                    <i class="fa fa-download"></i>
+                                </a>
+
+                            @elseif ($equipment->status == 3)
+                                <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>
+                                <a href="#" onclick="putStock({{$equipment->id}})"
+                                   title="Devolver ao estoque" class="btn btn-xs btn-success">
+                                    <i class="fa fa-download"></i>
+                                </a>
+
+                            @elseif($equipment->status == 4)
+                                <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>
+                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
+                                <a href="#" onclick="putStock({{$equipment->id}})"
+                                   title="Devolver ao estoque" class="btn btn-xs btn-success">
+                                    <i class="fa fa-download"></i>
+                                </a>
                             @endif
+{{--                            <a href="#" title="Notas" class="btn btn-xs btn-facebook"><i class="fa fa-sticky-note"></i></a>--}}
+
                         </td>
                     </tr>
                 @endforeach
@@ -87,7 +94,7 @@
         </div>
         {{-- /.box-body --}}
         <div class="box-footer">
-            Footer
+            Floripa Server || Norte Server || Gbit Telecom
         </div>
         {{-- /.box-footer --}}
     </div>
@@ -99,6 +106,10 @@
     <script src="{{ asset('softemp/panel/vendors/dataTables/js/dataTable.js') }}"></script>
     <!-- page script -->
     <script>
+
+        var token = document.getElementById('token').value;
+
+
         $(document).ready(function() {
             //$(function () {
             $('#table1').DataTable({
@@ -128,29 +139,60 @@
             })
             //});
         });
+
+        function putStock(equipmentId)
+        {
+
+            $.ajax({
+                url: "{{route('panel.stockcontrol.equipment.putStock')}}",
+                type: "POST",
+                data: {
+                    "equipmentid" : equipmentId,
+                    "_token" : token
+                },
+                success: function(response) {
+                    location.reload()
+                }
+            })
+        }
+
+        function putTrash(equipmentId)
+        {
+            $.ajax({
+                url: "{{route('panel.stockcontrol.equipment.putTrash')}}",
+                type: "POST",
+                data: {
+                    "equipment_id" : equipmentId,
+                    "_token" : token
+                },
+                success: function (response) {
+                    location.reload()
+                }
+            })
+        }
     </script>
     {{--<script>--}}
-        {{--$(function () {--}}
-            {{--$("td").dblclick(function () {--}}
-                {{--var conteudoOriginal = $(this).text();--}}
+    {{--$(function () {--}}
+    {{--$("td").dblclick(function () {--}}
+    {{--var conteudoOriginal = $(this).text();--}}
 
-                {{--$(this).addClass("celulaEmEdicao");--}}
-                {{--$(this).html("<input type='text' value='" + conteudoOriginal + "' />");--}}
-                {{--$(this).children().first().focus();--}}
+    {{--$(this).addClass("celulaEmEdicao");--}}
+    {{--$(this).html("<input type='text' value='" + conteudoOriginal + "' />");--}}
+    {{--$(this).children().first().focus();--}}
 
-                {{--$(this).children().first().keypress(function (e) {--}}
-                    {{--if (e.which == 13) {--}}
-                        {{--var novoConteudo = $(this).val();--}}
-                        {{--$(this).parent().text(novoConteudo);--}}
-                        {{--$(this).parent().removeClass("celulaEmEdicao");--}}
-                    {{--}--}}
-                {{--});--}}
+    {{--$(this).children().first().keypress(function (e) {--}}
+    {{--if (e.which == 13) {--}}
+    {{--var novoConteudo = $(this).val();--}}
+    {{--$(this).parent().text(novoConteudo);--}}
+    {{--$(this).parent().removeClass("celulaEmEdicao");--}}
+    {{--}--}}
+    {{--});--}}
 
-                {{--$(this).children().first().blur(function(){--}}
-                    {{--$(this).parent().text(conteudoOriginal);--}}
-                    {{--$(this).parent().removeClass("celulaEmEdicao");--}}
-                {{--});--}}
-            {{--});--}}
-        {{--});--}}
+    {{--$(this).children().first().blur(function(){--}}
+    {{--$(this).parent().text(conteudoOriginal);--}}
+    {{--$(this).parent().removeClass("celulaEmEdicao");--}}
+    {{--});--}}
+    {{--});--}}
+    {{--});--}}
     {{--</script>--}}
 @stop

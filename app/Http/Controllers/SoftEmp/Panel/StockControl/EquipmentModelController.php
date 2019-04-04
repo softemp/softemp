@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Softemp\Panel\StockControl;
 
+use App\Http\Controllers\SoftEmp\Panel\CrudController;
 use App\Models\StockControl\EquipmentModel;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Softemp\Panel\CrudController;
 
 class EquipmentModelController extends CrudController
 {
 
     public function __construct(EquipmentModel $equipmentModel)
     {
-        $this->model = $equipmentModel;
-        $pathView = 'softemp.panel.stockcontrol.equipment.models.';
-        $groupRoute = 'panel.access.';
+        $pathView = 'softemp.panel.stockcontrol.equipment_model';
+        $groupRoute = 'panel.stockcontrol.model';
 
         parent::__construct($equipmentModel, $groupRoute, $pathView);
     }

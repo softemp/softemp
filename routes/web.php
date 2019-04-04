@@ -199,7 +199,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                 // Directory stock control
                 Route::group(['namespace' => 'StockControl'], function () {
 
-                    Route::group(['prefix' => 'controleestoque'], function (){
+                    Route::group(['prefix' => 'estoque'], function (){
 
                         //Equipamentos
                         Route::group(['prefix' => '/equipamentos', 'as' => 'stockcontrol.'], function (){
@@ -208,11 +208,24 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                             Route::put('/update/{id}', 'EquipmentController@update')->name('equipment.update');
                             Route::get('/cadastrar', 'EquipmentController@create')->name('equipment.create');
                             Route::post('/cadastrar/novo', 'EquipmentController@store')->name('equipment.store');
-                            Route::get('/lixeira/{id}', 'EquipmentController@putTrash')->name('equipment.puttrash');
-                            Route::get('/estoque/{id}', 'EquipmentController@putStock')->name('equipment.putstock');
-                            Route::get('show/{id}', 'EquipmentController@show')->name('equipment.show');
+                            Route::post('/lixeira', 'EquipmentController@putTrash')->name('equipment.putTrash');
+                            Route::post('/devolver', 'EquipmentController@putStock')->name('equipment.putStock');
+                            Route::get('/show/{id}', 'EquipmentController@show')->name('equipment.show');
+                            Route::delete('/remover/{id}', 'EquipmentController@destroy')->name('equipment.destroy');
                         });
                         //end equipamentos
+
+                        //Modelo de equipamento
+                        Route::group(['prefix' => '/modelos', 'as' => 'stockcontrol.'], function (){
+                            Route::get('/', 'EquipmentModelController@index')->name('model.index');
+                            Route::get('/editar/{id}', 'EquipmentModelController@edit')->name('model.edit');
+                            Route::put('/update/{id}', 'EquipmentModelController@update')->name('model.update');
+                            Route::get('/cadastrar', 'EquipmentModelController@create')->name('model.create');
+                            Route::post('/cadastrar/novo', 'EquipmentModelController@store')->name('model.store');
+                            Route::get('/show/{id}', 'EquipmentModelController@show')->name('model.show');
+                            Route::delete('/remover/{id}', 'EquipmentModelController@destroy')->name('model.destroy');
+                        });
+                        //end modelo de equipamento
 
                         // Técnicos
                         Route::group(['prefix' => '/tecnicos', 'as' => 'stockcontrol.'], function (){
@@ -221,8 +234,23 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                             Route::put('/update/{id}', 'TechnicalController@update')->name('technical.update');
                             Route::get('/cadastrar', 'TechnicalController@create')->name('technical.create');
                             Route::post('/cadastrar/novo', 'TechnicalController@store')->name('technical.store');
+                            Route::get('/show/{id}', 'TechnicalController@show')->name('technical.show');
+                            Route::delete('/remover/{id}', 'TechnicalController@destroy')->name('technical.destroy');
                         });
                         // end tecnicos
+
+                        // Ordens de saída de equipamentos
+                        Route::group(['prefix' => '/ordens', 'as' => 'stockcontrol.'], function (){
+                            Route::get('/', 'OrderOutController@index')->name('order.index');
+                            Route::get('/editar/{id}', 'OrderOutController@edit')->name('order.edit');
+                            Route::put('/update/{id}', 'OrderOutController@update')->name('order.update');
+                            Route::get('/cadastrar', 'OrderOutController@create')->name('order.create');
+                            Route::post('/cadastrar/novo', 'OrderOutController@store')->name('order.store');
+                            Route::get('/show/{id}', 'OrderOutController@show')->name('order.show');
+                            Route::delete('/remover/{id}', 'OrderOutController@destroy')->name('order.destroy');
+                            Route::get('/fechar/{id}', 'OrderOutController@closeOrder')->name('order.close');
+                            Route::post('/destinar', 'OrderOutController@assignEquipment')->name('order.assignEquipment');
+                        });
 
                     });
 

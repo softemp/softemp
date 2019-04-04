@@ -137,17 +137,19 @@
         {{--end MkAuths--}}
 
         {{--StockControl--}}
-        <li class="treeview {{(Request::is('painel/controleestoque*')?'active':'')}}">
+        <li class="treeview {{(Request::is('painel/estoque*')?'active':'')}}">
             <a href="#"><i class="fa fa-server"></i> <span>Controle Estoque</span>
                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
             </a>
             <ul class="treeview-menu">
-                <li class="{{(Request::is('painel/controleestoque/equipamentos*')?'active':'')}}"><a href="{{route('panel.stockcontrol.equipment.index')}}"><i
-                            class="fa fa-circle-o"></i> Estoque</a></li>
-                <li class="{{(Request::is('painel/controleestoque/tecnicos*')?'active':'')}}"><a href="{{route('panel.stockcontrol.technical.index')}}"><i
+                <li class="{{(Request::is('painel/estoque/ordens*')?'active':'')}}"><a href="{{route('panel.stockcontrol.order.index')}}"><i
+                            class="fa fa-circle-o"></i> Ordens</a></li>
+                <li class="{{(Request::is('painel/estoque/equipamentos*')?'active':'')}}"><a href="{{route('panel.stockcontrol.equipment.index')}}"><i
+                            class="fa fa-circle-o"></i> Equipamentos</a></li>
+                <li class="{{(Request::is('painel/estoque/modelos*')?'active':'')}}"><a href="{{route('panel.stockcontrol.model.index')}}"><i
+                            class="fa fa-circle-o"></i> Modelos de Equipamentos</a></li>
+                <li class="{{(Request::is('painel/estoque/tecnicos*')?'active':'')}}"><a href="{{route('panel.stockcontrol.technical.index')}}"><i
                             class="fa fa-circle-o"></i> Técnicos</a></li>
-                <li class="{{(Request::is('painel/usuario/colaborador*')?'active':'')}}"><a href="{{route('panel.user.employee.index')}}"><i
-                            class="fa fa-circle-o"></i> Colaboradores</a></li>
             </ul>
         </li>
         {{--end StockControl--}}

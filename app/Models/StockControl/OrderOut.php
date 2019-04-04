@@ -3,36 +3,75 @@
 namespace App\Models\StockControl;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-
 class OrderOut extends Model
 {
     protected $connection = 'mysql_stockcontrol';
     protected $table = 'order_outs';
     protected $guarded = [];
 
+    public function rules (){
+        return [
+            'technical_id' => '',
+            'status' => '',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function messages (){
+        return [];
+    }
+
     public function technicals()
     {
         return $this->belongsTo(Technical::class, 'technical_id', 'id');
     }
 
-    public function equipments()
+    public function equipment()
     {
-        return $this->belongsToMany(Equipment::class, 'order_out_equipments', 'order_out_id', 'equipment_id');
+        return $this->belongsToMany(Equipment::class, 'order_out_equipment', 'order_out_id', 'equipment_id');
     }
 
-    public function addEquipments(Equipment $equipment)
+    public function orderEquipmentDestination()
     {
-        return $this->equipments()->save($equipment);
+        return $this->belongsTo(EquipmentDestination::class, 'order_out_id', 'id');
     }
+
+//    public function addEquipments(Equipment $equipment)
+//    {
+//        return $this->equipments()->save($equipment);
+//    }
 
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('d/m/Y');
     }
 
-    public function upStatus($id, $status)
+//    public function upStatus($id, $status)
+//    {
+//        return OrderOut::find($id)->update(['order_status' => $status]);
+//    }
+
+    public function scopeCloseOrder(Builder $builder, $id)
     {
-        return OrderOut::find($id)->update(['order_status' => $status]);
+        return $builder->find($id)->update(['status' => 2]);
+    }
+
+    public function scopeOpenOrders(Builder $builder)
+    {
+        return $builder->where('status', 1)->get();
+    }
+
+    public function scopeClosedOrders(Builder $builder)
+    {
+        return $builder->where('status', 2)->get();
+    }
+
+    public function equipmentWithTechnical()
+    {
+        return $this->equipment()->where('status', 2)->get();
     }
 }

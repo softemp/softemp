@@ -23,7 +23,7 @@ class CrudController extends BaseController
     protected $groupRoute;
 
     /**
-     * array com retorno nos metodos index, create, edit
+     * array com retorno nos metodos index, create, edit, show
      *
      * @var array
      */
@@ -99,16 +99,16 @@ class CrudController extends BaseController
      */
     public function show($id)
     {
-        $data = $this->model->find($id);
+        $this->arrayData['data'] = $this->model->find($id);
 
-        if ($data) {
+        if ($this->arrayData['data']) {
 //            return response()->json($data, 200);
-            return view("{$this->pathView}.show", compact('data'));
+            return view("{$this->pathView}.show", $this->arrayData);
         }
 
-        $data = ['message' => 'Registro não encontrado!', 404];
+        $this->arrayData = ['message' => 'Registro não encontrado!', 404];
 
-        return response()->json($data);
+        return response()->json($this->arrayData);
     }
 
     /**
