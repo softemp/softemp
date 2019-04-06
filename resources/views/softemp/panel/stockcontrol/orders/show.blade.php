@@ -1,6 +1,6 @@
 @extends('softemp.panel.layouts.app')
 @section('title')
-    Blank
+    Ordens
     @parent
 @stop
 
@@ -26,7 +26,12 @@
     {{-- Default box --}}
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Ordem #{{$data->id}}</h3>
+            <h3 class="box-title">
+                <div class="fx">
+                    Ordem #{{$data->id}}
+                    <svg class="fx-barcode" onload="JsBarcode(this, '{{$data->id}}')"></svg>
+                </div>
+            </h3>
             <a class="btn btn-primary btn-xs pull-right" href="{{route('panel.stockcontrol.order.create')}}">Nova Ordem</a>
         </div>
         <div class="box-body">
@@ -37,7 +42,7 @@
                     <th>Modelo</th>
                     <th>Mac</th>
                     <th>NS</th>
-                    <th>Data de Compra</th>
+                    <th>Código de barras</th>
                     <th>Ação</th>
                 </tr>
                 </thead>
@@ -56,17 +61,20 @@
                         <td>{{$equipment->equipmentModel->name}}</td>
                         <td>{{$equipment->mac}}</td>
                         <td>{{$equipment->ns}}</td>
-                        <td>{{$equipment->purchase_date}}</td>
+                        <td class="td-bar">
+                            <div class="bar">
+                                <svg class="barcode" onload="JsBarcode(this, '{{$equipment->ns}}')"></svg>
+                            </div>
+                        </td>
                         <td>
-                            {{--<a href="#" onclick="putStock( {{$data->id}}, {{$equipment->id}} )">estoque</a>--}}
                             @if($equipment->status == 2)
-                                <a href="#" onclick="putStock({{$data->id}}, {{$equipment->id}})"
+                                <a href="#" onclick="putStock('{{$data->id}}', '{{$equipment->id}}')"
                                    title="Devolver ao estoque" class="btn btn-xs btn-success">
                                     <i class="fa fa-download"></i>
                                 </a>
                                 <a href="#" data-toggle="modal" data-target="#modal-show-columns"
                                    title="Destinar equipamento" class="btn btn-xs btn-warning"
-                                   onclick="destiny({{$data->id}}, {{$equipment->id}})">
+                                   onclick="destiny('{{$data->id}}', '{{$equipment->id}}')">
                                     <i class="fa fa-upload"></i>
                                 </a>
                             @endif
@@ -98,49 +106,36 @@
     <div class="modal fade" id="modal-show-columns">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form class="form-group" method="post" action="{{route('panel.stockcontrol.order.assignEquipment')}}">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Destinar equipamento</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="errors-msg alert alert-danger" style="display: none;"></div>
-                        <div class="success-msg alert alert-success" style="display: none;"></div>
-                        <div>
-                            <div class="form-group row">
-                                <label for="mac" class="col-md-4 col-form-label text-md-right">Destino</label>
-                                <div class="col-md-6">
-                                    <textarea class="form-control" type="text" id="destination" name="destination" required autofocus></textarea>
-                                    <input type="hidden" name="equipment_id" id="equipment_id" value="">
-                                    <input type="hidden" name="order_out_id" id="order_out_id" value="">
-                                    @csrf
-                                </div>
-                            </div>
-                            <div class="box-body">
-                                {{--                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>--}}
-                                {{--                                <button type="submit" class="btn btn-success pull-right">Enviar</button>--}}
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-success pull-right">Enviar</button>
-                    </div>
-                </form>
+                {!! Form::open(['route' => 'panel.stockcontrol.order.assignEquipment', 'method' => 'post', 'class'=>'form-group']) !!}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Destinar equipamento</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="errors-msg alert alert-danger" style="display: none;"></div>
+                    <div class="success-msg alert alert-success" style="display: none;"></div>
+                            {!! Form::label('destination', null, ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+                                {!! Form::textarea('destination', null, ['class' => 'form-control', 'id'=>'destination', 'required', 'autofocus', 'placeholder'=>'Destino do equipamento']) !!}
+                                {!! Form::hidden('equipment_id', null, ['id' => 'equipment_id']) !!}
+                                {!! Form::hidden('order_out_id', null, ['id' => 'order_out_id']) !!}
+                </div>
+                <div class="modal-footer">
+                    {!! Form::submit('Enviar', ['class' => 'btn btn-success pull-left']) !!}
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Fechar</button>
+                </div>
+                {!! Form::close() !!}
             </div>
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal show columns -->
-
-
 @endsection
 
 {{-- page level scripts --}}
 @section('page_scripts')
+    <script type="text/javascript" src="{{asset('barcodegenerator/JsBarcode.all.min.js')}}"></script>
     <script src="{{ asset('softemp/panel/vendors/dataTables/js/dataTable.js') }}"></script>
     <!-- page script -->
     <script>

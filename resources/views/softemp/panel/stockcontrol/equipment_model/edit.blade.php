@@ -33,20 +33,10 @@
         </div>
         <div class="box-body">
             <div class="card-body">
-                <form action="{{route('panel.stockcontrol.model.update', $data->id)}}" method="post">
-                    @csrf {{method_field('PUT')}}
-                    <div class="form-group row">
-                        <label for="mac" class="col-md-4 col-form-label text-md-right">Modelo do Equipamento</label>
-                        <div class="col-md-6">
-                            <input class="form-control" type="text" id="name" name="name" value="{{$data->name}}">
-                        </div>
-                    </div>
 
-                    <button class="btn btn-success">Editar</button>
-
-                    {{--<input type="text" name="ns" value="{{$data->ns}}">--}}
-                    {{--<input type="date" name="purchase_date" value="{{$data->purchase_date}}">>--}}
-                </form>
+                {!! Form::model($data, ['route' => ['panel.stockcontrol.model.update', $data->id], 'method' => 'put']) !!}
+                	@include('softemp.panel.stockcontrol.equipment_model._form')
+                {!! Form::close() !!}
             </div>
         </div>
         {{-- /.box-body --}}

@@ -32,27 +32,9 @@
         </div>
         <div class="box-body">
             <div class="card-body">
-                <form action="{{route('panel.stockcontrol.technical.store')}}" method="post">
-                    @csrf
-                    <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">Nome completo</label>
-                        <div class="col-md-6">
-                            <input class="form-control" type="text" id="name" name="name" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="fone" class="col-md-4 col-form-label text-md-right">Telefone</label>
-                        <div class="col-md-6">
-                            <input class="form-control" type="text" id="fone" name="fone" maxlength="15" minlength="14" onkeyup="mascara(this, mtel)" required>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-success">cadastrar</button>
-
-                    {{--<input type="text" name="ns" value="{{$data->ns}}">--}}
-                    {{--<input type="date" name="purchase_date" value="{{$data->purchase_date}}">>--}}
-                </form>
+                    {!! Form::open(['route' => 'panel.stockcontrol.technical.store', 'method' => 'post']) !!}
+                    	@include('softemp.panel.stockcontrol.technicals._form')
+                    {!! Form::close() !!}
             </div>
         </div>
         {{-- /.box-body --}}

@@ -32,27 +32,9 @@
         </div>
         <div class="box-body">
             <div class="card-body">
-                <form action="{{route('panel.stockcontrol.technical.update', $data->id)}}" method="post">
-                    @csrf {{method_field('PUT')}}
-                    <div class="form-group row">
-                        <label for="mac" class="col-md-4 col-form-label text-md-right">Nome do técnico</label>
-                        <div class="col-md-6">
-                            <input class="form-control" type="text" id="name" name="name" value="{{$data->name}}">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="ns" class="col-md-4 col-form-label text-md-right">Telefone</label>
-                        <div class="col-md-6">
-                            <input class="form-control" maxlength="15" minlength="14" onkeyup="mascara(this, mtel)" type="text" id="fone" name="fone" value="{{$data->fone}}">
-                        </div>
-                    </div>
-
-                    <button class="btn btn-success">Editar</button>
-
-                    {{--<input type="text" name="ns" value="{{$data->ns}}">--}}
-                    {{--<input type="date" name="purchase_date" value="{{$data->purchase_date}}">>--}}
-                </form>
+                {!! Form::model($data, ['route' => ['panel.stockcontrol.technical.update', $data->id ], 'method' => 'put']) !!}
+                @include('softemp.panel.stockcontrol.technicals._form')
+                {!! Form::close() !!}
             </div>
         </div>
         {{-- /.box-body --}}

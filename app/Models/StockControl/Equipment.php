@@ -2,17 +2,24 @@
 
 namespace App\Models\StockControl;
 
+use App\Models\ValidateTrait;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 
 class Equipment extends Model
 {
+    use ValidateTrait;
+
     protected $connection = 'mysql_stockcontrol';
     protected $table = 'equipment';
-    protected $guarded = [];
+//    protected $guarded = [];
 
-    public function rules (){
+    protected $fillable =[
+        'equipment_model_id','ns','mac','purchase_date', 'status'
+    ];
+
+    private function rulesStore (){
         return [
             'equipment_model_id' => 'required',
             'ns'=>'required|unique:mysql_stockcontrol.equipment|min:10|max:20',
@@ -21,6 +28,15 @@ class Equipment extends Model
             'status' => '',
         ];
     }
+
+    private function rulesUpdate ($id){
+        return [
+            'ns'=>'required|min:10|max:20|unique:mysql_stockcontrol.equipment,ns,'.$id,
+            'mac'=>'required|min:10|max:20',
+            'purchase_date'=>'required|date',
+        ];
+    }
+
 
     /**
      * @return array
@@ -118,7 +134,11 @@ class Equipment extends Model
      */
     public function putStock($id)
     {
-        return Equipment::find($id)->update(['status' => 1]);
+        if (Equipment::find($id)->update(['status' => 1]))
+            return true;
+        else
+
+        return false;
     }
 
     /**
@@ -138,7 +158,8 @@ class Equipment extends Model
      */
     public function putClient($id)
     {
-        return Equipment::find($id)->update(['status' => 3]);
+//        return Equipment::find($id)->update(['status' => 3]);
+        return false;
     }
 
     /**

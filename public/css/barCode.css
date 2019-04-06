@@ -1,11 +1,50 @@
+.fx{
+    margin: 0;
+    border: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+}
+
+.fx-barcode{
+    margin: 0;
+    border: 0;;
+    padding: 0;
+    bottom: 0;
+    width: 200px;
+    height: auto;
+}
+
+.bar{
+    margin: 0;
+    border: 0;
+    padding: 0;
+    bottom: 0;
+    overflow: hidden;
+    position: relative;
+    width: 200px;
+    height: 30px;
+    alignment: center;
+}
+
 .barcode{
-    padding: 20px;
-    width: 100%;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    bottom: 0;
+    top: -70px;
 }
-.barcode-container{
-    float: left;
-    width: 50%;
-}
-.barcode-align-center{
-    text-align: center
+
+.td-bar{
+    width: 200px;
+    height: 30px;
+    padding: 0;
+    bottom: 0;
+    border: 0;
 }

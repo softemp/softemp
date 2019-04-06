@@ -33,34 +33,9 @@
         </div>
         <div class="box-body">
             <div class="card-body">
-                <form action="{{route('panel.stockcontrol.equipment.update', $data->id)}}" method="post">
-                    @csrf {{method_field('PUT')}}
-                    <div class="form-group row">
-                        <label for="mac" class="col-md-4 col-form-label text-md-right">End. Mac</label>
-                        <div class="col-md-6">
-                        <input class="form-control" type="text" id="mac" name="mac" value="{{$data->mac}}">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="ns" class="col-md-4 col-form-label text-md-right">Número de Série</label>
-                        <div class="col-md-6">
-                            <input class="form-control" type="text" id="ns" name="ns" value="{{$data->ns}}">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="purchase_date" class="col-md-4 col-form-label text-md-right">Data de Compra</label>
-                        <div class="col-md-6">
-                            <input class="form-control" type="date" id="purchase_date" name="purchase_date" value="{{$data->purchase_date}}">
-                        </div>
-                    </div>
-
-                    <button class="btn btn-success">Aplicar</button>
-
-                        {{--<input type="text" name="ns" value="{{$data->ns}}">--}}
-                        {{--<input type="date" name="purchase_date" value="{{$data->purchase_date}}">>--}}
-                </form>
+                {{ Form::model($data, ['route'=>['panel.stockcontrol.equipment.update', $data->id],'method'=>'put']) }}
+                @include('softemp.panel.stockcontrol.equipment._form')
+                {{Form::close()}}
             </div>
         </div>
         {{-- /.box-body --}}

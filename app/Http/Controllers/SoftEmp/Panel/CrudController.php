@@ -142,11 +142,11 @@ class CrudController extends BaseController
         if(!method_exists($this->model,'validateUpdate')) {
             $validateData = $request->validate($this->prepareRuleValidate($this->model->rules(), $id));
         }else {
-            $validateData = $this->model->validateUpdate($request, $this->groupRoute . '.edit', $id);
+            $validateData = $this->model->validateUpdate($request->all(), $this->groupRoute . '.edit', $id);
         }
 
         $obj = $this->model->find($id);
-        $obj->fill($validateData);
+        $obj->update($validateData);
         $result = $obj->save();
 
         if ($result) {
@@ -193,4 +193,10 @@ class CrudController extends BaseController
         }
         return $ruleValidate;
     }
+
+    public function redirect($page, array $arrayNotification = null, $id = null)
+    {
+        return redirect()->route($this->groupRoute.'.'.$page, $id)->with($arrayNotification);
+    }
+
 }

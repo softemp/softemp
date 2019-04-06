@@ -1,7 +1,7 @@
 @extends('softemp.panel.layouts.app')
 
 @section('title')
-    Blank
+    {{$data->equipmentModel->name}}
     @parent
 @stop
 @section('page_styles')
@@ -10,11 +10,11 @@
 @section('content-header')
     <script type="text/javascript" src="{{asset('barcodegenerator/JsBarcode.all.min.js')}}"></script>
     {{--<script--}}
-        {{--src="https://code.jquery.com/jquery-3.3.1.js"--}}
-        {{--integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="--}}
-        {{--crossorigin="anonymous"></script>--}}
+    {{--src="https://code.jquery.com/jquery-3.3.1.js"--}}
+    {{--integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="--}}
+    {{--crossorigin="anonymous"></script>--}}
     <h1>
-        Histórico
+        {{$data->equipmentModel->name}}
         <small>Tudo começa aqui</small>
     </h1>
     <ol class="breadcrumb">
@@ -73,23 +73,32 @@
             <h2>Histórico de destinos</h2>
         </div>
         <div class="box-body">
-            <table id="table1" class="display responsive nowrap dataTable no-footer dtr-inline collapsed" style="width: 100%;" role="grid">
-                <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Descrição</th>
-                </tr>
-                </thead>
-                <tbody>
-                    @foreach($data->destinations as $destination)
-                        <tr>
-                        <td>{{date('d/m/Y h:m:s', time())}}</td>
-                        <td>{{$destination->destination}}</td>
-                        </tr>
-                    @endforeach
+            <div class="box-comments">
 
-                </tbody>
-            </table>
+                <div class="box-comment">
+
+                </div>
+
+                <div class="box-comment">
+                    <table id="table1" class="display responsive nowrap dataTable no-footer dtr-inline collapsed" style="width: 100%;" role="grid">
+                        <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($data->destinations as $destination)
+                            <tr>
+                                <td>{{date('d/m/Y h:m:s', time())}}</td>
+                                <td>{{$destination->destination}}</td>
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <div class="box-footer">
             {{count($data->destinations)}} Registro(s)

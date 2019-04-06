@@ -2,17 +2,28 @@
 
 namespace App\Models\StockControl;
 
+use App\Models\ValidateTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class EquipmentModel extends Model
 {
+    use ValidateTrait;
+
     protected $connection = 'mysql_stockcontrol';
     protected $table = 'equipment_models';
-    protected $guarded = [];
+    protected $fillable = [
+        'name'
+    ];
 
-    public function rules (){
+    public function rulesStore (){
         return [
-            'name' => '',
+            'name' => 'required|unique:mysql_stockcontrol.equipment_models|min:5|max:50',
+        ];
+    }
+
+    public function rulesUpdate ($id){
+        return [
+            'name' => 'required|min:5|max:50|unique:mysql_stockcontrol.equipment_models,name,'.$id,
         ];
     }
 
@@ -20,7 +31,9 @@ class EquipmentModel extends Model
      * @return array
      */
     public function messages (){
-        return [];
+        return [
+            'name.required' => 'Campo nome deve ser preenchido'
+        ];
     }
 
     public function equipments()

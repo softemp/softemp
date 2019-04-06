@@ -5,7 +5,7 @@
     @parent
 @stop
 
-{{-- page level styles --}}
+{{-- page level styles--}}
 @section('page_styles')
     <link rel="stylesheet" href="{{ asset('softemp/panel/vendors/select2/css/select2.css') }}">
 @stop
@@ -23,7 +23,7 @@
 @endsection
 
 @section('content')
-    {{-- Default box --}}
+{{--     Default box--}}
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Nova Ordem</h3>
@@ -36,48 +36,50 @@
                     <i class="fa fa-times"></i></button>
             </div>
         </div>
-        <form class="form-group" method="post" action="{{route('panel.stockcontrol.order.store')}}">
-            @csrf
-            <div class="box-body">
-                <div class="form-group row">
-                    <label for="technical_id" class="col-md-4 col-form-label text-md-right">Técnico responsável</label>
-                    <div class="col-md-6">
-                        <select class="form-control select-container" name="technical_id" id="technical_id" required>
-                            <option>Selecione o técnico responsável</option>
-                            @foreach($technicals as $technical)
-                                <option value="{{$technical->id}}">{{$technical->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+        <div class="box-body">
+            <div class="card-body">
+                {!! Form::open(['route' => 'panel.stockcontrol.order.store', 'method' => 'post', 'class' => 'form-group']) !!}
 
-                <div class="form-group row">
-                    <label for="equipment_id" class="col-md-4 col-form-label text-md-right">Equipamentos</label>
+                <div class="form-group row {{ $errors->has('equipment_model_id') ? ' has-error has-danger' : '' }}">
+                    {!! Form::label('technical_id', 'Técnico responsável', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
                     <div class="col-md-6">
-                        <select class="form-control select2-container" name="equipment_id[]"
-                                id="equipment_id" multiple="multiple" required>
-                            @foreach($equipments as $equipment)
-                                <option value="{{$equipment->id}}">NS: {{$equipment->ns}}</option>
-                            @endforeach
-                        </select>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-group"></i> </span>
+                            {!! Form::select('technical_id', $technicals, null, ['class'=>'form-control select2-container',
+                             'id'=>'technical_id', 'placeholder'=>'', 'required']) !!}
+                        </div>
+                        @if ($errors->has('technical_id'))
+                            <div class="help-block">
+                                <label class="error">{{ $errors->first('technical_id') }}</label>
+                            </div>
+                        @endif
                     </div>
                 </div>
-                <button class="btn btn-success">Criar</button>
+                <div class="form-group row">
+                    {!! Form::label('equipment_id', 'Equipamentos', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+                    <div class="col-md-6">
+                        {!! Form::select('equipment_id[]', $equipments , null ,['class' => 'form-control select2-container',
+                        'id' => 'equipment_id', 'multiple' => 'multiple', 'required']) !!}
+                    </div>
+                </div>
+                {!! Form::submit('Criar', ['class' => 'btn btn-success']) !!}
             </div>
-        </form>
-        {{-- /.box-body --}}
+            {!! Form::close() !!}
+        </div>
+{{--         /.box-body--}}
         <div class="box-footer">
             Floripa Server || Norte Server || Gbit Telecom
         </div>
-        {{-- /.box-footer --}}
+{{--         /.box-footer--}}
     </div>
-    {{-- /.box --}}
+{{--     /.box--}}
 @endsection
 
 {{-- page level scripts --}}
 @section('page_scripts')
     <script src="{{ asset('softemp/panel/vendors/select2/js/select2.js') }}"></script>
-    {{-- page script --}}
+    <script src="{{ asset('softemp/panel/vendors/bootstrap-validator/js/validator.js') }}"></script>
+{{--    page script--}}
     <script>
         $(document).ready(function() {
             $('#equipment_id').select2({
@@ -86,5 +88,17 @@
                 allowClear: true
             });
         });
+        $('form').validator();
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#technical_id').select2({
+                placeholder: 'Selecione o técnico responsável',
+                allowClear: true
+            });
+        });
+        $('form').validator();
+    </script>
+
 @stop

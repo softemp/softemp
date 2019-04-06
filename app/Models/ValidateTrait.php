@@ -34,17 +34,18 @@ trait ValidateTrait
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function validateUpdate($request, $route, $id = null)
+    public function validateUpdate($data, $route, $id = null)
     {
-        $data = $request->all();
+        //$data = $request->all();
 
-        $validator = Validator::make($data, $this->rulesUpdate($id));
+        $validator = Validator::make($data, $this->rulesUpdate($id))->validate();
 
-        if ($validator->fails()) {
-            return redirect()->route($route, [$id])
-                ->withErrors($validator)
-                ->withInput();
-        }
+
+//        if ($validator->fails()) {
+//            return redirect()->route($route, $id)
+//                ->withErrors($validator)
+//                ->withInput();
+//        }
 
         return $data;
     }
