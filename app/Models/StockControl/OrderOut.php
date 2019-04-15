@@ -45,10 +45,10 @@ class OrderOut extends Model
 //        return $this->equipments()->save($equipment);
 //    }
 
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('d/m/Y');
-    }
+//    public function getCreatedAtAttribute($value)
+//    {
+//        return Carbon::parse($value)->format('d/m/Y');
+//    }
 
 //    public function upStatus($id, $status)
 //    {
@@ -74,4 +74,19 @@ class OrderOut extends Model
     {
         return $this->equipment()->where('status', 2)->get();
     }
+
+    public function checkExpiration($created_at)
+    {
+        $created_at = date_format($created_at, 'm/d/Y');
+        $expirationDate = date('d/m/Y', strtotime('+2days', strtotime(($created_at))));
+        $today = date('d/m/Y');
+
+        if ($today >= $expirationDate){
+            return true;
+        }
+
+        return false;
+
+    }
+
 }

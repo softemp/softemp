@@ -158,8 +158,7 @@ class Equipment extends Model
      */
     public function putClient($id)
     {
-//        return Equipment::find($id)->update(['status' => 3]);
-        return false;
+        return Equipment::find($id)->update(['status' => 3]);
     }
 
     /**

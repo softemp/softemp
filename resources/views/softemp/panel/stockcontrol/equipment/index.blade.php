@@ -47,7 +47,7 @@
                         <td>{{$equipment->mac}}</td>
                         <td>
                             @if($equipment->status == 1)<span class="label label-success">Em estoque</span>
-                            @elseif($equipment->status == 2)<span class="label label-warning">Está com </span>
+                            @elseif($equipment->status == 2)<span class="label label-warning">Equipamento com técnicophp </span>
                             @elseif($equipment->status == 3)<span class="label label-info">Com cliente</span>
                             @elseif($equipment->status == 4)<span class="label label-danger">Equipamento no lixo</span>
                             @endif

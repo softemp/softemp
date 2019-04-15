@@ -50,7 +50,7 @@ class CrudController extends BaseController
     public function index()
     {
         $this->arrayData['data'] = $this->model->all();
-        return view("{$this->pathView}.index", $this->arrayData);
+        return view("$this->pathView.index", $this->arrayData);
     }
 
     /**
@@ -194,9 +194,17 @@ class CrudController extends BaseController
         return $ruleValidate;
     }
 
+    /**
+     * método de redirecionamento
+     *
+     * @param $page
+     * @param array|null $arrayNotification
+     * @param null $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function redirect($page, array $arrayNotification = null, $id = null)
     {
-        return redirect()->route($this->groupRoute.'.'.$page, $id)->with($arrayNotification);
+        return redirect()->route("$this->groupRoute.$page", $id)->with($arrayNotification);
     }
 
 }

@@ -7,6 +7,7 @@
 {{-- page level styles --}}
 @section('page_styles')
     <link rel="stylesheet" href="{{ asset('softemp/panel/vendors/dataTables/css/dataTable.css') }}">
+    <script type="text/javascript" src="{{asset('barcodegenerator/JsBarcode.all.min.js')}}"></script>
 @stop
 
 @section('content-header')
@@ -135,7 +136,6 @@
 
 {{-- page level scripts --}}
 @section('page_scripts')
-    <script type="text/javascript" src="{{asset('barcodegenerator/JsBarcode.all.min.js')}}"></script>
     <script src="{{ asset('softemp/panel/vendors/dataTables/js/dataTable.js') }}"></script>
     <!-- page script -->
     <script>
