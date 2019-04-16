@@ -115,11 +115,12 @@ class OrderOutController extends CrudController
 //        return redirect()->route('home')->with('success', 'Ordem fechada com sucesso');
 //    }
 
-//    public function closedorders()
-//    {
-//        $os = $this->orderOut->where('order_status', 2)->get();
-//        return view('orderouts.closedorders', compact('os'));
-//    }
+    public function closedorders()
+    {
+        $os = $this->model->where('status', 2)->get();
+        $this->arrayData['data'] = $os;
+        return view("$this->pathView.index", $this->arrayData);
+    }
 //
 //    public function showclosed($id)
 //    {

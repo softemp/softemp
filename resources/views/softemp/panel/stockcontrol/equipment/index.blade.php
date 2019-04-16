@@ -26,7 +26,7 @@
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Equipamentos cadastrados</h3>
-            <a class="btn btn-primary btn-xs pull-right" href="{{route('panel.stockcontrol.equipment.create')}}">Novo Equipamento</a>
+            <a class="btn btn-primary pull-right" href="{{route('panel.stockcontrol.equipment.create')}}">Novo Equipamento</a>
         </div>
         <div class="box-body">
             <table id="table1" class="display responsive nowrap dataTable no-footer dtr-inline collapsed" style="width: 100%;" role="grid">
@@ -55,34 +55,34 @@
                         <td>
                             <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>
 
-{{--                        @if ($equipment->status == 1)--}}
-{{--                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>--}}
-{{--                                <a href="#"--}}
-{{--                                   onclick="putTrash({{$equipment->id}})" title="Mover para Lixeira" class="btn btn-xs btn-danger">--}}
-{{--                                    <i class="fa fa-trash"></i>--}}
-{{--                                </a>--}}
+                            {{--                        @if ($equipment->status == 1)--}}
+                            {{--                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>--}}
+                            {{--                                <a href="#"--}}
+                            {{--                                   onclick="putTrash({{$equipment->id}})" title="Mover para Lixeira" class="btn btn-xs btn-danger">--}}
+                            {{--                                    <i class="fa fa-trash"></i>--}}
+                            {{--                                </a>--}}
 
-{{--                            @elseif($equipment->status == 2)--}}
-{{--                                <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>--}}
-{{--                                <a href="#" onclick="putStock({{$equipment->id}})"--}}
-{{--                                   title="Devolver ao estoque" class="btn btn-xs btn-success">--}}
-{{--                                    <i class="fa fa-download"></i>--}}
-{{--                                </a>--}}
+                            {{--                            @elseif($equipment->status == 2)--}}
+                            {{--                                <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>--}}
+                            {{--                                <a href="#" onclick="putStock({{$equipment->id}})"--}}
+                            {{--                                   title="Devolver ao estoque" class="btn btn-xs btn-success">--}}
+                            {{--                                    <i class="fa fa-download"></i>--}}
+                            {{--                                </a>--}}
 
-{{--                            @elseif ($equipment->status == 3)--}}
-{{--                                <a href="#" onclick="putStock({{$equipment->id}})"--}}
-{{--                                   title="Devolver ao estoque" class="btn btn-xs btn-success">--}}
-{{--                                    <i class="fa fa-download"></i>--}}
-{{--                                </a>--}}
+                            {{--                            @elseif ($equipment->status == 3)--}}
+                            {{--                                <a href="#" onclick="putStock({{$equipment->id}})"--}}
+                            {{--                                   title="Devolver ao estoque" class="btn btn-xs btn-success">--}}
+                            {{--                                    <i class="fa fa-download"></i>--}}
+                            {{--                                </a>--}}
 
-{{--                            @elseif($equipment->status == 4)--}}
-{{--                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>--}}
-{{--                                <a href="#" onclick="putStock({{$equipment->id}})"--}}
-{{--                                   title="Devolver ao estoque" class="btn btn-xs btn-success">--}}
-{{--                                    <i class="fa fa-download"></i>--}}
-{{--                                </a>--}}
-{{--                            @endif--}}
-{{--                            <a href="#" title="Notas" class="btn btn-xs btn-facebook"><i class="fa fa-sticky-note"></i></a>--}}
+                            {{--                            @elseif($equipment->status == 4)--}}
+                            {{--                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>--}}
+                            {{--                                <a href="#" onclick="putStock({{$equipment->id}})"--}}
+                            {{--                                   title="Devolver ao estoque" class="btn btn-xs btn-success">--}}
+                            {{--                                    <i class="fa fa-download"></i>--}}
+                            {{--                                </a>--}}
+                            {{--                            @endif--}}
+                            {{--                            <a href="#" title="Notas" class="btn btn-xs btn-facebook"><i class="fa fa-sticky-note"></i></a>--}}
 
                         </td>
                     </tr>
@@ -97,6 +97,33 @@
         {{-- /.box-footer --}}
     </div>
     {{-- /.box --}}
+    <!-- modal show columns -->
+    <div class="modal fade" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Equipamento #<label id="modal_id"></label> </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="errors-msg alert alert-danger" style="display: none;"></div>
+                    <div class="success-msg alert alert-success" style="display: none;"></div>
+                    <i><strong>Mac</strong> = <span id="modal_mac"></span> </i><hr>
+                    <i><strong>Numero de Série</strong> = <span id="modal_ns"></span> </i><hr>
+                    <i><strong>Data de compra</strong> = <span id="modal_purchase_date"></span></i><hr>
+
+                </div>
+                <div class="modal-footer">
+
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal show columns -->
 @endsection
 
 {{-- page level scripts --}}
@@ -169,28 +196,63 @@
             })
         }
     </script>
-    {{--<script>--}}
-    {{--$(function () {--}}
-    {{--$("td").dblclick(function () {--}}
-    {{--var conteudoOriginal = $(this).text();--}}
 
-    {{--$(this).addClass("celulaEmEdicao");--}}
-    {{--$(this).html("<input type='text' value='" + conteudoOriginal + "' />");--}}
-    {{--$(this).children().first().focus();--}}
+    <script>
+        var pressed = document.getElementById('teste');
+        var barCode = '';
 
-    {{--$(this).children().first().keypress(function (e) {--}}
-    {{--if (e.which == 13) {--}}
-    {{--var novoConteudo = $(this).val();--}}
-    {{--$(this).parent().text(novoConteudo);--}}
-    {{--$(this).parent().removeClass("celulaEmEdicao");--}}
-    {{--}--}}
-    {{--});--}}
+        function keyPressed(evt){
+            evt = evt || window.event;
+            var key = evt.keyCode || evt.which;
+            return String.fromCharCode(key);
+        }
 
-    {{--$(this).children().first().blur(function(){--}}
-    {{--$(this).parent().text(conteudoOriginal);--}}
-    {{--$(this).parent().removeClass("celulaEmEdicao");--}}
-    {{--});--}}
-    {{--});--}}
-    {{--});--}}
-    {{--</script>--}}
+        document.onkeypress = function(evt) {
+            var str = keyPressed(evt);
+            barCode = barCode+str;
+
+            if (event.keyCode==13){
+                equipmentBarCode()
+            }
+        };
+
+        function equipmentBarCode()
+        {
+            $.ajax({
+                url: "{{route('panel.stockcontrol.equipment.barCodeSearch')}}",
+                type: "POST",
+                data:{
+                    "equipmentBarCode" : barCode,
+                    "_token" : token
+                },
+                success: function(response) {
+                    if (response){
+                        console.log(response);
+                        barCode = '';
+                        reload();
+                        modal(response);
+                    }
+                    barCode = '';
+                    reload();
+                }
+            })
+        }
+        $(reload());
+        function reload(){
+            setTimeout(function () {
+                barCode = '';
+                reload()
+            }, 5000)
+        }
+
+        function modal(data) {
+            document.getElementById('modal_id').innerHTML = data['id'];
+            document.getElementById('modal_mac').innerHTML = data['mac'];
+            document.getElementById('modal_ns').innerHTML = data['ns'];
+            document.getElementById('modal_purchase_date').innerHTML = data['purchase_date'];
+
+            $('#modal').modal()
+        }
+
+    </script>
 @stop

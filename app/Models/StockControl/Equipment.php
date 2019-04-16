@@ -9,8 +9,8 @@ use Carbon\Carbon;
 
 class Equipment extends Model
 {
-    use ValidateTrait;
 
+    use ValidateTrait;
     protected $connection = 'mysql_stockcontrol';
     protected $table = 'equipment';
 //    protected $guarded = [];
@@ -19,7 +19,10 @@ class Equipment extends Model
         'equipment_model_id','ns','mac','purchase_date', 'status'
     ];
 
-    private function rulesStore (){
+
+
+
+    public function rulesStore (){
         return [
             'equipment_model_id' => 'required',
             'ns'=>'required|unique:mysql_stockcontrol.equipment|min:10|max:20',
@@ -138,7 +141,7 @@ class Equipment extends Model
             return true;
         else
 
-        return false;
+            return false;
     }
 
     /**

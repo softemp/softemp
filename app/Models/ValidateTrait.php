@@ -13,18 +13,17 @@ trait ValidateTrait
      * @param $route rota de retorno
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function validateStore($request, $route)
+    public function validateStore($request, $route, $messages = null)
     {
         $data = $request->all();
 
-        $validator = Validator::make($data, $this->rulesStore());
+        $validator = Validator::make($data, $this->rulesStore(), $messages);
 
         if ($validator->fails()) {
             return redirect()->route($route)
                 ->withErrors($validator)
                 ->withInput();
         }
-
         return $data;
     }
 

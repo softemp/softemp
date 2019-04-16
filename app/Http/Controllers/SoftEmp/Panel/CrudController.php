@@ -64,17 +64,21 @@ class CrudController extends BaseController
     }
 
     /**
-     * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         if(!method_exists($this->model,'validateStore')) {
             $validateData = $request->validate($this->model->rules());
+
         }else {
-            $validateData = $this->model->validateStore($request, $this->groupRoute . '.create');
+            $validateData = $this->model->validateStore($request, $this->groupRoute . '.index', $this->model->messages());
+
+            if (!is_array($validateData)){
+                return $validateData;
+            }
         }
 
         $obj = $this->model;

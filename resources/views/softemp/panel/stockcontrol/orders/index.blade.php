@@ -1,7 +1,7 @@
 @extends('softemp.panel.layouts.app')
 
 @section('title')
-    Blank
+    Ordens
     @parent
 @stop
 
@@ -24,9 +24,17 @@
 @section('content')
     {{-- Default box --}}
     <div class="box">
+
         <div class="box-header with-border">
-            <h3 class="box-title">Ordens Abertas</h3>
-            <a class="btn btn-primary btn-xs pull-right" href="{{route('panel.stockcontrol.order.create')}}">Nova Ordem</a>
+            @if(!Request::is('painel/estoque/ordens'))
+                <h3 class="box-title">Ordens Fechadas</h3>
+                <a class="btn btn-success btn-sm" href="{{ route('panel.stockcontrol.order.index') }}">Ordens Abertas</a>
+            @endif
+            @if(!Request::is('painel/estoque/ordens/fechadas'))
+                <h3 class="box-title">Ordens Abertas</h3>
+                <a class="btn btn-warning btn-sm" href="{{ route('panel.stockcontrol.order.closed') }}">Ordens Finalizadas</a>
+            @endif
+            <a class="btn btn-primary btn-sm pull-right" href="{{route('panel.stockcontrol.order.create')}}">Nova Ordem</a>
         </div>
         <div class="box-body">
             <table id="table1" class="display responsive nowrap dataTable no-footer dtr-inline collapsed" style="width: 100%;" role="grid">
@@ -35,7 +43,13 @@
                     <th>ID</th>
                     <th>Técnico responsável</th>
                     <th>Equipamentos</th>
-                    <th>Data de abertura</th>
+                    @if(!Request::is('painel/estoque/ordens'))
+                        <th>Data de fechamento</th>
+                    @endif
+                    @if(!Request::is('painel/estoque/ordens/fechadas'))
+                        <th>Data de abertura</th>
+                    @endif
+
                     <th>Ação</th>
                 </tr>
                 </thead>
@@ -46,11 +60,15 @@
                         <td>{{$order->technicals->name}}</td>
                         <td>{{count($order->equipment)}}</td>
                         <td>
-                            {{$order->created_at->format('d/m/Y H:m')}}
-                            @if ($order->checkExpiration($order->created_at))
-                                <span class="label label-danger">Expirado!</span>
+                            @if ($order->status == 2)
+                                {{$order->updated_at->format('d/m/Y H:m')}}
                             @else
-                                <span class="label label-success">Recente</span>
+                                @if ($order->checkExpiration($order->created_at))
+                                    {{$order->created_at->format('d/m/Y H:m')}}
+                                    <span class="label label-danger">Expirado!</span>
+                                @else
+                                    {{$order->created_at->format('d/m/Y H:m')}}
+                                @endif
                             @endif
                         </td>
                         <td>

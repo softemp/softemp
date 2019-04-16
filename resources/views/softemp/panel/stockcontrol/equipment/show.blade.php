@@ -84,7 +84,7 @@
                         <thead>
                         <tr>
                             <th>Data</th>
-                            <th>Descrição</th>
+                            <th>Notas</th>
                         </tr>
                         </thead>
                         <tbody>

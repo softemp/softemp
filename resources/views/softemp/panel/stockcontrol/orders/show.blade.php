@@ -7,6 +7,7 @@
 {{-- page level styles --}}
 @section('page_styles')
     <link rel="stylesheet" href="{{ asset('softemp/panel/vendors/dataTables/css/dataTable.css') }}">
+    <link href="{{asset('css/barCode.css')}}" rel="stylesheet">
     <script type="text/javascript" src="{{asset('barcodegenerator/JsBarcode.all.min.js')}}"></script>
 @stop
 
@@ -54,9 +55,11 @@
                             @if($equipment->status == 1)
                                 <span class="label label-success">Devolvido</span>
                             @elseif($equipment->status == 2)
-                                <span class="label label-danger">Com técnico</span>
+                                <span class="label label-warning">Com técnico</span>
                             @elseif($equipment->status == 3)
                                 <span class="label label-success">Destinado</span>
+                            @elseif($equipment->status == 4)
+                                <span class="label label-danger">Equipamento no lixo</span>
                             @endif
                         </td>
                         <td>{{$equipment->equipmentModel->name}}</td>
@@ -89,8 +92,11 @@
                 @endforeach
                 </tbody>
             </table>
-            @if($close)
-                <a class="btn btn-success" href="{{route('panel.stockcontrol.order.close', $data->id)}}">Fechar ordem</a>
+            @if ($data->status == 2)
+            @else
+                @if($close)
+                    <a class="btn btn-success" href="{{route('panel.stockcontrol.order.close', $data->id)}}">Fechar ordem</a>
+                @endif
             @endif
         </div>
         {{-- /.box-body --}}
@@ -116,10 +122,10 @@
                 <div class="modal-body">
                     <div class="errors-msg alert alert-danger" style="display: none;"></div>
                     <div class="success-msg alert alert-success" style="display: none;"></div>
-                            {!! Form::label('destination', null, ['class' => 'col-md-4 col-form-label text-md-right']) !!}
-                                {!! Form::textarea('destination', null, ['class' => 'form-control', 'id'=>'destination', 'required', 'autofocus', 'placeholder'=>'Destino do equipamento']) !!}
-                                {!! Form::hidden('equipment_id', null, ['id' => 'equipment_id']) !!}
-                                {!! Form::hidden('order_out_id', null, ['id' => 'order_out_id']) !!}
+                    {!! Form::label('destination', null, ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+                    {!! Form::textarea('destination', null, ['class' => 'form-control', 'id'=>'destination', 'required', 'autofocus', 'placeholder'=>'Destino do equipamento']) !!}
+                    {!! Form::hidden('equipment_id', null, ['id' => 'equipment_id']) !!}
+                    {!! Form::hidden('order_out_id', null, ['id' => 'order_out_id']) !!}
                 </div>
                 <div class="modal-footer">
                     {!! Form::submit('Enviar', ['class' => 'btn btn-success pull-left']) !!}

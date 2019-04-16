@@ -44,7 +44,11 @@
                 @foreach($data as $equipmentModel)
                     <tr>
                         <td>{{$equipmentModel->name}}</td>
-                        <td>{{count($equipmentModel->inStock)}}</td>
+                        @if (count($equipmentModel->inStock)<=5)
+                            <td class="alert-danger">{{count($equipmentModel->inStock)}}</td>
+                            @else
+                            <td>{{count($equipmentModel->inStock)}}</td>
+                        @endif
                         <td>
                             <a href="{{route('panel.stockcontrol.model.edit', $equipmentModel->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
                             <a href="#"

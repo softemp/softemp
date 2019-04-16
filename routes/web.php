@@ -12,21 +12,21 @@
 */
 
 
-// Provisional routes of the stock control system;
-Route::get('/equipamentos', 'Softemp\Panel\StockControl\EquipmentController@index')->name('equipment.index');
-Route::get('/equipamentos/editar/{id}', 'Softemp\Panel\StockControl\EquipmentController@edit')->name('equipment.edit');
-Route::put('/equipamentos/{id}', 'Softemp\Panel\StockControl\EquipmentController@update')->name('equipment.update');
-Route::get('/equipamentos/novo', 'Softemp\Panel\StockControl\EquipmentController@create')->name('equipment.create');
-Route::post('/equipamentos', 'Softemp\Panel\StockControl\EquipmentController@store')->name('equipment.store');
-
-
-Route::get('/equipamentos/modelos', 'EquipmentModelController@index')->name('equipment.models.index');
-Route::get('/equipamentos/modelos/editar/{id}', 'EquipmentModelController@edit')->name('equipment.models.edit');
-Route::put('/equipamentos/modelos/{id}', 'EquipmentModelController@update')->name('equipment.models.update');
-Route::get('/equipamentos/modelos/novo', 'EquipmentModelController@create')->name('equipment.models.create');
-Route::post('/equipamentos/modelos', 'EquipmentModelController@store')->name('equipment.models.store');
-
-// end of provisional routes
+//// Provisional routes of the stock control system;
+//Route::get('/equipamentos', 'Softemp\Panel\StockControl\EquipmentController@index')->name('equipment.index');
+//Route::get('/equipamentos/editar/{id}', 'Softemp\Panel\StockControl\EquipmentController@edit')->name('equipment.edit');
+//Route::put('/equipamentos/{id}', 'Softemp\Panel\StockControl\EquipmentController@update')->name('equipment.update');
+//Route::get('/equipamentos/novo', 'Softemp\Panel\StockControl\EquipmentController@create')->name('equipment.create');
+//Route::post('/equipamentos', 'Softemp\Panel\StockControl\EquipmentController@store')->name('equipment.store');
+//
+//
+//Route::get('/equipamentos/modelos', 'EquipmentModelController@index')->name('equipment.models.index');
+//Route::get('/equipamentos/modelos/editar/{id}', 'EquipmentModelController@edit')->name('equipment.models.edit');
+//Route::put('/equipamentos/modelos/{id}', 'EquipmentModelController@update')->name('equipment.models.update');
+//Route::get('/equipamentos/modelos/novo', 'EquipmentModelController@create')->name('equipment.models.create');
+//Route::post('/equipamentos/modelos', 'EquipmentModelController@store')->name('equipment.models.store');
+//
+//// end of provisional routes
 
 
 
@@ -210,6 +210,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                             Route::post('/cadastrar/novo', 'EquipmentController@store')->name('equipment.store');
                             Route::post('/lixeira', 'EquipmentController@putTrash')->name('equipment.putTrash');
                             Route::post('/devolver', 'EquipmentController@putStock')->name('equipment.putStock');
+                            Route::post('/buscar', 'EquipmentController@barCodeSearch')->name('equipment.barCodeSearch');
                             Route::get('/show/{id}', 'EquipmentController@show')->name('equipment.show');
                             Route::delete('/remover/{id}', 'EquipmentController@destroy')->name('equipment.destroy');
                         });
@@ -242,6 +243,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                         // Ordens de saída de equipamentos
                         Route::group(['prefix' => '/ordens', 'as' => 'stockcontrol.'], function (){
                             Route::get('/', 'OrderOutController@index')->name('order.index');
+                            Route::get('/fechadas', 'OrderOutController@closedorders')->name('order.closed');
                             Route::get('/editar/{id}', 'OrderOutController@edit')->name('order.edit');
                             Route::put('/update/{id}', 'OrderOutController@update')->name('order.update');
                             Route::get('/cadastrar', 'OrderOutController@create')->name('order.create');

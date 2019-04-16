@@ -17,7 +17,6 @@
     </title>
     {{-- Styles --}}
     <link href="{{ asset('softemp/panel/css/app.css') }}" rel="stylesheet">
-    <link href="{{asset('css/barCode.css')}}" rel="stylesheet">
     {{-- page level css --}}
     @yield('page_styles')
     {{-- end of page level css --}}

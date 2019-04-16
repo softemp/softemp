@@ -4,8 +4,8 @@
     padding: 0;
     overflow: hidden;
     position: relative;
-    width: 200px;
-    height: 50px;
+    width: 500px;
+    height: 20px;
     text-align: center;
 }
 
@@ -15,7 +15,9 @@
     padding: 0;
     bottom: 0;
     width: 200px;
-    height: auto;
+    height: 100px;
+    position: absolute;
+    top: -10px;
 }
 
 .bar{
