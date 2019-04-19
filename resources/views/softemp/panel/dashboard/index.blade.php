@@ -29,14 +29,14 @@
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>{{$equipmentCount}}</h3>
 
-                    <p>Domínios</p>
+                    <p>Equipamentos em estoque</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="#" class="small-box-footer">Listar <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{route('panel.stockcontrol.equipment.index')}}" class="small-box-footer">Listar <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->

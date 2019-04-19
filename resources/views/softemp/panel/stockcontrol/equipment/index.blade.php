@@ -26,6 +26,7 @@
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Equipamentos cadastrados</h3>
+            <div id="loading"></div>
             <a class="btn btn-primary pull-right" href="{{route('panel.stockcontrol.equipment.create')}}">Novo Equipamento</a>
         </div>
         <div class="box-body">
@@ -104,7 +105,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Equipamento #<label id="modal_id"></label> </h4>
+                    <h3 class="modal-title">Equipamento <label id="modal_name"></label> </h3>
                 </div>
                 <div class="modal-body">
                     <div class="errors-msg alert alert-danger" style="display: none;"></div>
@@ -115,7 +116,8 @@
 
                 </div>
                 <div class="modal-footer">
-
+                    <button href="#" class="btn btn-success pull-left">Devolver ao estoque</button>
+                    <button href="#" class="btn btn-primary pull-right">Destinar ao cliente</button>
                 </div>
 
             </div>
@@ -131,7 +133,7 @@
     <script src="{{ asset('softemp/panel/vendors/dataTables/js/dataTable.js') }}"></script>
     <!-- page script -->
     <script>
-
+    
         var token = document.getElementById('token').value;
 
 
@@ -195,10 +197,8 @@
                 }
             })
         }
-    </script>
 
-    <script>
-        var pressed = document.getElementById('teste');
+        //BarCode search
         var barCode = '';
 
         function keyPressed(evt){
@@ -226,33 +226,37 @@
                     "_token" : token
                 },
                 success: function(response) {
+                    console.log(response);
                     if (response){
-                        console.log(response);
                         barCode = '';
-                        reload();
+                        // $("#loading").html('');
                         modal(response);
                     }
+
                     barCode = '';
-                    reload();
                 }
             })
         }
-        $(reload());
-        function reload(){
-            setTimeout(function () {
-                barCode = '';
-                reload()
-            }, 5000)
-        }
 
         function modal(data) {
-            document.getElementById('modal_id').innerHTML = data['id'];
+            // document.getElementById('modal_id').innerHTML = data['id'];
+            document.getElementById('modal_name').innerHTML = data['name'];
             document.getElementById('modal_mac').innerHTML = data['mac'];
             document.getElementById('modal_ns').innerHTML = data['ns'];
             document.getElementById('modal_purchase_date').innerHTML = data['purchase_date'];
 
             $('#modal').modal()
         }
+
+        // $(reload());
+        // function reload(){
+        //     setTimeout(function () {
+        //         barCode = '';
+        //         reload()
+        //     }, 5000)
+        // }
+
+        //end BarCode Search
 
     </script>
 @stop

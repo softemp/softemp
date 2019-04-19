@@ -109,15 +109,14 @@ class EquipmentController extends CrudController
 
     public function barCodeSearch(Request $request)
     {
-        $barCode = $request->equipmentBarCode;
-        $response = $this->model->where('ns', $barCode)->get()->first();
-
-        $resposta = ['resposta' => $response, 'requerido' => $barCode];
-
-        if ($response){
-            return response()->json($response);
+        if (strlen($request->equipmentBarCode) > 5){
+            $barCode = $request->equipmentBarCode;
+            $response = $this->model->where('ns', 'Like','%' . $barCode . '%')->first();
+            if ($response){
+                $response['name'] = $response->equipmentModel->name;
+                return response()->json($response);
+            }
         }
         return response()->json(false);
-
     }
 }

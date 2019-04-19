@@ -121,6 +121,7 @@ class OrderOutController extends CrudController
         $this->arrayData['data'] = $os;
         return view("$this->pathView.index", $this->arrayData);
     }
+
 //
 //    public function showclosed($id)
 //    {
