@@ -245,6 +245,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                             Route::get('/', 'OrderOutController@index')->name('order.index');
                             Route::get('/fechadas', 'OrderOutController@closedorders')->name('order.closed');
                             Route::get('/editar/{id}', 'OrderOutController@edit')->name('order.edit');
+                            Route::get('/imprimir/{id}', 'OrderOutController@print')->name('order.print');
                             Route::put('/update/{id}', 'OrderOutController@update')->name('order.update');
                             Route::get('/cadastrar', 'OrderOutController@create')->name('order.create');
                             Route::post('/cadastrar/novo', 'OrderOutController@store')->name('order.store');

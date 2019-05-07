@@ -1,0 +1,63 @@
+table{
+    cellpacing: 0;
+    cellpadding: 0;
+    border: 0;
+    align: center;
+    width: 100%;
+    font-size: 12px;
+}
+
+td{
+    align-items: center ;
+    padding: 0;
+}
+
+.topo{
+    font-size: 24px;
+}
+
+.topo2{
+    font-size: 18px;
+}
+
+.line{
+    margin-top: 1px;
+    margin-bottom: 3px;
+    border-bottom: 2px orange solid
+}
+
+.center{
+    text-align: center;
+}
+
+.contract{
+    font-size: 12px;
+}
+
+.pc100{
+    width: 100%;
+}
+
+.pc50{
+    width: 50%;
+}
+
+.pc33{
+    width: 33%;
+}
+
+.align-left{
+    text-align: left;
+}
+
+.wpx200{
+    width: 200px;
+}
+
+.pc20{
+    width: 20%;
+}
+
+.pc40{
+    width: 40%;
+}

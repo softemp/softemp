@@ -16,4 +16,3 @@ class DashBoardController extends Controller
         return view("{$this->pathView}.index", compact('equipmentCount'));
     }
 }
-

@@ -82,6 +82,9 @@
                                     <i class="fa fa-upload"></i>
                                 </a>
                             @endif
+                            @if ($equipment->status <> 2)
+                                    <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" title="Ver equipamento" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>
+                                @endif
                             {{--<a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" title="Destinar a um cliente" class="btn btn-xs btn-success"><i class="fa fa-upload"></i></a>--}}
                             {{--<a href="#"--}}
                             {{--onclick="destroy('{{route('panel.stockcontrol.equipment.destroy', $data->id)}}', '{{$data->id}}')" title="Deletar" class="btn btn-xs btn-danger">--}}
@@ -92,6 +95,7 @@
                 @endforeach
                 </tbody>
             </table>
+            <a href="{{route('panel.stockcontrol.order.print', $data->id)}}" class="btn btn-primary" target="_blank">Imprimir ordem</a>
             @if ($data->status == 2)
             @else
                 @if($close)

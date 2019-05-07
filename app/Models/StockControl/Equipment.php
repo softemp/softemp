@@ -174,6 +174,12 @@ class Equipment extends Model
         return Equipment::find($id)->update(['status' => 4]);
     }
 
+    /**
+     * Recebe o request e exclui a pontuação gráfica e transforma as letras em maiúsculas
+     *
+     * @param $obj
+     * @return mixed
+     */
     public function validateMacNs($obj)
     {
         $replace = array('-', '/', ':', ';', '.', ',', ')', '(', '=');
