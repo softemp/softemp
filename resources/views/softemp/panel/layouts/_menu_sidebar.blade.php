@@ -5,7 +5,7 @@
             <img src="{{asset('softemp/images/temp/panel/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-            <p>{{ Auth::user()->user->name }}</p>
+            <p>{{ Auth::user()->physical->name }}</p>
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
     </div>
@@ -38,21 +38,62 @@
             </ul>
         </li>
 
-        {{--Usuários--}}
-        <li class="treeview {{(Request::is('painel/usuario*')?'active':'')}}">
-            <a href="#"><i class="fa fa-users"></i> <span>Usuários</span>
+        {{--Pessoas--}}
+        <li class="treeview {{(Request::is('painel/pessoa*')?'active':'')}}">
+            <a href="#"><i class="fa fa-users"></i> <span>Cadastro de pessoas</span>
                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
             </a>
             <ul class="treeview-menu">
-                <li class="{{(Request::is('painel')?'active':'')}}"><a href="{{route('panel.index')}}"><i
-                                class="fa fa-circle-o"></i> Clientes</a></li>
-                <li class="{{(Request::is('painel/v2')?'active':'')}}"><a href="{{route('panel.index2')}}"><i
-                                class="fa fa-circle-o"></i> Fornecedores</a></li>
-                <li class="{{(Request::is('painel/usuario/colaborador*')?'active':'')}}"><a
-                            href="{{route('panel.user.employee.index')}}"><i
-                                class="fa fa-circle-o"></i> Colaboradores</a></li>
+                <li class="{{(Request::is('painel/people*')?'active':'')}}">
+                    <a href="{{route('panel.people.index')}}">
+                        <i class="fa fa-circle-o"></i> Todos
+                    </a>
+                </li>
+                <li class="{{(Request::is('painel/people/client*')?'active':'')}}">
+                    <a href="{{route('panel.people.client.index')}}">
+                        <i class="fa fa-circle-o"></i> Clientes
+                    </a>
+                </li>
+                <li class="{{(Request::is('painel/people/caterer*')?'active':'')}}">
+                    <a href="{{route('panel.people.caterer.index')}}">
+                        <i class="fa fa-circle-o"></i> Fornecedores
+                    </a>
+                </li>
+                <li class="{{(Request::is('painel/pessoa/peossoa/fisica*')?'active':'')}}">
+                    <a href="{{route('panel.people.physical.index')}}">
+                        <i class="fa fa-circle-o"></i> Pessoas
+                    </a>
+                </li>
+                <li class="{{(Request::is('painel/people/company*')?'active':'')}}">
+                    <a href="{{route('panel.people.company.index')}}">
+                        <i class="fa fa-circle-o"></i> Empresas
+                    </a>
+                </li>
+                <li class="{{ (Request::is('painel/pessoa/colaborador*')?'active':'') }}">
+                    <a href="{{ route('panel.people.employee.index') }}">
+                        <i class="fa fa-circle-o"></i> Colaboradores
+                    </a>
+                </li>
             </ul>
         </li>
+        {{--end Pessoas--}}
+
+
+        {{--Usuários--}}
+{{--        <li class="treeview {{(Request::is('painel/usuario*')?'active':'')}}">--}}
+{{--            <a href="#"><i class="fa fa-users"></i> <span>Usuários</span>--}}
+{{--                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>--}}
+{{--            </a>--}}
+{{--            <ul class="treeview-menu">--}}
+{{--                <li class="{{(Request::is('painel')?'active':'')}}"><a href="{{route('panel.index')}}"><i--}}
+{{--                                class="fa fa-circle-o"></i> Clientes</a></li>--}}
+{{--                <li class="{{(Request::is('painel/v2')?'active':'')}}"><a href="{{route('panel.index2')}}"><i--}}
+{{--                                class="fa fa-circle-o"></i> Fornecedores</a></li>--}}
+{{--                <li class="{{(Request::is('painel/usuario/colaborador*')?'active':'')}}"><a--}}
+{{--                            href="{{route('panel.user.employee.index')}}"><i--}}
+{{--                                class="fa fa-circle-o"></i> Colaboradores</a></li>--}}
+{{--            </ul>--}}
+{{--        </li>--}}
         {{--end Usuários--}}
 
         {{--access control--}}
@@ -152,6 +193,114 @@
                             class="fa fa-circle-o"></i> Técnicos</a></li>
             </ul>
         </li>
+
+        <!-- Configuração -->
+        <li class="treeview {{(Request::is('panel/companies/empresa') || Request::is('painel/contato/*') ? 'active' : '') }}">
+            <a href="#">
+                <i class="fa fa-cogs"></i>
+                <span>Configuração</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+{{--            @can('dados-empresa-view')--}}
+{{--                <!-- Dados da Empresa -->--}}
+{{--                    <li {{ (Request::is('panel/companies/empresa') ? 'class=active' : '') }}>--}}
+{{--                        <a href="{{ route('panel.companies.empresa.index') }}">--}}
+{{--                            <i class="fa fa-adn"></i> Dados da Empresa--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--            @endcan--}}
+            <!-- /.Dados da Empresa -->
+{{--            @can('contact-type-view')--}}
+                <!-- Contato -->
+                    <li {{(Request::is('painel/contato/tipo/*') ? 'active' : '') }}>
+                        <a href="{{ route('panel.contact.type.index') }}">
+                            <i class="fa fa-circle-o text-yellow"></i> <span>Tipo de Contato</span>
+                        </a>
+                    </li>
+                <!-- /.Contato -->
+{{--            @endcan--}}
+{{--            @can('occupation-view')--}}
+{{--                <!-- ocupação -->--}}
+{{--                    <li {{ (Request::is('panel/companies/occupations') ? 'class=active' : '') }}>--}}
+{{--                        <a href="{{ route('panel.companies.occupations.index') }}">--}}
+{{--                            <i class="fa fa-book"></i> Ocupação Colaborador--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <!-- /.ocupação -->--}}
+{{--            @endcan--}}
+{{--            @can('role-view')--}}
+{{--                <!-- Papéis -->--}}
+{{--                    <li {{ (Request::is('panel/companies/roles') ? 'class=active' : '') }}>--}}
+{{--                        <a href="{{ route('panel.companies.roles.index') }}">--}}
+{{--                            <i class="fa fa-adn"></i> Papéis--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <!-- /.Papéis -->--}}
+{{--            @endcan--}}
+{{--            @can('permission-view')--}}
+{{--                <!-- Permissões -->--}}
+{{--                    <li {{ (Request::is('panel/permissions/permissions') ? 'class=active' : '') }}>--}}
+{{--                        <a href="{{ route('panel.permissions.permissions.index') }}">--}}
+{{--                            <i class="fa fa-lock"></i> Permissões--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <!-- /.Permissões -->--}}
+{{--                @endcan--}}
+            </ul>
+        </li>
+        <!-- /.Configuração -->
+
+        <!-- Address -->
+        <li class="treeview {{(Request::is('panel/address/*') ? 'active' : '') }}">
+            <a href="#">
+                <i class="fa fa-sitemap"></i>
+                <span>Endereços</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+
+                <li class="{{(Request::is('panel/address/types') ? 'active' : '') }}"><a
+                            href="{{ route('panel.address.types.index') }}"><i class="fa fa-circle-o text-aqua"></i>
+                        <span>Tipo de Endereço</span></a></li>
+
+                <li {{ (Request::is('panel/address/continents*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.continents.index') }}">
+                        <i class="fa fa-globe"></i> Continentes
+                    </a>
+                </li>
+                <li {{ (Request::is('panel/address/countries*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.countries.index') }}">
+                        <i class="fa fa-flag"></i> Paises
+                    </a>
+                </li>
+                <li {{ (Request::is('panel/address/states*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.states.index') }}">
+                        <i class="fa fa-circle-thin"></i> Estados
+                    </a>
+                </li>
+                <li {{ (Request::is('panel/address/cities*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.cities.index') }}">
+                        <i class="fa fa-address-book"></i> Cidades
+                    </a>
+                </li>
+                <li {{ (Request::is('panel/address/neighboarhoods*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.neighboarhoods.index') }}">
+                        <i class="fa fa-bullseye"></i> Bairros
+                    </a>
+                </li>
+                <li {{ (Request::is('panel/address/streets*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.streets.index') }}">
+                        <i class="fa fa-crosshairs"></i> Logradouros
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- /.Address -->
         {{--end StockControl--}}
 
 

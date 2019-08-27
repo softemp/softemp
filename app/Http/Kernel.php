@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\SoftEmp\RedirectIfAuthenticated;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -60,6 +61,10 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
+        //softemp
+        //'softemp.base' => \App\Http\Middleware\SoftEmp\Base::class,
+        'softemp.auth' => \App\Http\Middleware\SoftEmp\Authenticate::class,
     ];
 
     /**

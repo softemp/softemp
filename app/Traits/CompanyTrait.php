@@ -11,8 +11,6 @@ trait CompanyTrait
 
     protected static function bootCompanyTrait()
     {
-
-
         if (auth()->check()) {
             dd('teste de auth');
             static::creating(function ($model) {
@@ -20,7 +18,6 @@ trait CompanyTrait
                 // $model->owner_company_id = 10;
                 $model->owner_company_id = auth()->user()->active_company_id;
             });
-
 
             static::addGlobalScope('owner_company_id', function (Builder $builder) {
                 $builder->where('owner_company_id', auth()->user()->active_company_id);

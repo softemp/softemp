@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
+
+use App\Models\Core\AccessControl\Permission;
+use Illuminate\Support\Facades\App;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -21,10 +24,37 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(GateContract $gate)
     {
-        $this->registerPolicies();
+        $this->registerPolicies($gate);
 
-        //
+        if (!App::runningInConsole()) {
+            foreach ($this->getPermissions() as $permission) {
+                $gate->define($permission->slug, function(User $user) use($permission) {
+                    $personId = $user->personPhysicals->person_id;
+                    return Person::find($personId)->hasRole($permission->roles);
+                });
+            }
+        }
+
+        //Method executado por primeiro pelo laravel
+        $gate->before(function (User $user, $ability) {
+            $personId = $user->personPhysicals->person_id;
+            if (Person::find($personId)->isRoot()) {
+                return true;
+            }
+        });
+    }
+
+    /**
+     * retorna as permissoes relacionadas a role
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    private function getPermissions()
+    {
+        //dd(Permission::with('roles')->get());
+        //return Permission::with('roles')->get();
+        return Permission::all();
     }
 }

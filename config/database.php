@@ -5,7 +5,7 @@
  * Ao database vai ser adicionado um prefix do .env DB_PREFIX, EX: softemp_base
  */
 $modules = [
-    'base',
+    'core',
     'stockcontrol',
     'mkauth'=>[
         'db_host'=>'_MKAUTH',

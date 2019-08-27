@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\SoftEmp\Panel;
 
+use App\Models\Core\Contact\ContEmail;
+use App\Models\Core\Contact\ContPhone;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Redirect;
 
 /**
  * Class CrudController
@@ -21,6 +24,7 @@ class CrudController extends BaseController
     protected $request;
     protected $pathView;
     protected $groupRoute;
+    protected $redirect;
 
     /**
      * array com retorno nos metodos index, create, edit, show
@@ -81,13 +85,25 @@ class CrudController extends BaseController
             }
         }
 
-        $obj = $this->model;
-        $obj->fill($validateData);
-        $result = $obj->save();
+//        $obj = $this->model;
+//        $obj->fill($validateData);
+//        $result = $obj->save();
 
+        $result = $this->model->create($validateData);
+
+//        if ($result) {
+//            return redirect()->route("{$this->groupRoute}.index")->with('success',
+//                trans('panel/crud.msg_created_sucess'));
+//        }
+        //se deu tudo certo redireciona para para rota index
         if ($result) {
-            return redirect()->route("{$this->groupRoute}.index")->with('success',
-                trans('panel/crud.msg_created_sucess'));
+            if ($this->redirect==='edit'){
+                $redirect = redirect()->route("{$this->groupRoute}.edit",$result->id)->with('success', trans('panel/crud.msg_created_sucess'));
+            }else {
+                $redirect = redirect()->route("{$this->groupRoute}.index")->with('success', trans('panel/crud.msg_created_sucess'));
+            }
+
+            return $redirect;
         }
 
         return redirect()->route("{$this->groupRoute}.create")
@@ -182,6 +198,31 @@ class CrudController extends BaseController
     }
 
     /**
+     * Restore a deleted user.
+     *
+     * @param  int $id
+     * @return Redirect
+     */
+    public function restore($id = null)
+    {
+        try {
+            // Get user information
+            $user = $this->model->withTrashed()->find($id);
+
+            // Restore the user
+            $user->restore();
+
+            // Redirect to the user management page
+            return Redirect::route("{$this->groupRoute}.index")->with('success', trans('panel/crud.msg_restored_sucess'));
+        } catch (UserNotFoundException $e) {
+            // Redirect to the user management page
+            return Redirect::route("{$this->groupRoute}.index")
+                ->withErrors(['errors' => trans('panel/crud.msg_updated_error')])
+                ->withInput();
+        }
+    }
+
+    /**
      * metodo que adiciona o id do registro para fazer update nos compos UNIQUE
      *
      * @param $ruleValidate
@@ -209,6 +250,113 @@ class CrudController extends BaseController
     public function redirect($page, array $arrayNotification = null, $id = null)
     {
         return redirect()->route("$this->groupRoute.$page", $id)->with($arrayNotification);
+    }
+
+    /**
+     * para quando for inserir uma pessoa use este method para cadastru um telefone
+     * @return $this
+     */
+    protected function createPhone()
+    {
+        foreach ($this->request->phone as $key => $value) {
+            $dados = ['ddd' => $this->request->ddd[$key], 'phone' => $this->request->phone[$key],
+                'cont_type_id' => $this->request->phone_type_id[$key], 'person_id' => $this->request->person_id];
+            $contPhone = new ContPhone();
+            $validator = validator($dados, $contPhone->rulesStore());
+
+            if ($validator->fails()) {
+                return redirect()->route("{$this->groupRoute}.create")
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+            ContPhone::updateOrCreate(
+                ['id' => $this->request->phone_id[$key]],
+                ['ddd' => $this->request->ddd[$key], 'phone' => $this->request->phone[$key],
+                    'cont_type_id' => $this->request->phone_type_id[$key], 'person_id' => $this->request->person_id]
+            );
+        }
+    }
+
+    /**
+     * para quando estiver fazendo o update de uma pessoa e quise inserir ou alterar uma telefone
+     *
+     * @param $id
+     * @return $this
+     */
+    protected function updatePhone($id)
+    {
+        foreach ($this->request->phone as $key => $value) {
+            $dados = ['ddd' => $this->request->ddd[$key], 'phone' => $this->request->phone[$key],
+                'cont_type_id' => $this->request->phone_type_id[$key], 'person_id' => $this->request->phone_person_id[$key]];
+            $contPhone = new ContPhone();
+            $validator = validator($dados, $contPhone->rulesUpdate($this->request->phone_id[$key]));
+            if ($validator->fails()) {
+                return redirect()->route("{$this->groupRoute}.edit", ['id' => $id])
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+            ContPhone::updateOrCreate(
+                ['id' => $this->request->phone_id[$key]],
+                ['ddd' => $this->request->ddd[$key], 'phone' => $this->request->phone[$key],
+                    'cont_type_id' => $this->request->phone_type_id[$key], 'person_id' => $this->request->phone_person_id[$key]]
+            );
+        }
+    }
+
+    /**
+     * para quando for inserir uma pessoa use este method para cadastru um telefone
+     * @return $this
+     */
+    protected function createEmail()
+    {
+        foreach ($this->request->email as $key => $value) {
+            //dd($this->request->email_type_id[$key]);
+            $dados = ['email' => $this->request->email[$key],
+                'cont_type_id' => $this->request->email_type_id[$key], 'person_id' => $this->request->person_id];
+
+            $contEmail = new ContEmail();
+            $validator = validator($dados, $contEmail->rulesStore());
+
+            if ($validator->fails()) {
+                return redirect()->route("{$this->groupRoute}.create")
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+            ContEmail::updateOrCreate(
+                ['id' => $this->request->email_id[$key]],
+                ['email' => $this->request->email[$key],
+                    'cont_type_id' => $this->request->email_type_id[$key], 'person_id' => $this->request->person_id]
+            );
+        }
+    }
+
+    /**
+     * para quando estiver fazendo o update de uma pessoa e quise inserir ou alterar os emails
+     *
+     * @param $id
+     * @return $this
+     */
+    protected function updateEmail($id)
+    {
+        foreach ($this->request->email as $key => $value) {
+            $dados = ['email' => $this->request->email[$key],
+                'cont_type_id' => $this->request->email_type_id[$key], 'person_id' => $this->request->email_person_id[$key]];
+
+            $contEmail = new ContEmail();
+            $validator = validator($dados, $contEmail->rulesUpdate($this->request->email_id[$key]));
+
+            if ($validator->fails()) {
+                return redirect()->route("{$this->groupRoute}.edit", ['id' => $id])
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            $resultEmail[] = ContEmail::updateOrCreate(
+                ['id' => $this->request->email_id[$key]],
+                ['email' => $this->request->email[$key],
+                    'cont_type_id' => $this->request->email_type_id[$key], 'person_id' => $this->request->email_person_id[$key]]
+            );
+        }
     }
 
 }
