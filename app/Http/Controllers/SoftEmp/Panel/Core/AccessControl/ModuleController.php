@@ -13,11 +13,11 @@ use Illuminate\Http\Request;
  */
 class ModuleController extends CrudController
 {
-    public function __construct(Module $module)
+    public function __construct(Module $module, Request $request)
     {
         $pathView = 'softemp.panel.base.access_control.module';
         $groupRoute = 'panel.access.control.module';
 
-        parent::__construct($module, $groupRoute, $pathView);
+        parent::__construct($module, $request, $groupRoute, $pathView);
     }
 }

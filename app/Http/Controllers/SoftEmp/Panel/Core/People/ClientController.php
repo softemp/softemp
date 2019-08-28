@@ -22,12 +22,12 @@ class ClientController extends CrudController
 
     private $roleClient;
 
-    public function __construct(People $model)
+    public function __construct(People $model, Request $request)
     {
         //definindo o objeto clientes
         $this->roleClient = Role::find(env('ROLE_CLIENT_ID'));
 
-        parent::__construct($model, $this->groupRoute, $this->pathView);
+        parent::__construct($model, $request, $this->groupRoute, $this->pathView);
     }
 
     public function index()

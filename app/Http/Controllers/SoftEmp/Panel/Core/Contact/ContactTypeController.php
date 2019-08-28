@@ -14,8 +14,6 @@ class ContactTypeController extends CrudController
 
     public function __construct(ContType $model, Request $request)
     {
-        $this->request = $request;
-
-        parent::__construct($model, $this->groupRoute, $this->pathView);
+        parent::__construct($model, $request, $this->groupRoute, $this->pathView);
     }
 }

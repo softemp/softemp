@@ -20,9 +20,9 @@ class PeopleController extends CrudController
     protected $pathView = 'softemp.panel.core.people';
     protected $groupRoute = 'panel.people';
 
-    public function __construct(People $model)
+    public function __construct(People $model, Request $request)
     {
-        parent::__construct($model, $this->groupRoute, $this->pathView);
+        parent::__construct($model, $request, $this->groupRoute, $this->pathView);
     }
 
     public function index()

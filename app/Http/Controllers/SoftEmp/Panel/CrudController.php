@@ -39,9 +39,10 @@ class CrudController extends BaseController
      * @param string $groupRoute
      * @param string $pathView
      */
-    public function __construct(object $model, string $groupRoute, string $pathView)
+    public function __construct(object $model, $request, string $groupRoute, string $pathView)
     {
         $this->model = $model;
+        $this->request = $request;
         $this->pathView = $pathView;
         $this->groupRoute = $groupRoute;
     }
@@ -68,17 +69,15 @@ class CrudController extends BaseController
     }
 
     /**
-     *
-     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store()
     {
         if(!method_exists($this->model,'validateStore')) {
-            $validateData = $request->validate($this->model->rules());
+            $validateData = $this->request->validate($this->model->rules());
 
         }else {
-            $validateData = $this->model->validateStore($request, $this->groupRoute . '.index', $this->model->messages());
+            $validateData = $this->model->validateStore($this->request, $this->groupRoute . '.index', $this->model->messages());
 
             if (!is_array($validateData)){
                 return $validateData;
@@ -88,7 +87,8 @@ class CrudController extends BaseController
 //        $obj = $this->model;
 //        $obj->fill($validateData);
 //        $result = $obj->save();
-
+        //dd($request->role_id);
+        //dd($validateData);
         $result = $this->model->create($validateData);
 
 //        if ($result) {
@@ -151,18 +151,15 @@ class CrudController extends BaseController
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
         if(!method_exists($this->model,'validateUpdate')) {
-            $validateData = $request->validate($this->prepareRuleValidate($this->model->rules(), $id));
+            $validateData = $this->request->validate($this->prepareRuleValidate($this->model->rules(), $id));
         }else {
-            $validateData = $this->model->validateUpdate($request->all(), $this->groupRoute . '.edit', $id);
+            $validateData = $this->model->validateUpdate($this->request->all(), $this->groupRoute . '.edit', $id);
         }
 
         $obj = $this->model->find($id);

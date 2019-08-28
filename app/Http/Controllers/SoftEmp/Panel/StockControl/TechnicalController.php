@@ -9,11 +9,11 @@ use App\Http\Controllers\Controller;
 
 class TechnicalController extends CrudController
 {
-    public function __construct(Technical $technical)
+    public function __construct(Technical $technical, Request $request)
     {
         $pathView = 'softemp.panel.stockcontrol.technicals';
         $groupRoute = 'panel.stockcontrol.technical';
 
-        parent::__construct($technical, $groupRoute, $pathView);
+        parent::__construct($technical, $request, $groupRoute, $pathView);
     }
 }

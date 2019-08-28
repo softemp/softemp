@@ -45,10 +45,12 @@ class BaseCoreTableSeeder extends Seeder
             $objOccupationGerenteGeral = $objRolesColaborador->addOccupation(['name'=>'Gerente Geral']);
             $objOccupationGerenteVendas = $objRolesColaborador->addOccupation(['name'=>'Gerente Vendas']);
             $objOccupationGerenteRedeInterno = $objRolesColaborador->addOccupation(['name'=>'Gerente Rede Interno']);
+            $objOccupationSuporteInterno = $objRolesColaborador->addOccupation(['name'=>'Suporte Interno']);
             $objOccupationProgramador = $objRolesColaborador->addOccupation(['name'=>'Programador']);
             $objOccupationGerenteExterno = $objRolesColaborador->addOccupation(['name'=>'Gerente Rede Externo']);
             $objOccupationRecepcionista = $objRolesColaborador->addOccupation(['name'=>'Recepcionista']);
             $objOccupationInstalador = $objRolesColaborador->addOccupation(['name'=>'Instalador']);
+            $objOccupationAuxiliarInstalador = $objRolesColaborador->addOccupation(['name'=>'Auxiliar de Instalador']);
 
             // adiciona do o tipo de pessoa
             $objPeopleTypeFisica = PeopleType::create(['id'=>1,'name'=>'Fisíca']);

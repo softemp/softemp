@@ -19,8 +19,7 @@ class PhysicalController extends CrudController
 
     public function __construct(Physical $model, Request $request)
     {
-        $this->request = $request;
-        parent::__construct($model, $this->groupRoute, $this->pathView);
+        parent::__construct($model, $request, $this->groupRoute, $this->pathView);
     }
 
     public function autocompleteName()

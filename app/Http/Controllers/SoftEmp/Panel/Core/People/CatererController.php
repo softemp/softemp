@@ -22,12 +22,12 @@ class CatererController extends CrudController
 
     private $roleCaterer;
 
-    public function __construct(People $model)
+    public function __construct(People $model, Request $request)
     {
         //definindo o objeto fornecedor
         $this->roleCaterer = Role::find(env('ROLE_CATERER_ID'));
 
-        parent::__construct($model, $this->groupRoute, $this->pathView);
+        parent::__construct($model, $request, $this->groupRoute, $this->pathView);
     }
 
     public function index()
