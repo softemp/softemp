@@ -77,7 +77,7 @@ class CrudController extends BaseController
             $validateData = $this->request->validate($this->model->rules());
 
         }else {
-            $validateData = $this->model->validateStore($this->request, $this->groupRoute . '.index', $this->model->messages());
+            $validateData = $this->model->validateStore($this->request, $this->groupRoute . '.create', $this->model->messages());
 
             if (!is_array($validateData)){
                 return $validateData;
@@ -87,14 +87,8 @@ class CrudController extends BaseController
 //        $obj = $this->model;
 //        $obj->fill($validateData);
 //        $result = $obj->save();
-        //dd($request->role_id);
-        //dd($validateData);
         $result = $this->model->create($validateData);
 
-//        if ($result) {
-//            return redirect()->route("{$this->groupRoute}.index")->with('success',
-//                trans('panel/crud.msg_created_sucess'));
-//        }
         //se deu tudo certo redireciona para para rota index
         if ($result) {
             if ($this->redirect==='edit'){
@@ -159,7 +153,11 @@ class CrudController extends BaseController
         if(!method_exists($this->model,'validateUpdate')) {
             $validateData = $this->request->validate($this->prepareRuleValidate($this->model->rules(), $id));
         }else {
-            $validateData = $this->model->validateUpdate($this->request->all(), $this->groupRoute . '.edit', $id);
+            $validateData = $this->model->validateUpdate($this->request, $this->groupRoute . '.edit', $id, $this->model->messages());
+
+            if (!is_array($validateData)){
+                return $validateData;
+            }
         }
 
         $obj = $this->model->find($id);

@@ -5,6 +5,7 @@ namespace App\Models;
 
 
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\Types\Object_;
 
 trait ValidateTrait
 {
@@ -33,18 +34,18 @@ trait ValidateTrait
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function validateUpdate($data, $route, $id = null)
+    public function validateUpdate($request, $route, string $id, array $messages = [])
     {
-        //$data = $request->all();
+        $data = $request->all();
 
-        $validator = Validator::make($data, $this->rulesUpdate($id))->validate();
+        $validator = Validator::make($data, $this->rulesUpdate($id), $messages);
+        //$validator = Validator::make($data, $this->rulesUpdate($id))->validate();
 
-
-//        if ($validator->fails()) {
-//            return redirect()->route($route, $id)
-//                ->withErrors($validator)
-//                ->withInput();
-//        }
+        if ($validator->fails()) {
+            return redirect()->route($route, $id)
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         return $data;
     }

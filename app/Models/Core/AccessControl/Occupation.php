@@ -41,8 +41,13 @@ class Occupation extends Model
         ];
     }
 
+    /**
+     * @return array
+     */
     public function messages(){
-        return [];
+        return [
+           'name.unique'=>'Esta Ocupação ja existe.'
+        ];
     }
 
     /**
@@ -53,7 +58,7 @@ class Occupation extends Model
     {
         return [
             'name'=>'required|min:3|unique:occupations,name,'.$id,
-            'description'=>'',
+            'description'=>'nullable|max:191',
         ];
     }
 

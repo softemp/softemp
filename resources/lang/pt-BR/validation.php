@@ -135,6 +135,25 @@ return [
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
-    'attributes' => [],
+    'attributes' => [
+        //'age' => 'idade',
+        //'body' => 'conteúdo',
+        'description' => 'descrição',
+        'excerpt' => 'resumo',
+        //'first_name' => 'primeiro nome',
+        'gender' => 'gênero',
+        //'last_name' => 'sobrenome',
+        'message' => 'mensagem',
+        //'mobile' => 'celular',
+        'name' => 'nome',
+        'password_confirmation' => 'confirmação da senha',
+        'password' => 'senha',
+        'phone' => 'telefone',
+        'sex' => 'sexo',
+        'subject' => 'assunto',
+        'text' => 'texto',
+        'title' => 'título',
+        'username' => 'usuário',
+    ],
 
 ];
