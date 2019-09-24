@@ -48,7 +48,7 @@
                         <td>{{$equipment->mac}}</td>
                         <td>
                             @if($equipment->status == 1)<span class="label label-success">Em estoque</span>
-                            @elseif($equipment->status == 2)<span class="label label-warning">Equipamento com técnicophp </span>
+                            @elseif($equipment->status == 2)<span class="label label-warning">Equipamento com técnico</span>
                             @elseif($equipment->status == 3)<span class="label label-info">Com cliente</span>
                             @elseif($equipment->status == 4)<span class="label label-danger">Equipamento no lixo</span>
                             @endif
@@ -56,34 +56,34 @@
                         <td>
                             <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>
 
-                            {{--                        @if ($equipment->status == 1)--}}
-                            {{--                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>--}}
-                            {{--                                <a href="#"--}}
-                            {{--                                   onclick="putTrash({{$equipment->id}})" title="Mover para Lixeira" class="btn btn-xs btn-danger">--}}
-                            {{--                                    <i class="fa fa-trash"></i>--}}
-                            {{--                                </a>--}}
+                                                    @if ($equipment->status == 1)
+                                                            <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
+                                                            <a href="#"
+                                                               onclick="putTrash({{$equipment->id}})" title="Mover para Lixeira" class="btn btn-xs btn-danger">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
 
-                            {{--                            @elseif($equipment->status == 2)--}}
-                            {{--                                <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>--}}
-                            {{--                                <a href="#" onclick="putStock({{$equipment->id}})"--}}
-                            {{--                                   title="Devolver ao estoque" class="btn btn-xs btn-success">--}}
-                            {{--                                    <i class="fa fa-download"></i>--}}
-                            {{--                                </a>--}}
+                                                        @elseif($equipment->status == 2)
+                                                            <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" title="Ver" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>
+                                                            <a href="#" onclick="putStock({{$equipment->id}})"
+                                                               title="Devolver ao estoque" class="btn btn-xs btn-success">
+                                                                <i class="fa fa-download"></i>
+                                                            </a>
 
-                            {{--                            @elseif ($equipment->status == 3)--}}
-                            {{--                                <a href="#" onclick="putStock({{$equipment->id}})"--}}
-                            {{--                                   title="Devolver ao estoque" class="btn btn-xs btn-success">--}}
-                            {{--                                    <i class="fa fa-download"></i>--}}
-                            {{--                                </a>--}}
+                                                        @elseif ($equipment->status == 3)
+                                                            <a href="#" onclick="putStock({{$equipment->id}})"
+                                                               title="Devolver ao estoque" class="btn btn-xs btn-success">
+                                                                <i class="fa fa-download"></i>
+                                                            </a>
 
-                            {{--                            @elseif($equipment->status == 4)--}}
-                            {{--                                <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>--}}
-                            {{--                                <a href="#" onclick="putStock({{$equipment->id}})"--}}
-                            {{--                                   title="Devolver ao estoque" class="btn btn-xs btn-success">--}}
-                            {{--                                    <i class="fa fa-download"></i>--}}
-                            {{--                                </a>--}}
-                            {{--                            @endif--}}
-                            {{--                            <a href="#" title="Notas" class="btn btn-xs btn-facebook"><i class="fa fa-sticky-note"></i></a>--}}
+                                                        @elseif($equipment->status == 4)
+                                                            <a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" title="Alterar" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a>
+                                                            <a href="#" onclick="putStock({{$equipment->id}})"
+                                                               title="Devolver ao estoque" class="btn btn-xs btn-success">
+                                                                <i class="fa fa-download"></i>
+                                                            </a>
+                                                        @endif
+{{--                                                        <a href="#" title="Notas" class="btn btn-xs btn-facebook"><i class="fa fa-sticky-note"></i></a>--}}
 
                         </td>
                     </tr>
@@ -133,7 +133,7 @@
     <script src="{{ asset('softemp/panel/vendors/dataTables/js/dataTable.js') }}"></script>
     <!-- page script -->
     <script>
-    
+
         var token = document.getElementById('token').value;
 
 

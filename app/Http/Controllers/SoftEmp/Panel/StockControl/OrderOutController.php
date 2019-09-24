@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Softemp\Panel\StockControl;
 use App\Http\Controllers\SoftEmp\Panel\CrudController;
 use App\Models\StockControl\Equipment;
 use App\Models\StockControl\OrderOut;
+use App\Models\StockControl\OrderOutEquipment;
 use App\Models\StockControl\Technical;
 use Illuminate\Http\Request;
 
@@ -75,7 +76,7 @@ class OrderOutController extends CrudController
         return redirect()->route($this->groupRoute.'.index')->with(['success' => 'Ordem finalizada']);
     }
 
-    public function assignEquipment()
+    public function assignEquipment(OrderOutEquipment $orderOutEquipment)
     {
         $order = $this->model->orderEquipmentDestination()->create([
             'equipment_id' => $this->request->equipment_id,
@@ -84,6 +85,7 @@ class OrderOutController extends CrudController
         ]);
         $equipment = $this->equipment->putClient($this->request->equipment_id);
         $orderId = $this->request->order_out_id;
+        $orderOutEquipment->updateStatus($this->request->pivotId);
 
         if ($order && $equipment){
             return $this->redirect('show', ['success' => 'Equipamento destinado com sucesso'], $orderId);
@@ -127,6 +129,12 @@ class OrderOutController extends CrudController
         $this->arrayData['data'] = $this->model->find($id);
 
         return view("$this->pathView.print", $this->arrayData);
+    }
+
+    public function oestatusUpdate(OrderOutEquipment $orderOutEquipment)
+    {
+        $oestatusId = $_POST['oestatusid'];
+        $orderOutEquipment->updateStatus($oestatusId);
     }
 
 //

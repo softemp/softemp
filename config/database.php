@@ -7,13 +7,13 @@
 $modules = [
     'core',
     'stockcontrol',
-    'mkauth'=>[
-        'db_host'=>'_MKAUTH',
-        'db_database'=>'_MKAUTH',
-        'db_username'=>'_MKAUTH',
-        'db_password'=>'_MKAUTH',
-        'strict' =>'_MKAUTH',
-    ]
+//    'mkauth'=>[
+//        'db_host'=>'_MKAUTH',
+//        'db_database'=>'_MKAUTH',
+//        'db_username'=>'_MKAUTH',
+//        'db_password'=>'_MKAUTH',
+//        'strict' =>'_MKAUTH',
+//    ]
 ];
 
 $connections = array();

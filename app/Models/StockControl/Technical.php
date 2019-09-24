@@ -19,7 +19,7 @@ class Technical extends Model
     public function rulesStore (){
         return [
             'name'=>'required|unique:mysql_stockcontrol.technicals|min:3|max:255',
-            'fone'=>'required|unique:mysql_stockcontrol.technicals|min:8|max:9',
+            'fone'=>'required|unique:mysql_stockcontrol.technicals|min:8|max:15',
         ];
     }
 

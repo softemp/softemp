@@ -64,7 +64,7 @@ class Equipment extends Model
      */
     public function equipmentOrders()
     {
-        return $this->belongsToMany(OrderOut::class, 'order_out_equipment', 'order_out_id', 'equipment_id', 'id' );
+        return $this->belongsToMany(OrderOut::class, 'order_out_equipment', 'equipment_id', 'order_out_id')->withPivot('oestatus', 'id');
     }
 
     /**
