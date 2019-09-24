@@ -4,15 +4,26 @@
 namespace App\Helpers\Occupations;
 
 
-use App\Models\Core\AccessControl\Occupation;
 use App\Models\Core\People\Physical;
-use Illuminate\Database\Query\Builder;
 
+/**
+ * Classe responsavel por tratar os dados dos instaladores
+ *
+ * Class Installer
+ * @package App\Helpers\Occupations
+ */
 class Installer
 {
-
+    /**
+     * obj Intallers
+     *
+     * @var Physical
+     */
     private $physical;
 
+    /**
+     * Installer constructor.
+     */
     public function __construct()
     {
         $this->physical = new Physical;
@@ -21,7 +32,7 @@ class Installer
     /**
      * Buscar todos os instaladores
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
     public static function getAllInstallers()
     {
@@ -34,6 +45,11 @@ class Installer
         return $query->get();
     }
 
+    /**
+     * Buscar os instaladores ativos
+     *
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
     public static function getActiveInstallers()
     {
         $query = (new static)->physical->getInstallers();
@@ -45,6 +61,11 @@ class Installer
         return $query->get();
     }
 
+    /**
+     * Buscar os instaladores desativados
+     *
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
     public static function getDisabledInstallers()
     {
         $query = (new static)->physical->getInstallers();
@@ -62,7 +83,7 @@ class Installer
      * @param $id
      * @return mixed
      */
-    public static function findInstallers($id)
+    public static function findInstaller($id)
     {
         $installer = Physical::find($id);
         return $installer;
