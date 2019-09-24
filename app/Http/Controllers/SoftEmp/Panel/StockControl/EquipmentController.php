@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Softemp\Panel\StockControl;
 use App\Models\StockControl\Equipment;
 use App\Models\StockControl\EquipmentDestination;
 use App\Models\StockControl\EquipmentModel;
+use App\Models\StockControl\OrderOutEquipment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SoftEmp\Panel\CrudController;
 
@@ -62,18 +63,23 @@ class EquipmentController extends CrudController
         return view('equipments.inuse', compact('equipments'));
     }
 
+    public function putStockFromOrder(OrderOutEquipment $orderOutEquipment)
+    {
+        $return = $this->model->putStock($this->request->equipmentId);
+        $return2 = $orderOutEquipment->updateStatus($this->request->pivotId);
+        if ($return && $return == true){
+            return response()->json(true);
+        }else{
+            return response()->json(false);
+        }
+    }
+
     public function putStock()
     {
-        $equipmentId = $_POST['equipmentid'];
-
+        $equipmentId = $this->request->equipmentid;
         $return = $this->model->putStock($equipmentId);
 
         return response()->json($return);
-
-//        $this->equipment->putStock($data->equipmentId);
-
-//        return redirect()->route('panel.stockcontrol.order.view.', $data->orderid)->with('success', 'Equipamento de volta ao estoque');
-
     }
 
     public function putTrash()

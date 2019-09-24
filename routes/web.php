@@ -313,6 +313,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                             Route::post('/cadastrar/novo', 'EquipmentController@store')->name('equipment.store');
                             Route::post('/lixeira', 'EquipmentController@putTrash')->name('equipment.putTrash');
                             Route::post('/devolver', 'EquipmentController@putStock')->name('equipment.putStock');
+                            Route::post('/devolverOrdem', 'EquipmentController@putStockFromOrder')->name('equipment.putStockFromOrder');
                             Route::post('/buscar',
                                 'EquipmentController@barCodeSearch')->name('equipment.barCodeSearch');
                             Route::get('/show/{id}', 'EquipmentController@show')->name('equipment.show');
@@ -353,7 +354,8 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                             Route::put('/update/{id}', 'OrderOutController@update')->name('order.update');
                             Route::get('/cadastrar', 'OrderOutController@create')->name('order.create');
                             Route::post('/cadastrar/novo', 'OrderOutController@store')->name('order.store');
-                            Route::get('/show/{id}', 'OrderOutController@show')->name('order.show');
+                            Route::post('/oestatus', 'OrderOutController@oestatusUpdate')->name('order.oestatusupdate');
+                            Route::get('/ver/{id}', 'OrderOutController@show')->name('order.show');
                             Route::delete('/remover/{id}', 'OrderOutController@destroy')->name('order.destroy');
                             Route::get('/fechar/{id}', 'OrderOutController@closeOrder')->name('order.close');
                             Route::post('/destinar',

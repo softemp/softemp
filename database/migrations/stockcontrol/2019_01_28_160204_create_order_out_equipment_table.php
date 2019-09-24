@@ -12,6 +12,7 @@ class CreateOrderOutEquipmentTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('order_out_id');
             $table->unsignedBigInteger('equipment_id');
+            $table->bigInteger('oestatus')->default(1);
 
             $table->timestamps();
 

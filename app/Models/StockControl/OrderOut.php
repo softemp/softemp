@@ -32,7 +32,7 @@ class OrderOut extends Model
 
     public function equipment()
     {
-        return $this->belongsToMany(Equipment::class, 'order_out_equipment', 'order_out_id', 'equipment_id');
+        return $this->belongsToMany(Equipment::class, 'order_out_equipment', 'order_out_id', 'equipment_id')->withPivot('oestatus', 'id');
     }
 
     public function orderEquipmentDestination()
@@ -88,5 +88,10 @@ class OrderOut extends Model
         return false;
 
     }
+
+//    public function equipmentOrder()
+//    {
+//        return $this->belongsToMany(Equipment::class, 'order_out_equipment', 'order_out_id','equipment_id')->withPivot('oestatus');
+//    }
 
 }

@@ -50,16 +50,13 @@
                 </thead>
                 <tbody>
                 @foreach($data->equipment as $equipment)
+{{--                    {{dd($equipment->pivot->oestatus)}}--}}
                     <tr>
                         <td>
-                            @if($equipment->status == 1)
-                                <span class="label label-success">Devolvido</span>
-                            @elseif($equipment->status == 2)
+                            @if($equipment->pivot->oestatus == 0)
+                                <span class="label label-success">Dado Baixa</span>
+                            @elseif($equipment->pivot->oestatus == 1)
                                 <span class="label label-warning">Com técnico</span>
-                            @elseif($equipment->status == 3)
-                                <span class="label label-success">Destinado</span>
-                            @elseif($equipment->status == 4)
-                                <span class="label label-danger">Equipamento no lixo</span>
                             @endif
                         </td>
                         <td>{{$equipment->equipmentModel->name}}</td>
@@ -71,18 +68,18 @@
                             </div>
                         </td>
                         <td>
-                            @if($equipment->status == 2)
-                                <a href="#" onclick="putStock('{{$data->id}}', '{{$equipment->id}}')"
+                            @if($equipment->pivot->oestatus == 1)
+                                <a href="#" onclick="putStock('{{$data->id}}', '{{$equipment->id}}', '{{$equipment->pivot->id}}')"
                                    title="Devolver ao estoque" class="btn btn-xs btn-success">
                                     <i class="fa fa-download"></i>
                                 </a>
                                 <a href="#" data-toggle="modal" data-target="#modal-show-columns"
                                    title="Destinar equipamento" class="btn btn-xs btn-warning"
-                                   onclick="destiny('{{$data->id}}', '{{$equipment->id}}')">
+                                   onclick="destiny('{{$data->id}}', '{{$equipment->id}}', '{{$equipment->pivot->id}}')">
                                     <i class="fa fa-upload"></i>
                                 </a>
                             @endif
-                            @if ($equipment->status <> 2)
+                            @if ($equipment->pivot->oestatus <> 1)
                                     <a href="{{route('panel.stockcontrol.equipment.show', $equipment->id)}}" title="Ver equipamento" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a>
                                 @endif
                             {{--<a href="{{route('panel.stockcontrol.equipment.edit', $equipment->id)}}" title="Destinar a um cliente" class="btn btn-xs btn-success"><i class="fa fa-upload"></i></a>--}}
@@ -96,7 +93,7 @@
                 </tbody>
             </table>
             <a href="{{route('panel.stockcontrol.order.print', $data->id)}}" class="btn btn-primary" target="_blank">Imprimir ordem</a>
-            @if ($data->status == 2)
+            @if ($equipment->pivot->oestatus == 1)
             @else
                 @if($close)
                     <a class="btn btn-success" href="{{route('panel.stockcontrol.order.close', $data->id)}}">Fechar ordem</a>
@@ -130,6 +127,7 @@
                     {!! Form::textarea('destination', null, ['class' => 'form-control', 'id'=>'destination', 'required', 'autofocus', 'placeholder'=>'Destino do equipamento']) !!}
                     {!! Form::hidden('equipment_id', null, ['id' => 'equipment_id']) !!}
                     {!! Form::hidden('order_out_id', null, ['id' => 'order_out_id']) !!}
+                    {!! Form::hidden('pivotId', null, ['id' => 'pivotId']) !!}
                 </div>
                 <div class="modal-footer">
                     {!! Form::submit('Enviar', ['class' => 'btn btn-success pull-left']) !!}
@@ -178,23 +176,42 @@
         });
     </script>
     <script>
-        function destiny(orderId, equipmentId) {
+        function destiny(orderId, equipmentId, pivotId) {
 
             document.getElementById('equipment_id').value = equipmentId;
             document.getElementById('order_out_id').value = orderId;
+            document.getElementById('pivotId').value = pivotId;
         }
 
-        function putStock(orderId, equipmentId)
+        function putStock(orderId, equipmentId, pivot)
         {
             var token = document.getElementById('token').value;
 
             $.ajax({
-                url: "{{route('panel.stockcontrol.equipment.putStock')}}",
+                url: "{{route('panel.stockcontrol.equipment.putStockFromOrder')}}",
                 type: "POST",
                 data:{
-                    "equipmentid" : equipmentId,
-                    "orderid" : orderId,
-                    "_token" : token
+                    "equipmentId"   :   equipmentId,
+                    "pivotId"       :   pivot,
+                    "orderId"       :   orderId,
+                    "_token"        : token
+                },
+                success: function(response) {
+                    location.reload()
+                }
+            })
+        }
+
+        function oestatusUpdate($id)
+        {
+            var token = document.getElementById('token').value;
+
+            $.ajax({
+                url: "{{route('panel.stockcontrol.order.oestatusupdate')}}",
+                type: "POST",
+                data:{
+                    "oestatusid"   :   $id,
+                    "_token"        :   token
                 },
                 success: function(response) {
                     location.reload()
