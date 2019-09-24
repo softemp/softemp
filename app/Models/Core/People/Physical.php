@@ -3,9 +3,11 @@
 namespace App\Models\Core\People;
 
 use App\Models\Core\AccessControl\Occupation;
+use App\Models\Core\AccessControl\Role;
 use App\Models\Core\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 
 class Physical extends Model
 {
@@ -123,6 +125,22 @@ class Physical extends Model
         }
 
         return str_replace(['.','-','/','(',')',' '], '', $param);
+    }
+
+    public function getInstallers(){
+        $query = $this->query();
+        $this->getOccupationInstaller($query);
+        return $query;
+    }
+
+    private function getOccupationInstaller($query)
+    {
+//        $value = $this->value;
+        $value = '7313-05';
+
+        $query->whereHas('occupations', function ($query2) use ($value) {
+            $query2->where('cbo2002', $value);
+        });
     }
 
 }

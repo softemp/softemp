@@ -13,7 +13,8 @@ $modules = [
         'db_username'=>'_MKAUTH',
         'db_password'=>'_MKAUTH',
         'strict' =>'_MKAUTH',
-    ]
+    ],
+    'website'
 ];
 
 $connections = array();

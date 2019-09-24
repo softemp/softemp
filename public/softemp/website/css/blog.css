@@ -1,0 +1,236 @@
+/*---------- Blog Custom Css ---------- */
+.mt-23{
+    margin-top: 23px;
+}
+.blog {
+    margin-top: 2%;
+}
+
+.blog h3 {
+    margin-top: -7px;
+    margin-bottom: 0;
+    padding-left: 3%;
+}
+.h3, h3 {
+    font-size: 23px
+}
+
+.blog img {
+    margin: 1% 2% 2% 2%;
+    max-width: 100%;
+}
+
+.right-blog a {
+    color: #787878;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.right-blog h6 {
+    color: #ef6f6c;
+    margin-top: -1%;
+    margin-bottom: 6%;
+    font-size: 12px;
+}
+
+.right-blog h5{
+    font-size: 13px;
+}
+.right-blog span{
+    margin-top: 5px;
+}
+.panel-heading h4{
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+.april a {
+    color: #128bc6;
+}
+/* ---------- Box Css Start ---------- */
+.the-box {
+    padding: 15px;
+    margin-bottom: 30px;
+    border: 1px solid #D5DAE0;
+    position: relative;
+    background: white;
+    margin-top: 6%;
+    border-radius: 4px;
+}
+.the-box h4{
+    margin-top: 10px;
+}
+.the-box1 {
+    padding: 15px;
+    margin-bottom: 30px;
+    position: relative;
+    background: white;
+    margin-top: 5%;
+    border-radius: 4px;
+}
+/* ---------- Box Css Start End ---------- */
+/*---------- //Blog Custom Css End ---------- */
+
+.martop13 {
+    margin-top: 13px;
+}
+/* ---------- Blog Item Css Start ---------- */
+/* ---------- Featured-text Css Start ---------- */
+.featured-text {
+    position: relative;
+    background: #fff;
+    padding: 15px 15px 15px 40px;
+    z-index: 3;
+}
+/* ---------- //Featured-text Css End ---------- */
+blockquote {
+    padding-right: 15px;
+    padding-left: 0;
+    text-align: right;
+    border-right: 1px solid #ef6f6c;
+    border-left: 0;
+}
+
+.thumbnail {
+    display: block;
+    padding: 4px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-top: 2%;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+
+    margin-bottom: 18px;
+}
+.thumbnail h3{
+    margin-top: 1%;
+}
+.the-box h3{
+    margin-top: 0;
+    margin-bottom: 0;
+
+}
+.media{
+    margin-top: 0;
+}
+.media-heading p{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.pagination{
+    margin: 0;
+}
+textarea{
+    resize: vertical;
+}
+@media (min-width:320px) and (max-width:768px){
+    .margin_left_right{
+        margin-left:0px !important;
+        margin-right:0px !important;
+    }
+
+
+}
+@media (min-width:320px) and (max-width:425px){
+    .featured-text.relative-left iframe,.thumbnail iframe{
+        width:100% !important;
+        height:100% !important;
+    }
+}
+@media (max-width:768px){
+    .featured-text.relative-left iframe,.thumbnail iframe{
+        width:100% !important;
+    }
+}
+.featured-text p.text-right a{
+    color:#fff;
+
+}
+.featured-text p a,.thumbnail p a{
+    color:#4FC1E9;
+    word-wrap:break-word;
+}
+
+/* ---------- //Blog item Css End ---------- */
+.pager {
+    padding-left: 0;
+    margin: 18px 0;
+    list-style: none;
+    text-align: center;
+
+}
+.pagination {
+    margin: 0;
+    display:inline-block;
+}
+.pagination > li{
+    display:inline-block;
+
+}
+.pagination > li > span {
+    position: relative;
+    padding: 6px 12px;
+    line-height: 1.42857;
+    text-decoration: none;
+    color: #4FC1E9;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-left: -1px;
+}
+.pager .disabled > span {
+    color: #fff;
+    background-color: #4FC1E9;
+    cursor: not-allowed;
+}
+.pagination > li:first-child > a, .pagination > li:first-child > span {
+    margin-left: 0;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+.pager .disabled > a, .pager .disabled > a:hover, .pager .disabled > a:focus, .pager .disabled > span {
+    color: #fff;
+    background-color: #4FC1E9;
+    cursor: not-allowed;
+}
+.pager li > a, .pager li > span {
+    display: inline-block;
+    padding: 5px 14px;
+    background-color: #4FC1E9;
+    /* border: 1px solid #4FC1E9; */
+    border-radius: 15px;
+}
+.pagination > li:last-child > a, .pagination > li:last-child > span {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+/*.pagination > .disabled > span, .pagination > .disabled > span:hover {*/
+    /*color: #777777;*/
+    /*background-color: #fff;*/
+    /*border-color: #ddd;*/
+    /*cursor: not-allowed;*/
+/*}*/
+
+/*.pager .disabled > a, .pager .disabled > a:hover, .pager .disabled > a:focus, .pager .disabled > span {*/
+    /*color: #fff;*/
+    /*background-color: #4FC1E9;*/
+    /*cursor: not-allowed;*/
+/*}*/
+
+/*.pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus {*/
+    /*color: #777777;*/
+    /*background-color: #fff;*/
+    /*border-color: #ddd;*/
+    /*cursor: not-allowed;*/
+/*}*/
+ .pager .disabled > span:hover {
+     color: #777777;
+     background-color: #fff;
+     border-color: #ddd;
+     cursor: not-allowed;
+
+
+ }

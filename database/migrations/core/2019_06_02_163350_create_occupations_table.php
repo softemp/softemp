@@ -17,6 +17,7 @@ class CreateOccupationsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
 //            $table->string('slug')->unique();
+            $table->string('cbo2002');
             $table->text('description')->nullable();
 
             $table->unsignedBigInteger('role_id');

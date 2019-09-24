@@ -42,15 +42,17 @@ class BaseCoreTableSeeder extends Seeder
             $objRolesDependete= Role::create(['id'=>8,'name'=>'Dependente', 'slug'=>Str::slug('dependent')]);
 
             // adicionando as Ocupações dos funcionários dentro da empresa
-            $objOccupationGerenteGeral = $objRolesColaborador->addOccupation(['name'=>'Gerente Geral']);
-            $objOccupationGerenteVendas = $objRolesColaborador->addOccupation(['name'=>'Gerente Vendas']);
-            $objOccupationGerenteRedeInterno = $objRolesColaborador->addOccupation(['name'=>'Gerente Rede Interno']);
-            $objOccupationSuporteInterno = $objRolesColaborador->addOccupation(['name'=>'Suporte Interno']);
-            $objOccupationProgramador = $objRolesColaborador->addOccupation(['name'=>'Programador']);
-            $objOccupationGerenteExterno = $objRolesColaborador->addOccupation(['name'=>'Gerente Rede Externo']);
-            $objOccupationRecepcionista = $objRolesColaborador->addOccupation(['name'=>'Recepcionista']);
-            $objOccupationInstalador = $objRolesColaborador->addOccupation(['name'=>'Instalador']);
-            $objOccupationAuxiliarInstalador = $objRolesColaborador->addOccupation(['name'=>'Auxiliar de Instalador']);
+            $objOccupationDiretorAdministrativoFinanceiro = $objRolesColaborador->addOccupation(['cbo2002'=>'1231-10','name'=>'Diretor administrativo e financeiro','description'=>'Superintendente administrativo e financeiro']);
+            $objOccupationGerenteVendas = $objRolesColaborador->addOccupation(['cbo2002'=>'1423-20','name'=>'Gerente de vendas','description'=>'Gerente de departamento de vendas, Gerente de exportação, Gerente de mercado, Gerente de área de vendas, Gerente distrital de vendas, Gerente geral de vendas, Gerente nacional de vendas, Gerente regional de vendas']);
+            $objOccupationGerenteCompras = $objRolesColaborador->addOccupation(['cbo2002'=>'1424-05','name'=>'Administrador de compras, Coordenador de compras, Gerente de materiais, Gerente de planejamento de compras, Gerente geral de compras, Gerente nacional de compras']);
+            $objOccupationProgramador = $objRolesColaborador->addOccupation(['cbo2002'=>'3171-10','name'=>'Programador de sistemas de informação']);
+            $objOccupationGerenteRede = $objRolesColaborador->addOccupation(['cbo2002'=>'1425-05','name'=>'Gerente de rede','description'=>'Gerente de infra-estrutura de tecnologia da informação, Gerente de teleprocessamento']);
+            $objOccupationGerenteDesenvolvimento = $objRolesColaborador->addOccupation(['cbo2002'=>'1425-10','name'=>'Gerente de desenvolvimento de sistemas','description'=>'Gerente de programação de sistema']);
+            $objOccupationGerenteProjetos = $objRolesColaborador->addOccupation(['cbo2002'=>'1425-20','name'=>'Gerente de projetos de tecnologia da informação']);
+            $objOccupationGerenteSuporte = $objRolesColaborador->addOccupation(['cbo2002'=>'1425-30','name'=>'Gerente de suporte técnico de tecnologia da informação']);
+            $objOccupationRecepcionista = $objRolesColaborador->addOccupation(['cbo2002'=>'4221','name'=>'Recepcionistas']);
+            $objOccupationInstalador = $objRolesColaborador->addOccupation(['cbo2002'=>'7313-05','name'=>'Instalador de equipamentos de comunicação']);
+            $objOccupationAuxiliarInstalador = $objRolesColaborador->addOccupation(['cbo2002'=>'3741-10','name'=>'Auxiliar de instalação (equipamentos de rádio)']);
 
             // adiciona do o tipo de pessoa
             $objPeopleTypeFisica = PeopleType::create(['id'=>1,'name'=>'Fisíca']);
@@ -70,8 +72,8 @@ class BaseCoreTableSeeder extends Seeder
             $objPerson_3 = $objPeopleTypeFisica->addPeople([]);
 //            $objPerson_3->addRole($objRolesAdministrador);
             $objRolesColaborador_1 = $objPerson_3->addRole($objRolesColaborador);
-            $objPhysical_2 = $objPerson_3->addPhysical(['name'=>'Willian','document'=>'95258417582']);
-            $objPhysical_2->addOccupation($objOccupationGerenteRedeInterno);
+            $objPhysical_2 = $objPerson_3->addPhysical(['name'=>'Willian Woiciechoski','document'=>'03824286092']);
+            $objPhysical_2->addOccupation($objOccupationGerenteRede);
             $objPhysical_2->addUser(['username'=>'willian','password'=>'12345678']);
 
             // adicionando a pessoa fisica Colaborador da empresa
@@ -85,7 +87,7 @@ class BaseCoreTableSeeder extends Seeder
             $objPerson_5 = $objPeopleTypeFisica->addPeople([]);
             $objRolesColaborador_3 = $objPerson_5->addRole($objRolesColaborador);
             $objPhysical_4 = $objPerson_5->addPhysical(['name'=>'Luciano da Silva','document'=>'18258417582']);
-            $objPhysical_4->addOccupation($objOccupationGerenteExterno);
+            $objPhysical_4->addOccupation($objOccupationInstalador);
             $objPhysical_4->addUser(['username'=>'luciano','password'=>'12345678']);
 
             // adicionando a pessoa fisica Colaborador da empresa
@@ -117,10 +119,12 @@ class BaseCoreTableSeeder extends Seeder
             $objPhysical_8->addOccupation($objOccupationInstalador);
             $objPhysical_8->addUser(['username'=>'tiago','password'=>'12345678']);
 
+            //Cliente
             $objPerson_10 = $objPeopleTypeJuridica->addPeople([]);
             $objRolesCliente_2 = $objPerson_10->addRole($objRolesCliente);
             $objCompany_2 = $objPerson_10->addCompany(['business_name'=>'Floripa Server LTDA ME', 'fantasy_name'=>'Floripa Server', 'document'=>'10916734000155']);
 
+            //Fornecedores
             $objPerson_11 = $objPeopleTypeJuridica->addPeople([]);
             $objRolesFornecedor_1 = $objPerson_11->addRole($objRolesForncedor);
             $objCompany_3 = $objPerson_11->addCompany(['business_name'=>'WR', 'fantasy_name'=>'WR', 'document'=>'10919734000185']);

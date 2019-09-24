@@ -57,7 +57,7 @@
                 @foreach($data as $order)
                     <tr>
                         <td>{{$order->id}}</td>
-                        <td>{{$order->technicals->name}}</td>
+                        <td>{{$order->technicals->physical->name}}</td>
                         <td>{{count($order->equipment)}}</td>
                         <td>
                             @if ($order->status == 2)
