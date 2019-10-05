@@ -29,20 +29,17 @@ class ClientController extends Controller
     }
 
     public function active(){
-        $data = $this->model->where('cli_ativado', 's')->get();
+        $data = $this->model->getActive();
         return view("{$this->pathView}.index", compact('data'));
     }
 
     public function blocked(){
-        $data = $this->model
-            ->where('cli_ativado', 's')
-                ->where('bloqueado', 'sim')
-            ->get();
+        $data = $this->model->getBlocked();
         return view("{$this->pathView}.index", compact('data'));
     }
 
     public function disabled(){
-        $data = $this->model->where('cli_ativado', 'n')->get();
+        $data = $this->model->getDisabled();
         return view("{$this->pathView}.index", compact('data'));
     }
 }
