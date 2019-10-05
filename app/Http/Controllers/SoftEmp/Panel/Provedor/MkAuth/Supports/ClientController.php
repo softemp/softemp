@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\SoftEmp\Panel\MkAuth;
+namespace App\Http\Controllers\SoftEmp\Panel\Provedor\MkAuth;
 
 use App\Http\Controllers\SoftEmp\CrudController;
-use App\Models\MkAuth\People\Client;
+use App\Models\Provedor\MkAuth\People\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

@@ -265,7 +265,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                 // end Directory Core
 
                 // Directoy MkAuth
-                Route::group(['namespace' => 'MkAuth', 'prefix' => '/mkauth', 'as' => 'mkauth.'], function () {
+                Route::group(['namespace' => 'Provedor\MkAuth', 'prefix' => '/mkauth', 'as' => 'mkauth.'], function () {
                     // Tables
                     Route::group(['namespace' => 'Table', 'prefix' => '/tabelas', 'as' => 'table.'], function () {
                         Route::get('/', 'TableController@index')->name('index');

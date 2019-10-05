@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\SoftEmp\Panel\MkAuth\Table;
+namespace App\Http\Controllers\SoftEmp\Panel\Provedor\MkAuth\Table;
 
-use App\Models\MkAuth\Table;
+use App\Models\Provedor\MkAuth\Table;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;

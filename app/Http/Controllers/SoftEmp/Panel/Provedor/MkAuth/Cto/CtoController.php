@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\SoftEmp\Panel\MkAuth\Cto;
+namespace App\Http\Controllers\SoftEmp\Panel\Provedor\MkAuth\Cto;
 
 use App\Http\Controllers\Controller;
-use App\Models\MkAuth\Client;
+use App\Models\Provedor\MkAuth\Client;
 
 class CtoController extends Controller
 {

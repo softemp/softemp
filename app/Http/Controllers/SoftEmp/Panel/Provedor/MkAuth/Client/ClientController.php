@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\SoftEmp\Panel\MkAuth\Client;
+namespace App\Http\Controllers\SoftEmp\Panel\Provedor\MkAuth\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\MkAuth\Client;
+use App\Models\Provedor\MkAuth\Client;
 
 class ClientController extends Controller
 {

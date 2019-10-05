@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\MkAuth;
+namespace App\Models\Provedor\MkAuth;
 
 use Illuminate\Database\Eloquent\Model;
 
