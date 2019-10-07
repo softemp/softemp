@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 class TableController extends Controller
 {
 
-    protected $pathView = 'softemp.panel.mkauth.table';
-    protected $groupRoute = 'softemp.panel.mkauth.table';
+    protected $pathView = 'softemp.panel.provedor.mkauth.table';
+    protected $groupRoute = 'softemp.panel.provedor.mkauth.table';
 
     private $model;
 

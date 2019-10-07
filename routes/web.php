@@ -264,40 +264,51 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                 });
                 // end Directory Core
 
-                // Directoy MkAuth
-                Route::group(['namespace' => 'Provedor\MkAuth', 'prefix' => '/mkauth', 'as' => 'mkauth.'], function () {
-                    // Tables
-                    Route::group(['namespace' => 'Table', 'prefix' => '/tabelas', 'as' => 'table.'], function () {
-                        Route::get('/', 'TableController@index')->name('index');
-                        Route::get('/{table}', 'TableController@show')->name('show');
-                    });
-                    // end Tables
+                // Directoy Provedor
+                Route::group(['namespace' => 'Provedor', 'prefix' => '/provedor', 'as' => 'provedor.'], function () {
+                    // Directoy MkAuth
+                    Route::group(['namespace' => 'MkAuth', 'prefix' => '/mkauth', 'as' => 'mkauth.'], function () {
+                        // Tables
+                        Route::group(['namespace' => 'Table', 'prefix' => '/tabelas', 'as' => 'table.'], function () {
+                            Route::get('/', 'TableController@index')->name('index');
+                            Route::get('/{table}', 'TableController@show')->name('show');
+                        });
+                        // end Tables
 
-                    // CTOs
-                    Route::group(['namespace' => 'Cto', 'prefix' => '/cto', 'as' => 'cto.'], function () {
-                        Route::get('/', 'CtoController@index')->name('index');
-                        Route::get('/{cto}', 'CtoController@show')->name('show');
-                    });
-                    // end CTOs
+                        // CTOs
+                        Route::group(['namespace' => 'Cto', 'prefix' => '/cto', 'as' => 'cto.'], function () {
+                            Route::get('/', 'CtoController@index')->name('index');
+                            Route::get('/{cto}', 'CtoController@show')->name('show');
+                        });
+                        // end CTOs
 
-                    // CTOs
-                    Route::group(['namespace' => 'Client', 'prefix' => '/cliente', 'as' => 'client.'], function () {
-                        Route::get('/', 'ClientController@index')->name('index');
-                        Route::get('/ativo', 'ClientController@active')->name('active');
-                        Route::get('/bloqueado', 'ClientController@blocked')->name('blocked');
-                        Route::get('/desativado', 'ClientController@disabled')->name('disabled');
-                        Route::get('/{client}', 'ClientController@show')->name('show');
-                    });
-                    // end CTOs
+                        // CTOs
+                        Route::group(['namespace' => 'Client', 'prefix' => '/cliente', 'as' => 'client.'], function () {
+                            Route::get('/', 'ClientController@index')->name('index');
+                            Route::get('/ativo', 'ClientController@active')->name('active');
+                            Route::get('/bloqueado', 'ClientController@blocked')->name('blocked');
+                            Route::get('/desativado', 'ClientController@disabled')->name('disabled');
+                            Route::get('/{client}', 'ClientController@show')->name('show');
+                        });
+                        // end CTOs
 
-                    // Support
-//                    Route::group(['prefix' => '/suporte', 'as' => 'supports.', 'namespace' => 'Supports'], function () {
-//                        Route::get('/', 'SupportsController@index')->name('index');
-//
-//                    });
-                    // end Support
+                        // Support
+    //                    Route::group(['prefix' => '/suporte', 'as' => 'supports.', 'namespace' => 'Supports'], function () {
+    //                        Route::get('/', 'SupportsController@index')->name('index');
+    //
+    //                    });
+                    });
+                    //end Directoy MkAuth
+
+                    // Bloqueio de clientes do MkAuth
+                    Route::group(['prefix' => '/mkblock', 'as' => 'mkblock.'], function () {
+                        Route::get('/', 'MkBlockController@sincLoginBlock')->name('sincLoginBlock');
+
+                    });
+                    // end Bloqueio de clientes do MkAuth
+
                 });
-                //end Directoy MkAuth
+                //end Directoy Provedor
 
                 // Directory stock control
                 Route::group(['namespace' => 'StockControl'], function () {

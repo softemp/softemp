@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 
 class ClientController extends CrudController
 {
-    protected $nameView = 'softemp.panel.support';
-    protected $route = 'panel.support';
+    protected $nameView = 'softemp.panel.provedor.support';
+    protected $route = 'panel.provedor.support';
 
     public function __construct(Client $model, Request $request)
     {

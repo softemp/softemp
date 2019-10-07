@@ -7,8 +7,8 @@ use App\Models\Provedor\MkAuth\Client;
 
 class CtoController extends Controller
 {
-    protected $pathView = 'softemp.panel.mkauth.cto';
-    protected $groupRoute = 'softemp.panel.mkauth.cto';
+    protected $pathView = 'softemp.panel.provedor.mkauth.cto';
+    protected $groupRoute = 'softemp.panel.provedor.mkauth.cto';
 
     private $model;
 

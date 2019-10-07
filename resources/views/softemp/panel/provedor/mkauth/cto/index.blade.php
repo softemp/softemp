@@ -17,7 +17,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('panel.index')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('panel.mkauth.cto.index')}}">MkAuth</a></li>
+        <li><a href="{{route('panel.provedor.mkauth.cto.index')}}">MkAuth</a></li>
         <li class="active">CTOs</li>
     </ol>
 @endsection
@@ -49,9 +49,9 @@
                 <tr>
                     <td>{{ $cto->caixa_herm }}</td>
                     <td>
-                        {{--<a class="btn btn-primary" href="{{ route('panel.mkauth.cto.show',['table'=>$cto->caixa_herm]) }}">ping</a>--}}
+                        {{--<a class="btn btn-primary" href="{{ route('panel.provedor.mkauth.cto.show',['table'=>$cto->caixa_herm]) }}">ping</a>--}}
                         <button type="button" class="btn btn-default btn-xs"
-                                onclick="showColumns('{{ route('panel.mkauth.cto.show',['table'=>$cto->caixa_herm]) }}');">
+                                onclick="showColumns('{{ route('panel.provedor.mkauth.cto.show',['table'=>$cto->caixa_herm]) }}');">
                             <i class="fa fa-eye"></i>
                         </button>
                     </td>
