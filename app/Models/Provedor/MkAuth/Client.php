@@ -3,6 +3,7 @@
 namespace App\Models\Provedor\MkAuth;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * Classe responsavel por gerenciar os clientes do MkAuth
@@ -31,7 +32,15 @@ class Client extends Model
      * @return mixed
      */
     public function getBlocked(){
-        return $this->where('cli_ativado', 's')->where('bloqueado', 'sim')->get();
+
+        $query = $this->query();
+
+        $query->select(['nome','login','ip','ramal']);
+
+        return $query->where('cli_ativado', 's')->whereBloqueado('sim')->get();
+//        return $this->select(['nome','login','ip','ramal'])->where('cli_ativado', 's')->whereBloqueado('sim')->get();
+        //return $this->where('cli_ativado', 's')->whereBloqueado('sim')->get();
+//        return $this->where('cli_ativado', 's')->where('bloqueado', 'sim')->get();
     }
 
     /**
