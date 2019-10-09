@@ -266,6 +266,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
 
                 // Directoy Provedor
                 Route::group(['namespace' => 'Provedor', 'prefix' => '/provedor', 'as' => 'provedor.'], function () {
+                    Route::get('/', 'ProvedorController@index')->name('index');
                     // Directoy MkAuth
                     Route::group(['namespace' => 'MkAuth', 'prefix' => '/mkauth', 'as' => 'mkauth.'], function () {
                         // Tables
