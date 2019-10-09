@@ -33,14 +33,13 @@ class Client extends Model
      */
     public function getBlocked(){
 
-        $query = $this->query();
+        //$query = $this->query();
 
-        $query->select(['nome','login','ip','ramal']);
+        //$query->select(['nome','login','ip','ramal']);
 
-        return $query->where('cli_ativado', 's')->whereBloqueado('sim')->get();
-//        return $this->select(['nome','login','ip','ramal'])->where('cli_ativado', 's')->whereBloqueado('sim')->get();
+        //return $query->where('cli_ativado', 's')->whereBloqueado('sim')->get();
         //return $this->where('cli_ativado', 's')->whereBloqueado('sim')->get();
-//        return $this->where('cli_ativado', 's')->where('bloqueado', 'sim')->get();
+        return $this->where('cli_ativado', 's')->where('bloqueado', 'sim')->get();
     }
 
     /**
@@ -50,5 +49,13 @@ class Client extends Model
      */
     public function getDisabled(){
         return $this->where('cli_ativado', 'n')->get();
+    }
+
+    public function countActive(){
+        return $this->getActive()->count();
+    }
+
+    public function countBlocked(){
+        return $this->getBlocked()->count();
     }
 }

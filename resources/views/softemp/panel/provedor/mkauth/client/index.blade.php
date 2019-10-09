@@ -17,6 +17,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('panel.index')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{route('panel.provedor.index')}}">Provedor</a></li>
         <li><a href="{{route('panel.provedor.mkauth.cto.index')}}">MkAuth</a></li>
         <li class="active">Clientes</li>
     </ol>
@@ -49,7 +50,8 @@
             <table id="table1" class="display responsive nowrap dataTable no-footer dtr-inline collapsed" style="width: 100%;" role="grid">
                 <thead>
                 <tr>
-                    <th>Tabela</th>
+                    <th>Clientes</th>
+                    <th>Logins</th>
                     <th>Ação</th>
                 </tr>
                 </thead>
@@ -57,11 +59,16 @@
                 @foreach($data as $client)
                 <tr>
                     <td>{{ $client->nome }}</td>
+                    <td>{{ $client->login }}</td>
                     <td>
                         {{--<a class="btn btn-primary btn-sm" href="{{ route('panel.provedor.mkauth.client.show',['table'=>$client->id]) }}">show</a>--}}
                         <button type="button" class="btn btn-default btn-xs"
                                 onclick="showColumns('{{ route('panel.provedor.mkauth.client.show',['table'=>$client->id]) }}');">
                             <i class="fa fa-eye"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-xs"
+                                onclick="showColumns('{{ route('panel.provedor.mkauth.client.show',['table'=>$client->id]) }}');">
+                            <i class="fa fa-de"></i>
                         </button>
                     </td>
                 </tr>

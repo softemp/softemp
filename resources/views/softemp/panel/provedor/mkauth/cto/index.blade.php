@@ -17,6 +17,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('panel.index')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{route('panel.provedor.index')}}">Provedor</a></li>
         <li><a href="{{route('panel.provedor.mkauth.cto.index')}}">MkAuth</a></li>
         <li class="active">CTOs</li>
     </ol>

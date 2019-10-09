@@ -17,7 +17,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route('panel.index')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('panel.pages.blank')}}">Blank</a></li>
+{{--        <li><a href="{{route('panel.pages.blank')}}">Blank</a></li>--}}
         <li class="active">Data Tables</li>
     </ol>
 @endsection

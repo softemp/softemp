@@ -129,53 +129,67 @@
         </li>
         {{--end access control--}}
 
-        {{--MkAuth--}}
-        <li class="treeview {{(Request::is('painel/mkauth*')?'active':'')}}">
-            <a href="#"><i class="fa fa-random"></i> <span>MkAuth</span>
+        {{--Provedor--}}
+        <li class="treeview {{(Request::is('painel/provedor*')?'active':'')}}">
+            <a href="#"><i class="fa fa-heartbeat"></i> <span>Provedor</span>
                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
             </a>
             <ul class="treeview-menu">
-                <li class="{{(Request::is('painel/mkauth/tabelas*')?'active':'')}}">
-                    <a href="{{route('panel.mkauth.table.index')}}">
-                        <i class="fa fa-circle-o"></i> Tabelas
+                <li class="{{(Request::is('painel/provedor*')?'active':'')}}">
+                    <a href="{{route('panel.provedor.index')}}">
+                        <i class="fa fa-circle-o"></i> Dashboard
                     </a>
                 </li>
-                <li class="{{(Request::is('painel/mkauth/cto*')?'active':'')}}">
-                    <a href="{{route('panel.mkauth.cto.index')}}">
-                        <i class="fa fa-circle-o"></i> CTOs
-                    </a>
-                </li>
-
-                <li class="treeview {{(Request::is('painel/mkauth/cliente*')?'active':'')}}">
-                    <a href="#"><i class="fa fa-users"></i> Clientes
+                {{--MkAuth--}}
+                <li class="treeview {{(Request::is('painel/provedor/mkauth*')?'active':'')}}">
+                    <a href="#"><i class="fa fa-random"></i> <span>MkAuth</span>
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="{{(Request::is('painel/mkauth/cliente/ativo')?'active':'')}}">
-                            <a href="{{ route('panel.mkauth.client.active') }}">
-                                <i class="fa fa-circle-o text-success"></i> Ativos
+                        <li class="{{(Request::is('painel/provedor/mkauth/tabelas*')?'active':'')}}">
+                            <a href="{{route('panel.provedor.mkauth.table.index')}}">
+                                <i class="fa fa-circle-o"></i> Tabelas
                             </a>
                         </li>
-                        <li class="{{(Request::is('painel/mkauth/cliente/bloqueado')?'active':'')}}">
-                            <a href="{{ route('panel.mkauth.client.blocked') }}">
-                                <i class="fa fa-circle-o text-warning"></i> Bloqueados
+                        <li class="{{(Request::is('painel/provedor/mkauth/cto*')?'active':'')}}">
+                            <a href="{{route('panel.provedor.mkauth.cto.index')}}">
+                                <i class="fa fa-circle-o"></i> CTOs
                             </a>
                         </li>
-                        <li class="{{(Request::is('painel/mkauth/cliente/desativado')?'active':'')}}">
-                            <a href="{{ route('panel.mkauth.client.disabled') }}">
-                                <i class="fa fa-circle-o text-danger"></i> Desativados
+
+                        <li class="treeview {{(Request::is('painel/provedor/mkauth/cliente*')?'active':'')}}">
+                            <a href="#"><i class="fa fa-users"></i> Clientes
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
-                        </li>
-                        <li class="{{(Request::is('painel/mkauth/cliente')?'active':'')}}">
-                            <a href="{{ route('panel.mkauth.client.index') }}">
-                                <i class="fa fa-circle-o text-blue"></i> Todos
-                            </a>
+                            <ul class="treeview-menu">
+                                <li class="{{(Request::is('painel/provedor/mkauth/cliente/ativo')?'active':'')}}">
+                                    <a href="{{ route('panel.provedor.mkauth.client.active') }}">
+                                        <i class="fa fa-circle-o text-success"></i> Ativos
+                                    </a>
+                                </li>
+                                <li class="{{(Request::is('painel/provedor/mkauth/cliente/bloqueado')?'active':'')}}">
+                                    <a href="{{ route('panel.provedor.mkauth.client.blocked') }}">
+                                        <i class="fa fa-circle-o text-warning"></i> Bloqueados
+                                    </a>
+                                </li>
+                                <li class="{{(Request::is('painel/provedor/mkauth/cliente/desativado')?'active':'')}}">
+                                    <a href="{{ route('panel.provedor.mkauth.client.disabled') }}">
+                                        <i class="fa fa-circle-o text-danger"></i> Desativados
+                                    </a>
+                                </li>
+                                <li class="{{(Request::is('painel/provedor/mkauth/cliente')?'active':'')}}">
+                                    <a href="{{ route('panel.provedor.mkauth.client.index') }}">
+                                        <i class="fa fa-circle-o text-blue"></i> Todos
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
+                {{--end MkAuths--}}
             </ul>
         </li>
-        {{--end MkAuths--}}
+        {{--end Provedor--}}
 
         {{--StockControl--}}
         <li class="treeview {{(Request::is('painel/estoque*')?'active':'')}}">
@@ -301,6 +315,45 @@
             </ul>
         </li>
         <!-- /.Address -->
+
+        <!-- WebSite -->
+        <li class="treeview {{(Request::is('painel/website/*') ? 'active' : '') }}">
+            <a href="#">
+                <i class="fa fa-globe"></i>
+                <span>WebSite</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+
+                <li class="{{(Request::is('painel/website/banner*') ? 'active' : '') }}"><a
+                        href="{{ route('panel.address.types.index') }}"><i class="fa fa-ban text-aqua"></i>
+                        <span>Banners</span></a></li>
+
+                <li {{ (Request::is('painel/website/sobre*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.continents.index') }}">
+                        <i class="fa fa-bolt"></i> Sobre Nós
+                    </a>
+                </li>
+                <li {{ (Request::is('painel/website/contato*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.countries.index') }}">
+                        <i class="fa fa-envelope"></i> Contato
+                    </a>
+                </li>
+                <li {{ (Request::is('painel/website/planos*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.states.index') }}">
+                        <i class="fa fa-plane"></i> Planos
+                    </a>
+                </li>
+                <li {{ (Request::is('painel/website/suporte*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.cities.index') }}">
+                        <i class="fa fa-support"></i> Suporte
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- /.WebSite -->
         {{--end StockControl--}}
 
 
