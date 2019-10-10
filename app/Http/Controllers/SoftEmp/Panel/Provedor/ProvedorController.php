@@ -30,7 +30,6 @@ class ProvedorController extends Controller
      */
     public function index()
     {
-
         $this->arrayData['countClientActive'] = $this->client->countActive();
         $this->arrayData['countClientBlocked'] = $this->client->countBlocked();
 

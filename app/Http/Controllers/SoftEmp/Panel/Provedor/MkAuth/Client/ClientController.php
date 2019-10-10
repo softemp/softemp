@@ -19,7 +19,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        $data = $this->model->all();
+        $data = $this->model->paginate();
         return view("{$this->pathView}.index", compact('data'));
     }
 
@@ -29,17 +29,22 @@ class ClientController extends Controller
     }
 
     public function active(){
-        $data = $this->model->getActive();
+        $data = $this->model->getActive()->paginate();
+        return view("{$this->pathView}.index", compact('data'));
+    }
+
+    public function free(){
+        $data = $this->model->getFree()->paginate();
         return view("{$this->pathView}.index", compact('data'));
     }
 
     public function blocked(){
-        $data = $this->model->getBlocked();
+        $data = $this->model->getBlocked()->paginate();
         return view("{$this->pathView}.index", compact('data'));
     }
 
     public function disabled(){
-        $data = $this->model->getDisabled();
+        $data = $this->model->getDisabled()->paginate();
         return view("{$this->pathView}.index", compact('data'));
     }
 }

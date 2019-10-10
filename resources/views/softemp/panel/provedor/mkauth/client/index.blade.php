@@ -8,6 +8,11 @@
 {{-- page level styles --}}
 @section('page_styles')
     <link rel="stylesheet" href="{{ asset('softemp/panel/vendors/dataTables/css/dataTable.css') }}">
+    <style>
+        .pagination {
+            margin: 0px 0;
+        }
+    </style>
 @stop
 
 @section('content-header')
@@ -28,13 +33,16 @@
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Title</h3>
-            @if(!Request::is('painel/mkauth/cliente/ativo'))
-            <a class="btn btn-success btn-sm" href="{{ route('panel.provedor.mkauth.client.active') }}">Clientes Ativos</a>
+            @if(!Request::is('painel/provedor/mkauth/cliente/ativo'))
+            <a class="btn btn-default btn-sm" href="{{ route('panel.provedor.mkauth.client.active') }}">Clientes Ativos</a>
             @endif
-            @if(!Request::is('painel/mkauth/cliente/bloqueado'))
+            @if(!Request::is('painel/provedor/mkauth/cliente/liberado'))
+            <a class="btn btn-success btn-sm" href="{{ route('panel.provedor.mkauth.client.free') }}">Clientes Liberados</a>
+            @endif
+            @if(!Request::is('painel/provedor/mkauth/cliente/bloqueado'))
             <a class="btn btn-warning btn-sm" href="{{ route('panel.provedor.mkauth.client.blocked') }}">Clientes Bloqueados</a>
             @endif
-            @if(!Request::is('painel/mkauth/cliente/desativado'))
+            @if(!Request::is('painel/provedor/mkauth/cliente/desativado'))
             <a class="btn btn-danger btn-sm" href="{{ route('panel.provedor.mkauth.client.disabled') }}">Clientes Desativados</a>
             @endif
             <div class="box-tools pull-right">
@@ -62,23 +70,39 @@
                     <td>{{ $client->login }}</td>
                     <td>
                         {{--<a class="btn btn-primary btn-sm" href="{{ route('panel.provedor.mkauth.client.show',['table'=>$client->id]) }}">show</a>--}}
-                        <button type="button" class="btn btn-default btn-xs"
+                        <button type="button" class="btn btn-default btn-xs" title="Detalhes"
                                 onclick="showColumns('{{ route('panel.provedor.mkauth.client.show',['table'=>$client->id]) }}');">
                             <i class="fa fa-eye"></i>
                         </button>
-                        <button type="button" class="btn btn-danger btn-xs"
-                                onclick="showColumns('{{ route('panel.provedor.mkauth.client.show',['table'=>$client->id]) }}');">
-                            <i class="fa fa-de"></i>
+                        @if(Request::is('painel/provedor/mkauth/cliente/bloqueado') || Request::is('painel/provedor/mkauth/cliente/liberado'))
+                        <button type="button" class="btn btn-success btn-xs" title="Liberar"
+                                onclick="unlockClient('{{ route('panel.provedor.mkblock.unlockClient',['login'=>$client->login]) }}');">
+                            <i class="fa fa-play"></i>
                         </button>
+                        @endif
+                        @if(Request::is('painel/provedor/mkauth/cliente/liberado') || Request::is('painel/provedor/mkauth/cliente/bloqueado'))
+                        <button type="button" class="btn btn-danger btn-xs" title="Bloquear"
+                                onclick="blockClient('{{ route('panel.provedor.mkblock.blockClient',['login'=>$client->login]) }}');">
+                            <i class="fa fa-power-off"></i>
+                        </button>
+                        @endif
                     </td>
                 </tr>
                     @endforeach
                 </tbody>
+                <tfoot>
+                <tr>
+                    <td>Mostrando de {{ $data->firstItem() }} até {{ $data->lastItem() }} de {{ $data->total() }} registros</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tfoot>
             </table>
         </div>
         {{-- /.box-body --}}
         <div class="box-footer">
-            Footer
+{{--          Mostrando de {{ $data->firstItem() }} até {{ $data->lastItem() }} de {{ $data->total() }} registros <br> --}}
+            {{ $data->links() }}
         </div>
         {{-- /.box-footer --}}
     </div>
@@ -118,6 +142,66 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal show columns -->
+
+    <!-- modal show unlockClient -->
+    <div class="modal fade" id="modal-show-unlockClient">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Login: </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="errors-msg alert alert-danger" style="display: none;"></div>
+                    <div class="success-msg alert alert-success" style="display: none;"></div>
+                    <div>
+                        <div id="loader"></div>
+                        <!--Área que mostrará carregando-->
+                        <h2></h2>
+                        <!--Lista de Clientes-->
+                        <ul id="listaClientes"></ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal show unlockClient -->
+
+    <!-- modal show blockClient -->
+    <div class="modal fade" id="modal-show-blockClient">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Login: </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="errors-msg alert alert-danger" style="display: none;"></div>
+                    <div class="success-msg alert alert-success" style="display: none;"></div>
+                    <div>
+                        <div id="loaderd" class="callout">srvt r trvwtwe</div>
+                        <!--Área que mostrará carregando-->
+                        <h2></h2>
+                        <!--Lista de Clientes-->
+                        <ul id="listaClientes"></ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal show blockClient -->
 @endsection
 
 {{-- page level scripts --}}
@@ -125,11 +209,101 @@
     <script src="{{ asset('softemp/panel/vendors/dataTables/js/dataTable.js') }}"></script>
     <!-- page script -->
     <script>
-        function preloaderDestroy() {
-            var div = '<tr><td colspan="5" align="center"><img src="{{ asset('softemp/panel/img/loading.gif') }}" width="100" alt="Carregando..." title="Carregando..." /></td></tr>'
-            $('#modal-show-columns #clientes').html(div);
+
+        function unlockClient(url) {
+            $.ajax({
+                type: "GET",
+                url: url,
+                timeout: 3000,
+                datatype: 'JSON',
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                //beforeSend: preloaderDestroy(),
+                error: function() {
+                    // $("#modal-show-unlockClient h2").html("O servidor não conseguiu processar o pedido");
+                    toastr.error("O servidor não conseguiu processar o pedido", "{{ trans('panel/notification.error') }}",{timeOut: 5000});
+                },
+                success: function(retorno) {
+                    console.log(retorno);
+
+                    var obj = retorno.message
+
+                    if(obj.success) {
+                        toastr.success(obj.success, "{{ trans('panel/notification.success') }}");
+                    } else if (obj.warning){
+                        toastr.warning(obj.warning, "{{ trans('panel/notification.warning') }}");
+                    } else if (obj.error){
+                        toastr.error(obj.error, "{{ trans('panel/notification.error') }}",{timeOut: 5000});
+                    }
+
+                    // $("#modal-show-unlockClient #loader").html(retorno.message.success);
+                    // var item = "<li><b>Nome:</b> "+retorno.nome+"<p><b>Login:</b> "+retorno.login+"</p><p><b>Ramal:</b> "+retorno.ramal+"</p></li>";
+                    // $("#modal-show-unlockClient #listaClientes").append(item);
+                    // $('#modal-show-unlockClient .modal-title').html('Login: ' + retorno.login);
+                    //
+                    // var status;
+                    // if(retorno.message.success){
+                    //     $("#modal-show-unlockClient #loader").addClass('success');
+                    //     status = 'retorno.message.success';
+                    // }
+
+                    // Listando cada cliente encontrado na lista...
+                    // $.each(retorno,function(i, cliente){
+                    //     var item = "<li><b>Nome:</b> "+i.nome+"<p><b>Login:</b> "+cliente.login+"</p><p><b>Ramal:</b> "+cliente.ramal+"</p></li>";
+                    //     $("#modal-show-unlockClient #listaClientes").append(item);
+                    //     $('#modal-show-unlockClient .modal-title').html('Login: '+cliente.login);
+                    // });
+                    // alert(retorno.message.success);
+                    //Limpar Status de Carregando
+                    // $("#modal-show-unlockClient #loader").html(status);
+                }
+            });
+            // $('#modal-show-unlockClient').modal('show');
         };
 
+        function blockClient(url) {
+            $.ajax({
+                type: "GET",
+                url: url,
+                timeout: 3000,
+                datatype: 'JSON',
+                contentType: "application/json; charset=utf-8",
+                // cache: false,
+                //beforeSend: preloaderDestroy(),
+                error: function() {
+                    // $("#modal-show-blockClient h2").html("O servidor não conseguiu processar o pedido");
+                    toastr.error("O servidor não conseguiu processar o pedido", "{{ trans('panel/notification.error') }}",{timeOut: 5000});
+                },
+                success: function(retorno) {
+                    console.log(retorno);
+
+                    var obj = retorno.message
+
+                    if(obj.success) {
+                        toastr.success(obj.success, "{{ trans('panel/notification.success') }}");
+                    } else if (obj.warning){
+                        toastr.warning(obj.warning, "{{ trans('panel/notification.warning') }}");
+                    } else if (obj.error){
+                        toastr.error(obj.error, "{{ trans('panel/notification.error') }}",{timeOut: 5000});
+                    }
+                    // Listando cada cliente encontrado na lista...
+                    // $.each(retorno,function(i, cliente){
+                    //     var item = "<li><b>Nome:</b> "+cliente.nome+"<p><b>Login:</b> "+cliente.login+"</p><p><b>Ramal:</b> "+cliente.ramal+"</p></li>";
+                    //     $("#modal-show-blockClient #listaClientes").append(item);
+                    //     $('#modal-show-blockClient .modal-title').html('Login: '+cliente.login);
+                    // });
+                    // //Limpar Status de Carregando
+                    // $("#modal-show-blockClient #loader").html(retorno.message.success);
+                    // $("#modal-show-unlockClient #loader").html(retorno.message.success);
+                }
+            });
+            // $('#modal-show-blockClient').modal('show');
+        };
+
+        function preloaderDestroy() {
+            var div = '<tr><td colspan="5" align="center"><img src="{{ asset('softemp/panel/img/loading.gif') }}" width="100" alt="Carregando..." title="Carregando..." /></td></tr>'
+            $('.modal-show-columns #clientes').html(div);
+        };
         function showColumns(url) {
 
             $.ajax({
@@ -158,11 +332,11 @@
             $('#modal-show-columns').modal('show');
         };
 
-
-
         $(document).ready(function() {
 
             $('#table1').DataTable({
+                "paginate": false,
+                "info": false,
                 "language": {
                     "sEmptyTable": "Nenhum registro encontrado",
                     "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",

@@ -17,13 +17,25 @@ class Client extends Model
 
     protected $table = 'sis_cliente';
 
+    protected $fillable = ['name', 'login', 'ip', 'ramal'];
+
+    protected $perPage = 10;
+
     /**
      * Buscar clientes ativos
      *
      * @return mixed
      */
     public function getActive(){
-        return $this->where('cli_ativado', 's')->get();
+        return $this->where('cli_ativado', 's');
+    }
+
+    /**
+     * Buscar clientes liberados
+     * @return mixed
+     */
+    public function getFree(){
+        return $this->where('cli_ativado', 's')->where('bloqueado', 'nao');
     }
 
     /**
@@ -32,14 +44,7 @@ class Client extends Model
      * @return mixed
      */
     public function getBlocked(){
-
-        //$query = $this->query();
-
-        //$query->select(['nome','login','ip','ramal']);
-
-        //return $query->where('cli_ativado', 's')->whereBloqueado('sim')->get();
-        //return $this->where('cli_ativado', 's')->whereBloqueado('sim')->get();
-        return $this->where('cli_ativado', 's')->where('bloqueado', 'sim')->get();
+        return $this->where('cli_ativado', 's')->where('bloqueado', 'sim');
     }
 
     /**
@@ -48,13 +53,19 @@ class Client extends Model
      * @return mixed
      */
     public function getDisabled(){
-        return $this->where('cli_ativado', 'n')->get();
+        return $this->where('cli_ativado', 'n');
     }
 
+    /**
+     * @return mixed
+     */
     public function countActive(){
         return $this->getActive()->count();
     }
 
+    /**
+     * @return mixed
+     */
     public function countBlocked(){
         return $this->getBlocked()->count();
     }
