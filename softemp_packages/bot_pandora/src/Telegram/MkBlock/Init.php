@@ -23,11 +23,13 @@ class Init
 
         $this->bot = new CommunicationLayer;
         $chatWillian = 616955662;    // Chat willian
-        $chatGrupo = -353589095; // Id do grupo
+        $chatGrupo = -1001484998585; // Id do grupo
+
 //        $this->chat = $chatWillian;
         $this->chat = $chatGrupo;
-        $this->permited[] = $chatWillian;
+
         $this->permited[] = $chatGrupo;
+        $this->permited[] = $chatWillian;
     }
 
     /**
@@ -40,6 +42,7 @@ class Init
     {
         $arrays = $this->bot->getAllMessages();
 
+//        print_r($arrays);
         foreach ($arrays as $array) {
             if (key_exists("message", $array)) {
                 if (in_array($array['message']['chat']['id'], $this->permited)) {
