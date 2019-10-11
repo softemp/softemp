@@ -1,0 +1,25 @@
+{
+  "name": "softemp/mikrotik",
+  "description": "desenvolvimento api mikrotik",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "version": "0.1.0",
+  "time": "2018-09-17",
+  "keywords": ["API", "Mikrotik","RouterOS"],
+  "authors": [
+    {
+      "name": "Paulo Roberto da SIlva",
+      "email": "paulo@softemp.com.br",
+      "homepage": "http://softemp.com.br"
+    }
+  ],
+  "require": {
+    "php": ">=7.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mikrotik\\Api\\": "src/Api",
+      "Mikrotik\\AHotsPot\\": "src/HotsPot"
+    }
+  }
+}
