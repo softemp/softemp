@@ -210,23 +210,26 @@
     <!-- page script -->
     <script>
 
+        function sendingProcessingQueue() {
+            toastr.info('Enviando para a fila de processamento', "{{ trans('panel/notification.info') }}",{timeOut: 2000})
+        }
         function unlockClient(url) {
             $.ajax({
                 type: "GET",
                 url: url,
-                timeout: 3000,
+                // timeout: 3000,
                 datatype: 'JSON',
                 contentType: "application/json; charset=utf-8",
                 cache: false,
-                //beforeSend: preloaderDestroy(),
+                async: true,
+                beforeSend: sendingProcessingQueue(),
                 error: function() {
-                    // $("#modal-show-unlockClient h2").html("O servidor não conseguiu processar o pedido");
                     toastr.error("O servidor não conseguiu processar o pedido", "{{ trans('panel/notification.error') }}",{timeOut: 5000});
                 },
                 success: function(retorno) {
-                    console.log(retorno);
+                    // console.log(retorno);
 
-                    var obj = retorno.message
+                    var obj = retorno.message;
 
                     if(obj.success) {
                         toastr.success(obj.success, "{{ trans('panel/notification.success') }}");
@@ -235,49 +238,27 @@
                     } else if (obj.error){
                         toastr.error(obj.error, "{{ trans('panel/notification.error') }}",{timeOut: 5000});
                     }
-
-                    // $("#modal-show-unlockClient #loader").html(retorno.message.success);
-                    // var item = "<li><b>Nome:</b> "+retorno.nome+"<p><b>Login:</b> "+retorno.login+"</p><p><b>Ramal:</b> "+retorno.ramal+"</p></li>";
-                    // $("#modal-show-unlockClient #listaClientes").append(item);
-                    // $('#modal-show-unlockClient .modal-title').html('Login: ' + retorno.login);
-                    //
-                    // var status;
-                    // if(retorno.message.success){
-                    //     $("#modal-show-unlockClient #loader").addClass('success');
-                    //     status = 'retorno.message.success';
-                    // }
-
-                    // Listando cada cliente encontrado na lista...
-                    // $.each(retorno,function(i, cliente){
-                    //     var item = "<li><b>Nome:</b> "+i.nome+"<p><b>Login:</b> "+cliente.login+"</p><p><b>Ramal:</b> "+cliente.ramal+"</p></li>";
-                    //     $("#modal-show-unlockClient #listaClientes").append(item);
-                    //     $('#modal-show-unlockClient .modal-title').html('Login: '+cliente.login);
-                    // });
-                    // alert(retorno.message.success);
-                    //Limpar Status de Carregando
-                    // $("#modal-show-unlockClient #loader").html(status);
                 }
             });
-            // $('#modal-show-unlockClient').modal('show');
         };
 
         function blockClient(url) {
             $.ajax({
                 type: "GET",
                 url: url,
-                timeout: 3000,
+                // timeout: 3000,
                 datatype: 'JSON',
                 contentType: "application/json; charset=utf-8",
-                // cache: false,
-                //beforeSend: preloaderDestroy(),
+                cache: false,
+                async: true,
+                beforeSend: sendingProcessingQueue(),
                 error: function() {
-                    // $("#modal-show-blockClient h2").html("O servidor não conseguiu processar o pedido");
                     toastr.error("O servidor não conseguiu processar o pedido", "{{ trans('panel/notification.error') }}",{timeOut: 5000});
                 },
                 success: function(retorno) {
-                    console.log(retorno);
+                    // console.log(retorno);
 
-                    var obj = retorno.message
+                    var obj = retorno.message;
 
                     if(obj.success) {
                         toastr.success(obj.success, "{{ trans('panel/notification.success') }}");
@@ -286,18 +267,8 @@
                     } else if (obj.error){
                         toastr.error(obj.error, "{{ trans('panel/notification.error') }}",{timeOut: 5000});
                     }
-                    // Listando cada cliente encontrado na lista...
-                    // $.each(retorno,function(i, cliente){
-                    //     var item = "<li><b>Nome:</b> "+cliente.nome+"<p><b>Login:</b> "+cliente.login+"</p><p><b>Ramal:</b> "+cliente.ramal+"</p></li>";
-                    //     $("#modal-show-blockClient #listaClientes").append(item);
-                    //     $('#modal-show-blockClient .modal-title').html('Login: '+cliente.login);
-                    // });
-                    // //Limpar Status de Carregando
-                    // $("#modal-show-blockClient #loader").html(retorno.message.success);
-                    // $("#modal-show-unlockClient #loader").html(retorno.message.success);
                 }
             });
-            // $('#modal-show-blockClient').modal('show');
         };
 
         function preloaderDestroy() {

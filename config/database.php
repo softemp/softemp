@@ -14,7 +14,10 @@ $modules = [
         'db_password'=>'_MKAUTH',
         'strict' =>'_MKAUTH',
     ],
-    'website'
+    'website',
+    'testimonial',
+    'blog',
+    'provedor'
 ];
 
 $connections = array();

@@ -28,15 +28,16 @@
             <div class="col-md-6">
                 <div class="item martop1 wow bounceInLeft" data-wow-duration="4s">
                     <img src="{{ asset($pathImg.$about->img) }}" alt="Sobre nós" class="img-fluid">
+{{--                    <img src="{{ asset('softemp/website/img/temp/banner_index/b1.png') }}" alt="Sobre nós" class="img-fluid">--}}
                 </div>
             </div>
             @endif
             <!-- //Image Section End -->
             <!-- About Us Section Start -->
-            <div class="col-md-6 wow lightSpeedIn" data-wow-duration="5s">
+            <div class="col-md-12 wow lightSpeedIn" data-wow-duration="5s">
                 <div class="text-left">
                     <p class="pad-top7">
-                        {!! $about->descriptions !!}
+                        {!! $about->description !!}
                     </p>
                 </div>
             </div>

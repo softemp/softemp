@@ -11,16 +11,11 @@ use Illuminate\Database\Query\Builder;
 
 class Physical extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
 
     protected $table ='physicals';
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
+    //protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.

@@ -155,5 +155,4 @@ return [
         'title' => 'título',
         'username' => 'usuário',
     ],
-
 ];

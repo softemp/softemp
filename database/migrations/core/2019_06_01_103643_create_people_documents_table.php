@@ -4,7 +4,12 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePhysicalsTable extends Migration
+/**
+ * Classe para adicionar documentos ao cadastro da pessoa
+ *
+ * Class CreatePeopleDocumentsTable
+ */
+class CreatePeopleDocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +18,15 @@ class CreatePhysicalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('physicals', function (Blueprint $table) {
+        Schema::create('people_documents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('document')->unique()->comment('CPF');
-            $table->string('document_2')->unique()->comment('RG');
-            $table->string('document_3')->unique()->comment('CNH');
+            $table->string('document');
 
             $table->unsignedBigInteger('person_id');
             $table->foreign('person_id')->references('id')->on('people')->onDelete('restrict');
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -35,6 +37,6 @@ class CreatePhysicalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('physicals');
+        Schema::dropIfExists('people_documents');
     }
 }

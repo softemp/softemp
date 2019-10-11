@@ -76,6 +76,16 @@
 @endsection
 
 @section('scripts_js')
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyAn_BXBGgcA_CCj7wp2T9_ff7l9xwXS0KA"></script>
-    <script src="{{ asset('softemp/website/js/gmap.js') }}" type="text/javascript"></script>
+    <script>
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 8
+            });
+        }
+    </script>
+{{--    <script src="http://maps.google.com/maps/api/js?key=AIzaSyBERTtkj-XSQv-GSukC1fozzTfk7h7LO0c"></script>--}}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBERTtkj-XSQv-GSukC1fozzTfk7h7LO0c&callback=initMap" async defer></script>
+{{--    <script src="{{ asset('softemp/website/js/gmap.js') }}" type="text/javascript"></script>--}}
 @endsection

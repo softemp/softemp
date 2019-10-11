@@ -15,7 +15,6 @@ class CreatePeopleTable extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->bigIncrements('id');
-//            $table->string('name');
 
             $table->unsignedBigInteger('people_type_id');
             $table->foreign('people_type_id')->references('id')->on('people_type')->onDelete('restrict');

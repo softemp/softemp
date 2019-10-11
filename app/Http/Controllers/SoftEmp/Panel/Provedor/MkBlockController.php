@@ -36,8 +36,14 @@ class MkBlockController extends Controller
         // buscando o cliente pelo login
         $client = $this->getMkAuthClient($login);
 
+        if(!$client){
+            $this->resultMessage['message'] = ['error'=>'O cliente: '.$login.' não foi encontrado no MkAuth'];
+            return response()->json($this->resultMessage);
+        }
+
         // conenctando na RB pelo ramal do cliente no MkAuth
         $rbConn = $this->rbConnection($client->ramal);
+
         // verifica o status da conexão com os roteadores
         if($rbConn->statusConnect() === true) {
 
@@ -62,7 +68,7 @@ class MkBlockController extends Controller
 
                 $this->setLog('adicionando bloqueio - ' . $client->login . ' IP: ' . $client->ip);
 
-                $this->resultMessage['message'] = ['success'=>'Cliente bloqueado com sucesso'];
+                $this->resultMessage['message'] = ['success'=>'Cliente ' . $client->login . ' bloqueado com sucesso'];
 
                 return response()->json($this->resultMessage);
             }
@@ -89,8 +95,14 @@ class MkBlockController extends Controller
         // buscando o cliente pelo login
         $client = $this->getMkAuthClient($login);
 
+        if(!$client){
+            $this->resultMessage['message'] = ['error'=>'O cliente: '.$login.' não foi encontrado no MkAuth'];
+            return response()->json($this->resultMessage);
+        }
+
         // conenctando na RB pelo ramal do cliente no MkAuth
         $rbConn = $this->rbConnection($client->ramal);
+
         // verifica o status da conexão com os roteadores
         if($rbConn->statusConnect() === true) {
 
@@ -105,7 +117,7 @@ class MkBlockController extends Controller
 
                 $this->setLog('removendo o bloqueio - ' . $rbClient['comment'] . ' IP: ' . $rbClient['address']);
 
-                $this->resultMessage['message'] = ['success'=>'Cliente liberado com sucesso'];
+                $this->resultMessage['message'] = ['success'=>'Cliente ' . $client->login . ' liberado com sucesso'];
 
                 return response()->json($this->resultMessage);
             }

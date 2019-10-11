@@ -22,8 +22,8 @@ class AboutController extends CrudController
 
        //$about = $this->model->personLegals->find(env('EMPRESA_SOFTWARE_ID'));
         //$about = $this->model->wherePersonLegalId(env('EMPRESA_SOFTWARE_ID'))->first();
-        $this->arrayData['about'] = $this->model->first();
-         //dd($about);
+        $this->arrayData['about'] = $this->model->firstOrFail();
+//         dd($this->arrayData['about']);
          $pathImg = $this->pathImg;
 
         $this->arrayData['opt'] = $this->optMeta->optimize('Sobre nos','Provedor de Internet, planos de internet fibra optica, a melhor internet de Garopaba e Imbituba', env('APP_URL').'/sobre','');

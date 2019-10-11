@@ -13,7 +13,7 @@ class CreateBannersTable extends Migration
      */
     public function up()
     {
-        Schema::create('banners', function (Blueprint $table) {
+        Schema::connection('mysql_website')->create('banners', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('img_background');
             $table->string('img_1')->nullable();
@@ -23,6 +23,12 @@ class CreateBannersTable extends Migration
             $table->string('text_1')->nullable();
             $table->string('text_2')->nullable();
             $table->enum('status',['0','1'])->default('0');
+            $table->text('page')->comment('de qual pagina é este banner');
+
+            $table->unsignedBigInteger('owner_company_id');
+            $dataBase = DB::connection('mysql_core')->getDatabaseName();
+            $table->foreign('owner_company_id')->references('id')->on($dataBase . '.companies')->onDelete('restrict');
+
             $table->timestamps();
         });
     }
@@ -34,6 +40,6 @@ class CreateBannersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('banners');
+        Schema::connection('mysql_website')->dropIfExists('banners');
     }
 }

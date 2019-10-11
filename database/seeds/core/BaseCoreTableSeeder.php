@@ -66,7 +66,7 @@ class BaseCoreTableSeeder extends Seeder
 
             // adicionando a empresa contratante do SoftWare
             $objPerson_2 = $objPeopleTypeJuridica->addPeople([]);
-            $objCompany_1 = $objPerson_2->addCompany(['business_name'=>'GBit Telecom', 'fantasy_name'=>'GBit', 'document'=>'24294146000155', 'software_owner'=>true]);
+            $objCompany_1 = $objPerson_2->addCompany(['business_name'=>'Luciane Berner ME', 'fantasy_name'=>'GBit Telecom', 'document'=>'24294146000155', 'software_owner'=>true]);
 
             // adicionando a pessoa fisica Administrador do software para a empresa
             $objPerson_3 = $objPeopleTypeFisica->addPeople([]);

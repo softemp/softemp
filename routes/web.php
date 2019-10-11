@@ -39,6 +39,16 @@ Route::group(['namespace' => 'SoftEmp'], function () {
         // Painel de administração
         Route::group(['prefix' => '/painel', 'as' => 'panel.'], function () {
 
+            // Bloqueio de clientes do MkAuth
+            Route::group(['namespace' => 'Provedor','prefix' => '/provedor/mkblock/telegram', 'as' => 'provedor.mkblock.telegram.'], function () {
+//                Route::get('/', 'MkBlockController@sincLoginBlock')->name('sincLoginBlock');
+                Route::get('/unlockClient/{login}', 'MkBlockController@unlockClient')->name('unlockClient');
+                Route::get('/blockClient/{login}', 'MkBlockController@blockClient')->name('blockClient');
+
+            });
+            // end Bloqueio de clientes do MkAuth
+
+
             // Directory Core
             Route::group(['namespace' => 'Core'], function () {
 
@@ -306,7 +316,6 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                     Route::group(['prefix' => '/mkblock', 'as' => 'mkblock.'], function () {
                         Route::get('/', 'MkBlockController@sincLoginBlock')->name('sincLoginBlock');
                         Route::get('/unlockClient/{login}', 'MkBlockController@unlockClient')->name('unlockClient');
-//                        Route::post('/unlockClient', 'MkBlockController@unlockClient')->name('unlockClient');
                         Route::get('/blockClient/{login}', 'MkBlockController@blockClient')->name('blockClient');
 
                     });

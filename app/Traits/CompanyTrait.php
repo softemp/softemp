@@ -24,7 +24,7 @@ trait CompanyTrait
             });
         }
 
-        $se = Session::getId();
+        //$se = Session::getId();
 
         //$id = ;
         //dd($se);

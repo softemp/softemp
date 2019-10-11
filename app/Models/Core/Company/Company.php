@@ -8,16 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
 
     protected $table = 'companies';
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
+    //protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.

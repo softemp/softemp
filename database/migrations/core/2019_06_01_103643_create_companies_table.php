@@ -19,6 +19,8 @@ class CreateCompaniesTable extends Migration
             $table->string('business_name')->unique()->comment('Razão Social');
 //            $table->string('firm_name');
             $table->string('document')->unique()->comment('CNPJ');
+            $table->string('document_2')->nullable()->comment('IE');
+            $table->string('document_3')->nullable()->comment('IM');
 
             $table->boolean('software_owner')->default(0);
 
@@ -26,7 +28,7 @@ class CreateCompaniesTable extends Migration
             $table->foreign('person_id')->references('id')->on('people')->onDelete('restrict');
 
             $table->timestamps();
-            $table->softDeletes();
+            //$table->softDeletes();
         });
     }
 
