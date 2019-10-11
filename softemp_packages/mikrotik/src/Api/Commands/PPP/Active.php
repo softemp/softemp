@@ -63,8 +63,34 @@ class Active
         $sentence = new SentenceUtil();
         $sentence->addCommand("/ppp/active/remove");
         $sentence->where(".id", "=", $id);
-        $enable = $this->talker->send($sentence);
-        return "Sucsess";
+        return $this->talker->send($sentence);
+    }
+
+    /**
+     * buscando registro
+     *
+     * @param $key
+     * @param $value
+     * @return bool|string|null
+     */
+    public function where($key, $value)
+    {
+        $sentence = new SentenceUtil();
+        $sentence->fromCommand("/ppp/active/print");
+        $sentence->where($key, "=", $value);
+
+        $resultSend = $this->talker->send($sentence);
+
+        if($resultSend) {
+            $rs = $this->talker->getResult();
+            $i = 0;
+            if ($i < $rs->size()) {
+                return $rs->getResultArray();
+            } else {
+                return null;
+            }
+        }
+        return $resultSend;
     }
 
 }

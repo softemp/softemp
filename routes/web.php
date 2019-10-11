@@ -44,6 +44,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
 //                Route::get('/', 'MkBlockController@sincLoginBlock')->name('sincLoginBlock');
                 Route::get('/unlockClient/{login}', 'MkBlockController@unlockClient')->name('unlockClient');
                 Route::get('/blockClient/{login}', 'MkBlockController@blockClient')->name('blockClient');
+                Route::get('/rebootClient/{login}', 'MkBlockController@rebootClient')->name('rebootClient');
 
             });
             // end Bloqueio de clientes do MkAuth
@@ -317,6 +318,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                         Route::get('/', 'MkBlockController@sincLoginBlock')->name('sincLoginBlock');
                         Route::get('/unlockClient/{login}', 'MkBlockController@unlockClient')->name('unlockClient');
                         Route::get('/blockClient/{login}', 'MkBlockController@blockClient')->name('blockClient');
+                        Route::get('/rebootClient/{login}', 'MkBlockController@rebootClient')->name('rebootClient');
 
                     });
                     // end Bloqueio de clientes do MkAuth

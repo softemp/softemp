@@ -26,6 +26,60 @@ class MkBlockController extends Controller
     }
 
     /**
+     * metodo para reiniciar a conexão do cliente, o metodo remove o registro na aba active em ppp
+     *
+     * @param $login
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function rebootClient($login)
+    {
+        // buscando o cliente pelo login
+        $client = $this->getMkAuthClient($login);
+
+        if(!$client){
+            $this->resultMessage['message'] = ['error'=>'O cliente: '.$login.' não foi encontrado no MkAuth'];
+            return response()->json($this->resultMessage);
+        }
+
+        // conenctando na RB pelo ramal do cliente no MkAuth
+        $rbConn = $this->rbConnection($client->ramal);
+
+        // verifica o status da conexão com os roteadores
+        if($rbConn->statusConnect() === true) {
+
+            $objAddressList = $rbConn->ppp()->active();
+
+            // buscando o registro na RB
+            $rbClient = $objAddressList->where('name', $client->login)[0];
+
+            if (!$rbClient) {
+                $this->resultMessage['message'] = ['warning'=>'O cliente: '.$client->login.' não esta conectado!'];
+                return response()->json($this->resultMessage);
+            }
+
+            $result = $objAddressList->delete($rbClient['.id']);
+
+            if($result === true ) {
+
+                $this->setLog('deconectado - ' . $client->login . ' IP: ' . $client->ip);
+
+                $this->resultMessage['message'] = ['success'=>'A conexão do cliente ' . $client->login . ' foi reiniciada'];
+
+                return response()->json($this->resultMessage);
+            }
+            $this->setLog(' - erro: ' . $result.': '.$client->ramal);
+
+            $this->resultMessage['message'] = ['error'=>$result.': '.$client->ramal];
+            return response()->json($this->resultMessage);
+        }
+
+        $this->setLog(' - erro: ' . $rbConn.': '.$client->ramal);
+
+        $this->resultMessage['message'] = ['error'=>$rbConn.': '.$client->ramal];
+        return response()->json($this->resultMessage);
+    }
+
+    /**
      * metodo para bloquear o cliente pelo login
      *
      * @param $login

@@ -130,7 +130,7 @@ class Init
     {
         $result = $this->bot->getUrl($this->urlMkBlock . 'unlockClient/' . $login);
 
-        print_r($result['message']);
+        //print_r($result['message']);
 
         $msg = $this->statusResult($result);
 
@@ -149,7 +149,7 @@ class Init
     {
         $result = $this->bot->getUrl($this->urlMkBlock . 'blockClient/' . $login);
 
-        print_r($result['message']);
+        //print_r($result['message']);
 
         $msg = $this->statusResult($result);
 
@@ -189,7 +189,13 @@ class Init
      */
     protected function reiniciar($login)
     {
-        $msg = "$login foi reiniciado";
+        $result = $this->bot->getUrl($this->urlMkBlock . 'rebootClient/' . $login);
+
+        //print_r($result['message']);
+
+        $msg = $this->statusResult($result);
+
+//        $msg = "$login foi reiniciado";
         $this->bot->sendMessage($msg, $this->chat);
         $this->log($msg . " por " . $this->originArrayMessage['message']['chat']['first_name']);
         return true;
