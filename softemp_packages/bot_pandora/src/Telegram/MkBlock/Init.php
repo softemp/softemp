@@ -13,8 +13,8 @@ class Init
     private $chat;
     private $permited = [];
     private $originArrayMessage;
-    private $repetitions;
     private $urlMkBlock;
+    private $offset;
 
     public function __construct()
     {
@@ -38,31 +38,21 @@ class Init
      *  -> Verifica se o remetente tem permissão de enviar comandos;
      *  -> Verifica se a mensagem é um comando ou não;
      */
-    public function init()
+    public function init($offset = null)
     {
-        $arrays = $this->bot->getAllMessages();
+        $arrays = $this->bot->getMessagesWithPost($offset);
 
-//        print_r($arrays);
         foreach ($arrays as $array) {
             if (key_exists("message", $array)) {
                 if (in_array($array['message']['chat']['id'], $this->permited)) {
                     if (key_exists("entities", $array['message'])) {
-                        $this->originArrayMessage = $array;
+                        $this->offset = $array['update_id'];
                         $this->verifyMessage();
                     }
                 }
             }
         }
-
-        $this->repetitions = $this->repetitions + 1;
-        if ($this->repetitions == 150) {
-            $this->repetitions = null;
-            $this->lastMessageId = null;
-
-        }
-        sleep(600);
-        $this->init();
-
+        $this->init($this->offset);
     }
 
     /**

@@ -30,6 +30,29 @@ class CommunicationLayer
         return $result['result'];
     }
 
+    public function getMessagesWithPost($offset = null)
+    {
+        $options = array(
+            'http' => array(
+                'method' => 'POST',
+                'content' => json_encode(
+                    array(
+                        'allowed_updates' => "message",
+                        'offset' => $offset + 1
+
+                    )),
+                'header' => [
+                    'Content-Type: application/json',
+                    'Accept: application/json'
+                ]
+            )
+        );
+        $context  = stream_context_create($options);
+        $send = file_get_contents($this->url.'getupdates', false, $context );
+        $result = json_decode($send, true);
+        return $result['result'];
+    }
+
     public function getLastMessage()
     {
         $messages = $this->getAllMessages();
