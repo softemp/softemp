@@ -32,13 +32,18 @@ class CommunicationLayer
 
     public function getMessagesWithPost($offset = null)
     {
+        $content = null;
+
+        if ($offset){
+            $content = $offset + 1;
+        }
         $options = array(
             'http' => array(
                 'method' => 'POST',
                 'content' => json_encode(
                     array(
                         'allowed_updates' => "message",
-                        'offset' => $offset + 1
+                        'offset' => $content
 
                     )),
                 'header' => [
