@@ -33,6 +33,20 @@ Route::group(['namespace' => 'SoftEmp'], function () {
         });
     });
 
+    //Tecnicos
+    Route::group(['namespace' => 'WebSite'], function () {
+        Route::group(['as' => 'website.'], function () {
+            Route::group(['as' => 'home.'], function () {
+                Route::get('/', 'HomeController@index')->name('index');
+                Route::get('/home', 'HomeController@index')->name('index');
+            });
+            Route::get('/contato', 'ContactController@index')->name('contact.index');
+            Route::get('/sobre', 'AboutController@index')->name('about.index');
+            Route::get('/planos', 'PlansController@index')->name('plans.index');
+            Route::get('/ajuda', 'HelpController@index')->name('help.index');
+        });
+    });
+
     // Directory Painel de controle
     Route::group(['namespace' => 'Panel'], function () {
 
@@ -45,10 +59,8 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                 Route::get('/unlockClient/{login}', 'MkBlockController@unlockClient')->name('unlockClient');
                 Route::get('/blockClient/{login}', 'MkBlockController@blockClient')->name('blockClient');
                 Route::get('/rebootClient/{login}', 'MkBlockController@rebootClient')->name('rebootClient');
-
             });
             // end Bloqueio de clientes do MkAuth
-
 
             // Directory Core
             Route::group(['namespace' => 'Core'], function () {
@@ -139,7 +151,6 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                         Route::resource('people', 'PeopleController');
                     });
                     // end Directory pessoas
-
 
                     //Configuração
                     //Route::group(['prefix' => 'configuracao', 'as' => 'configuration.'], function () {
@@ -319,9 +330,18 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                         Route::get('/unlockClient/{login}', 'MkBlockController@unlockClient')->name('unlockClient');
                         Route::get('/blockClient/{login}', 'MkBlockController@blockClient')->name('blockClient');
                         Route::get('/rebootClient/{login}', 'MkBlockController@rebootClient')->name('rebootClient');
-
                     });
                     // end Bloqueio de clientes do MkAuth
+
+                    // Directory Network
+                    Route::group(['namespace' => 'Network', 'prefix' => '/rede', 'as' => 'network.'], function () {
+                        // Rota para manutenção
+                        Route::group(['prefix' => '/rota', 'as' => 'route.'], function () {
+                            Route::get('/', 'RouteController@index')->name('index');
+                        });
+                        // end Rota para manutenção
+                    });
+                    //end directory Network
 
                 });
                 //end Directoy Provedor

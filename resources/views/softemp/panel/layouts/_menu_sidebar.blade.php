@@ -140,6 +140,54 @@
                         <i class="fa fa-circle-o"></i> Dashboard
                     </a>
                 </li>
+                {{--Network--}}
+                <li class="treeview {{(Request::is('painel/provedor/rede*')?'active':'')}}">
+                    <a href="#"><i class="fa fa-database"></i> <span>Rede</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{(Request::is('painel/provedor/rede/rota*')?'active':'')}}">
+                            <a href="{{route('panel.provedor.network.route.index')}}">
+                                <i class="fa fa-car"></i> Rota
+                            </a>
+                        </li>
+                        <li class="{{(Request::is('painel/provedor/mkauth/cto*')?'active':'')}}">
+                            <a href="{{route('panel.provedor.mkauth.cto.index')}}">
+                                <i class="fa fa-circle-o"></i> CTOs
+                            </a>
+                        </li>
+
+                        <li class="treeview {{(Request::is('painel/provedor/mkauth/cliente*')?'active':'')}}">
+                            <a href="#"><i class="fa fa-users"></i> Clientes
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="{{(Request::is('painel/provedor/mkauth/cliente/ativo')?'active':'')}}">
+                                    <a href="{{ route('panel.provedor.mkauth.client.active') }}">
+                                        <i class="fa fa-circle-o text-success"></i> Ativos
+                                    </a>
+                                </li>
+                                <li class="{{(Request::is('painel/provedor/mkauth/cliente/bloqueado')?'active':'')}}">
+                                    <a href="{{ route('panel.provedor.mkauth.client.blocked') }}">
+                                        <i class="fa fa-circle-o text-warning"></i> Bloqueados
+                                    </a>
+                                </li>
+                                <li class="{{(Request::is('painel/provedor/mkauth/cliente/desativado')?'active':'')}}">
+                                    <a href="{{ route('panel.provedor.mkauth.client.disabled') }}">
+                                        <i class="fa fa-circle-o text-danger"></i> Desativados
+                                    </a>
+                                </li>
+                                <li class="{{(Request::is('painel/provedor/mkauth/cliente')?'active':'')}}">
+                                    <a href="{{ route('panel.provedor.mkauth.client.index') }}">
+                                        <i class="fa fa-circle-o text-blue"></i> Todos
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                {{--end Network--}}
+
                 {{--MkAuth--}}
                 <li class="treeview {{(Request::is('painel/provedor/mkauth*')?'active':'')}}">
                     <a href="#"><i class="fa fa-random"></i> <span>MkAuth</span>
