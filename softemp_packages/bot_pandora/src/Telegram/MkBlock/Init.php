@@ -13,8 +13,8 @@ class Init
     private $chat;
     private $permited = [];
     private $originArrayMessage;
-    private $repetitions;
     private $urlMkBlock;
+    private $offset;
 
     public function __construct()
     {
@@ -38,30 +38,27 @@ class Init
      *  -> Verifica se o remetente tem permissão de enviar comandos;
      *  -> Verifica se a mensagem é um comando ou não;
      */
-    public function init()
+    public function init($offset = null)
     {
-        $arrays = $this->bot->getAllMessages();
+        $arrays = $this->bot->getMessagesWithPost($offset);
 
-//        print_r($arrays);
         foreach ($arrays as $array) {
             if (key_exists("message", $array)) {
                 if (in_array($array['message']['chat']['id'], $this->permited)) {
                     if (key_exists("entities", $array['message'])) {
-                        $this->originArrayMessage = $array;
-                        $this->verifyMessage();
+                        $this->offset = $array['update_id'];
+                        $this->recognition($array['message']['text']);
                     }
                 }
             }
         }
 
-        $this->repetitions = $this->repetitions + 1;
-        if ($this->repetitions == 150) {
-            $this->repetitions = null;
-            $this->lastMessageId = null;
-
+        if ($this->offset)
+        {
+            $this->init($this->offset);
+        }else{
+            $this->init();
         }
-        sleep(600);
-        $this->init();
 
     }
 
@@ -88,7 +85,6 @@ class Init
     private function recognition($message)
     {
         $arrayMessage = explode('/', $message);
-
         if (empty($arrayMessage[0])) {
             $params = explode(" ", "$arrayMessage[1]");
 
@@ -130,8 +126,6 @@ class Init
     {
         $result = $this->bot->getUrl($this->urlMkBlock . 'unlockClient/' . $login);
 
-        //print_r($result['message']);
-
         $msg = $this->statusResult($result);
 
         $this->bot->sendMessage($msg, $this->chat);
@@ -148,8 +142,6 @@ class Init
     protected function bloquear($login)
     {
         $result = $this->bot->getUrl($this->urlMkBlock . 'blockClient/' . $login);
-
-        //print_r($result['message']);
 
         $msg = $this->statusResult($result);
 
@@ -191,11 +183,8 @@ class Init
     {
         $result = $this->bot->getUrl($this->urlMkBlock . 'rebootClient/' . $login);
 
-        //print_r($result['message']);
-
         $msg = $this->statusResult($result);
 
-//        $msg = "$login foi reiniciado";
         $this->bot->sendMessage($msg, $this->chat);
         $this->log($msg . " por " . $this->originArrayMessage['message']['chat']['first_name']);
         return true;
