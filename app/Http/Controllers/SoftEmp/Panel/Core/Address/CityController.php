@@ -2,28 +2,23 @@
 
 namespace App\Http\Controllers\SoftEmp\Panel\Core\Address;
 
+use App\Http\Controllers\SoftEmp\Panel\CrudController;
 use App\Http\Validators\Address\CityValidator;
 use App\Models\Core\Address\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Controllers\SoftEmp\CrudController;
 use App\Models\Core\Address\State;
 
-class CitiesController extends CrudController {
+class CityController extends CrudController {
 
     /**
      * path file views
      *
      * @var type
      */
-    protected $nameView = 'softemp.panel.address.cities';
+    protected $pathView = 'softemp.panel.address.city';
 
-    /**
-     * route basic
-     *
-     * @var type
-     */
-    protected $route = 'panel.address.cities';
+    protected $groupRoute = 'panel.address.city';
 
     private $state;
 
@@ -34,15 +29,14 @@ class CitiesController extends CrudController {
      * @param CityValidator $validator
      * @param State $state
      */
-    public function __construct(City $model, Request $request, CityValidator $validator, State $state) {
-        $this->model = $model;
-        $this->request = $request;
-        $this->validator = $validator;
+    public function __construct(City $model, Request $request, State $state) {
+//        $this->validator = $validator;
         $this->state = $state;
-    }
+
+    parent::__construct($model, $request, $this->groupRoute, $this->pathView);
+}
 
     public function getCity(){
-        $data = [];
         if($this->request->has('state')&&$this->request->has('city')){
             $state_id = $this->request->state;
             $search = $this->request->city;
@@ -50,8 +44,9 @@ class CitiesController extends CrudController {
                 ->whereStateId($state_id)
                 ->where('name','LIKE',"%$search%")
                 ->get();
+
             if (count($data)) {
-                return response()->json($data);
+                return response()->json($data, 200);
             }
         }
         $data = [

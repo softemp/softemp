@@ -6,53 +6,58 @@ use App\Http\Validators\Address\CountrieValidator;
 use App\Models\Core\Address\ContinentCountrie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Controllers\SoftEmp\CrudController;
-use App\Models\Core\Address\Countrie;
+use App\Http\Controllers\SoftEmp\Panel\CrudController;
+use App\Models\Core\Address\Country;
 use App\Models\Core\Address\Continent;
 
-class CountriesController extends CrudController {
+class CountryController extends CrudController {
 
     /**
      * path file views
      *
      * @var type
      */
-    protected $nameView = 'softemp.panel.address.countries';
-
-    /**
-     * route basic
-     *
-     * @var type
-     */
-    protected $route = 'panel.address.countries';
+    protected $pathView = 'softemp.panel.address.country';
+    protected $groupRoute= 'panel.address.country';
     private $continent;
 
     /**
-     * CountriesController constructor.
-     * @param Countrie $modal
+     * CountryController constructor.
+     *
+     * @param Country $model
      * @param Request $request
-     * @param CountrieValidator $validator
      * @param Continent $continent
      */
-    public function __construct(Countrie $modal, Request $request, CountrieValidator $validator, Continent $continent) {
-        $this->model = $modal;
-        $this->request = $request;
-        $this->validator = $validator;
+    public function __construct(Country $model, Request $request, Continent $continent) {
         $this->continent = $continent;
-    }
+
+    parent::__construct($model, $request, $this->groupRoute, $this->pathView);
+}
 
     /**
+     * autocompletar via ajax
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getCountrie(){
-        $data = [];
-        if($this->request->has('countrie')){
-            $search = $this->request->countrie;
+    public function getCountry(){
+        if($this->request->has('country')){
+            $search = $this->request->country;
             $data = $this->model->select("id","name","iso2")
                 ->where('name','LIKE',"%$search%")
+                ->orWhere('iso2','LIKE',"%$search%")
                 ->get();
+
+            if (count($data)) {
+                return response()->json($data, 200);
+            }
         }
-        return response()->json($data);
+        $data = [
+            0=>[
+                'id'=>'new',
+                'name'=>'País não encontrado'
+            ],
+        ];
+        return response()->json($data,200);
     }
 
     public function create()

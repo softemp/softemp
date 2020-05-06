@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\SoftEmp\Panel\Core\Address;
 
-use App\Http\Validators\Address\AddressValidator;
+use App\Http\Controllers\SoftEmp\Panel\CrudController;
 use App\Models\Core\Address\Address;
 use App\Models\Core\Address\AddressType;
 use App\Models\Core\Address\City;
-use App\Models\Core\Address\Countrie;
+use App\Models\Core\Address\Country;
 use App\Models\Core\Address\Neighboarhood;
 use App\Models\Core\Address\State;
 use App\Models\Core\Address\Street;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Controllers\SoftEmp\CrudController;
 
 class AddressController extends CrudController {
 
@@ -21,20 +20,15 @@ class AddressController extends CrudController {
      *
      * @var type
      */
-    protected $nameView = 'softemp.panel.address.address';
+    protected $pathView = 'softemp.panel.address.address';
+    protected $groupRoute = 'panel.address.address';
 
-    /**
-     * route basic
-     *
-     * @var type
-     */
-    protected $route = 'panel.address.address';
     private $addressType;
     private $street;
     private $neighboarhood;
     private $city;
     private $state;
-    private $countrie;
+    private $country;
 
     /**
      * AddressController constructor.
@@ -43,22 +37,21 @@ class AddressController extends CrudController {
      * @param AddressValidator $validator
      * @param Street $street
      */
-    public function __construct(Address $model, Request $request, AddressValidator $validator, AddressType $addressType,
-                                Countrie $countrie, State $state,City $city,Neighboarhood $neighboarhood, Street $street) {
-        $this->model = $model;
-        $this->request = $request;
-        $this->validator = $validator;
+    public function __construct(Address $model, Request $request, AddressType $addressType,
+                                Country $country, State $state, City $city, Neighboarhood $neighboarhood, Street $street) {
         $this->addressType = $addressType;
         $this->street = $street;
         $this->neighboarhood = $neighboarhood;
         $this->city = $city;
         $this->state = $state;
-        $this->countrie = $countrie;
+        $this->country = $country;
+
+        parent::__construct($model, $request, $this->groupRoute, $this->pathView);
     }
 
     public function create()
     {
-        $countries = $this->countrie->all();
+        $countries = $this->country->all();
         $states = $this->state->all();
         $cities = $this->city->all();
         $neighboarhoods = $this->neighboarhood->all();

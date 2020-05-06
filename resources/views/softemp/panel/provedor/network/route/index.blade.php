@@ -193,6 +193,11 @@
             directionsDisplay.setMap(map);
         }
 
+        /**
+         * imprime as distancias e as rotas
+         *
+         * @param result
+         */
         function computeTotalDistance(result) {
             var total = 0;
             var myroute = result.routes[0];

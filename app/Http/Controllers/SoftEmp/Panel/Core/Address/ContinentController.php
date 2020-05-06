@@ -2,27 +2,21 @@
 
 namespace App\Http\Controllers\SoftEmp\Panel\Core\Address;
 
+use App\Http\Controllers\SoftEmp\Panel\CrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Controllers\SoftEmp\CrudController;
 use App\Models\Core\Address\Continent;
 use App\Http\Validators\Address\ContinentsValidator;
 
-class ContinentsController extends CrudController {
+class ContinentController extends CrudController {
 
     /**
      * path file views
      *
      * @var type
      */
-    protected $pathView = 'softemp.panel.core.address.continents';
-
-    /**
-     * route basic
-     *
-     * @var type
-     */
-    protected $groupRoute = 'panel.address.continents';
+    protected $pathView = 'softemp.panel.core.address.continent';
+    protected $groupRoute = 'panel.address.continent';
 
     /**
      * ContinentsController constructor.
@@ -30,12 +24,12 @@ class ContinentsController extends CrudController {
      * @param Request $request
      * @param ContinentsValidator $validator
      */
-    public function __construct(Continent $model, Request $request, ContinentsValidator $validator) {
-        $this->request = $request;
-        $this->validator = $validator;
+    public function __construct(Continent $model, Request $request) {
+//        $this->request = $request;
+//        $this->validator = $validator;
 
-        parent::__construct($model, $this->groupRoute, $this->pathView);
-    }
+        parent::__construct($model, $request, $this->groupRoute, $this->pathView);
+}
 
     /**
      * Display a listing of the resource.

@@ -54,7 +54,7 @@
                         <i class="fa fa-circle-o"></i> Clientes
                     </a>
                 </li>
-                <li class="{{(Request::is('painel/people/caterer*')?'active':'')}}">
+                <li class="{{(Request::is('painel/pessoa/fornecedor*')?'active':'')}}">
                     <a href="{{route('panel.people.caterer.index')}}">
                         <i class="fa fa-circle-o"></i> Fornecedores
                     </a>
@@ -257,7 +257,7 @@
         </li>
 
         <!-- Configuração -->
-        <li class="treeview {{(Request::is('panel/companies/empresa') || Request::is('painel/contato/*') ? 'active' : '') }}">
+        <li class="treeview {{(Request::is('painel/configuracao/*') || Request::is('painel/contato/*') ? 'active' : '') }}">
             <a href="#">
                 <i class="fa fa-cogs"></i>
                 <span>Configuração</span>
@@ -267,14 +267,24 @@
             </a>
             <ul class="treeview-menu">
 {{--            @can('dados-empresa-view')--}}
-{{--                <!-- Dados da Empresa -->--}}
-{{--                    <li {{ (Request::is('panel/companies/empresa') ? 'class=active' : '') }}>--}}
-{{--                        <a href="{{ route('panel.companies.empresa.index') }}">--}}
-{{--                            <i class="fa fa-adn"></i> Dados da Empresa--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--            @endcan--}}
+                <!-- Dados da Empresa -->
+                <li class="treeview {{(Request::is('painel/configuracao/empresa*') ? 'active' : '') }}">
+                    <a href="#">
+                        <i class="fa fa-compress"></i>
+                        <span>Empresa</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li class="{{(Request::is('painel/configuracao/empresa') ? 'active' : '') }}"><a
+                                href="{{ route('panel.configuration.company.index') }}"><i class="fa fa-circle-o text-aqua"></i>
+                                <span>Dados da Empresa</span></a></li>
+                    </ul>
+                </li>
             <!-- /.Dados da Empresa -->
+{{--            @endcan--}}
 {{--            @can('contact-type-view')--}}
                 <!-- Contato -->
                     <li {{(Request::is('painel/contato/tipo/*') ? 'active' : '') }}>
@@ -326,37 +336,37 @@
             </a>
             <ul class="treeview-menu">
 
-                <li class="{{(Request::is('panel/address/types') ? 'active' : '') }}"><a
-                            href="{{ route('panel.address.types.index') }}"><i class="fa fa-circle-o text-aqua"></i>
-                        <span>Tipo de Endereço</span></a></li>
+{{--                <li class="{{(Request::is('panel/address/type') ? 'active' : '') }}"><a--}}
+{{--                            href="{{ route('panel.address.type.index') }}"><i class="fa fa-circle-o text-aqua"></i>--}}
+{{--                        <span>Tipo de Endereço</span></a></li>--}}
 
-                <li {{ (Request::is('panel/address/continents*') ? 'class=active' : '') }}>
-                    <a href="{{ route('panel.address.continents.index') }}">
+                <li {{ (Request::is('panel/address/continent*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.continent.index') }}">
                         <i class="fa fa-globe"></i> Continentes
                     </a>
                 </li>
-                <li {{ (Request::is('panel/address/countries*') ? 'class=active' : '') }}>
-                    <a href="{{ route('panel.address.countries.index') }}">
+                <li {{ (Request::is('panel/address/country*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.country.index') }}">
                         <i class="fa fa-flag"></i> Paises
                     </a>
                 </li>
-                <li {{ (Request::is('panel/address/states*') ? 'class=active' : '') }}>
-                    <a href="{{ route('panel.address.states.index') }}">
+                <li {{ (Request::is('panel/address/state*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.state.index') }}">
                         <i class="fa fa-circle-thin"></i> Estados
                     </a>
                 </li>
-                <li {{ (Request::is('panel/address/cities*') ? 'class=active' : '') }}>
-                    <a href="{{ route('panel.address.cities.index') }}">
+                <li {{ (Request::is('panel/address/city*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.city.index') }}">
                         <i class="fa fa-address-book"></i> Cidades
                     </a>
                 </li>
-                <li {{ (Request::is('panel/address/neighboarhoods*') ? 'class=active' : '') }}>
-                    <a href="{{ route('panel.address.neighboarhoods.index') }}">
+                <li {{ (Request::is('panel/address/neighboarhood*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.neighboarhood.index') }}">
                         <i class="fa fa-bullseye"></i> Bairros
                     </a>
                 </li>
-                <li {{ (Request::is('panel/address/streets*') ? 'class=active' : '') }}>
-                    <a href="{{ route('panel.address.streets.index') }}">
+                <li {{ (Request::is('panel/address/street*') ? 'class=active' : '') }}>
+                    <a href="{{ route('panel.address.street.index') }}">
                         <i class="fa fa-crosshairs"></i> Logradouros
                     </a>
                 </li>
@@ -375,30 +385,30 @@
             </a>
             <ul class="treeview-menu">
 
-                <li class="{{(Request::is('painel/website/banner*') ? 'active' : '') }}"><a
-                        href="{{ route('panel.address.types.index') }}"><i class="fa fa-ban text-aqua"></i>
-                        <span>Banners</span></a></li>
+{{--                <li class="{{(Request::is('painel/website/banner*') ? 'active' : '') }}"><a--}}
+{{--                        href="{{ route('panel.address.type.index') }}"><i class="fa fa-ban text-aqua"></i>--}}
+{{--                        <span>Banners</span></a></li>--}}
 
-                <li {{ (Request::is('painel/website/sobre*') ? 'class=active' : '') }}>
-                    <a href="{{ route('panel.address.continents.index') }}">
-                        <i class="fa fa-bolt"></i> Sobre Nós
-                    </a>
-                </li>
-                <li {{ (Request::is('painel/website/contato*') ? 'class=active' : '') }}>
-                    <a href="{{ route('panel.address.countries.index') }}">
-                        <i class="fa fa-envelope"></i> Contato
-                    </a>
-                </li>
-                <li {{ (Request::is('painel/website/planos*') ? 'class=active' : '') }}>
-                    <a href="{{ route('panel.address.states.index') }}">
-                        <i class="fa fa-plane"></i> Planos
-                    </a>
-                </li>
-                <li {{ (Request::is('painel/website/suporte*') ? 'class=active' : '') }}>
-                    <a href="{{ route('panel.address.cities.index') }}">
-                        <i class="fa fa-support"></i> Suporte
-                    </a>
-                </li>
+{{--                <li {{ (Request::is('painel/website/sobre*') ? 'class=active' : '') }}>--}}
+{{--                    <a href="{{ route('panel.address.continent.index') }}">--}}
+{{--                        <i class="fa fa-bolt"></i> Sobre Nós--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li {{ (Request::is('painel/website/contato*') ? 'class=active' : '') }}>--}}
+{{--                    <a href="{{ route('panel.address.country.index') }}">--}}
+{{--                        <i class="fa fa-envelope"></i> Contato--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li {{ (Request::is('painel/website/planos*') ? 'class=active' : '') }}>--}}
+{{--                    <a href="{{ route('panel.address.state.index') }}">--}}
+{{--                        <i class="fa fa-plane"></i> Planos--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li {{ (Request::is('painel/website/suporte*') ? 'class=active' : '') }}>--}}
+{{--                    <a href="{{ route('panel.address.city.index') }}">--}}
+{{--                        <i class="fa fa-support"></i> Suporte--}}
+{{--                    </a>--}}
+{{--                </li>--}}
             </ul>
         </li>
         <!-- /.WebSite -->

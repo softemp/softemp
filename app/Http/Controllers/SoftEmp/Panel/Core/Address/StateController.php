@@ -2,28 +2,23 @@
 
 namespace App\Http\Controllers\SoftEmp\Panel\Core\Address;
 
+use App\Http\Controllers\SoftEmp\Panel\CrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Controllers\SoftEmp\CrudController;
 use App\Models\Core\Address\State;
-use App\Models\Core\Address\Countrie;
+use App\Models\Core\Address\Country;
 use App\Http\Validators\Address\StateValidator;
 
-class StatesController extends CrudController {
+class StateController extends CrudController {
 
     /**
      * path file views
      *
      * @var type
      */
-    protected $nameView = 'softemp.panel.address.states';
+    protected $pathView = 'softemp.panel.address.state';
 
-    /**
-     * route basic
-     *
-     * @var type
-     */
-    protected $route = 'panel.address.states';
+    protected $groupRoute = 'panel.address.state';
     protected $countrie;
 
     /**
@@ -31,29 +26,40 @@ class StatesController extends CrudController {
      * @param State $model
      * @param Request $request
      * @param StateValidator $validator
-     * @param Countrie $countrie
+     * @param Country $countrie
      */
-    public function __construct(State $model, Request $request, StateValidator $validator, Countrie $countrie) {
-        $this->model = $model;
-        $this->request = $request;
-        $this->validator = $validator;
+    public function __construct(State $model, Request $request, Country $countrie) {
+//        $this->validator = $validator;
         $this->countrie = $countrie;
-    }
+
+    parent::__construct($model, $request, $this->groupRoute, $this->pathView);
+}
 
     /**
      * @return \Illuminate\Http\JsonResponse
      */
     public function getState(){
-        $data = [];
-        if($this->request->has('countrie')&&$this->request->has('state')){
-            $countrie_id = $this->request->countrie;
+        if($this->request->has('country') && $this->request->has('state')){
+            $country_id = $this->request->country;
             $search = $this->request->state;
             $data = $this->model->select("id","name","initials")
-                ->whereCountrieId($countrie_id)
+                ->whereCountryId($country_id)
                 ->where('name','LIKE',"%$search%")
+                ->orWhere('initials','LIKE',"%$search%")
                 ->get();
+
+            if (count($data)) {
+                return response()->json($data, 200);
+            }
         }
-        return response()->json($data);
+        $data = [
+            0=>[
+                'id'=>'new',
+                'initials'=>'',
+                'name'=>'Estado não encontrado'
+            ],
+        ];
+        return response()->json($data,200);
     }
 
     /**

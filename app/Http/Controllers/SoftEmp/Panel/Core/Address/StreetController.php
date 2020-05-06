@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SoftEmp\Panel\Core\Address;
 
+use App\Http\Controllers\SoftEmp\Panel\CrudController;
 use App\Http\Validators\Address\CityValidator;
 use App\Http\Validators\Address\NeighboarhoodValidator;
 use App\Http\Validators\Address\StreetValidator;
@@ -11,23 +12,16 @@ use App\Models\Core\Address\Street;
 use App\Models\Core\Address\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Controllers\SoftEmp\CrudController;
 
-class StreetsController extends CrudController {
+class StreetController extends CrudController {
 
     /**
      * path file views
      *
      * @var type
      */
-    protected $nameView = 'softemp.panel.address.streets';
-
-    /**
-     * route basic
-     *
-     * @var type
-     */
-    protected $route = 'panel.address.streets';
+    protected $pathView = 'softemp.panel.address.street';
+    protected $groupRoute = 'panel.address.street';
     private $neighboarhood;
 
     /**
@@ -37,24 +31,31 @@ class StreetsController extends CrudController {
      * @param StreetValidator $validator
      * @param Neighboarhood $neighboarhood
      */
-    public function __construct(Street $model, Request $request, StreetValidator $validator, Neighboarhood $neighboarhood) {
-        $this->model = $model;
-        $this->request = $request;
-        $this->validator = $validator;
+    public function __construct(Street $model, Request $request, Neighboarhood $neighboarhood) {
         $this->neighboarhood = $neighboarhood;
+        parent::__construct($model, $request, $this->groupRoute, $this->pathView);
     }
 
     public function getStreet(){
-        $data = [];
-        if($this->request->has('neighboarhood')&&$this->request->has('street')){
+        if($this->request->has('neighboarhood') && $this->request->has('street')){
             $neighboarhood_id = $this->request->neighboarhood;
             $search = $this->request->street;
             $data = $this->model->select("id","name")
                 ->whereNeighboarhoodId($neighboarhood_id)
                 ->where('name','LIKE',"%$search%")
                 ->get();
+
+            if (count($data)) {
+                return response()->json($data, 200);
+            }
         }
-        return response()->json($data);
+        $data = [
+            0=>[
+                'id'=>'new',
+                'name'=>'Logradouro não encontrado'
+            ],
+        ];
+        return response()->json($data,200);
     }
 
     /**

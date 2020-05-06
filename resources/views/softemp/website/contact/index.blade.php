@@ -77,15 +77,21 @@
 
 @section('scripts_js')
     <script>
-        var map;
         function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -34.397, lng: 150.644},
-                zoom: 8
+
+            var gbitTelecomLocation = {lat: -28.102830, lng: -48.671439};
+
+            var map = new google.maps.Map(
+                document.getElementById('map'), {
+                    zoom: 15,
+                    center: gbitTelecomLocation
+                });
+
+            var marker = new google.maps.Marker({
+                position: gbitTelecomLocation,
+                map: map
             });
         }
     </script>
-{{--    <script src="http://maps.google.com/maps/api/js?key=AIzaSyBERTtkj-XSQv-GSukC1fozzTfk7h7LO0c"></script>--}}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBERTtkj-XSQv-GSukC1fozzTfk7h7LO0c&callback=initMap" async defer></script>
-{{--    <script src="{{ asset('softemp/website/js/gmap.js') }}" type="text/javascript"></script>--}}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAn_BXBGgcA_CCj7wp2T9_ff7l9xwXS0KA&callback=initMap" async defer></script>
 @endsection

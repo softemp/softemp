@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\SoftEmp\Panel\Core\Address;
 
+use App\Http\Controllers\SoftEmp\Panel\CrudController;
 use App\Http\Validators\Address\CityValidator;
 use App\Http\Validators\Address\NeighboarhoodValidator;
 use App\Models\Core\Address\City;
 use App\Models\Core\Address\Neighboarhood;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Controllers\SoftEmp\CrudController;
 use App\Models\Core\Address\State;
 
-class NeighboarhoodsController extends CrudController
+class NeighboarhoodController extends CrudController
 {
 
     /**
@@ -19,14 +19,8 @@ class NeighboarhoodsController extends CrudController
      *
      * @var type
      */
-    protected $nameView = 'softemp.panel.address.neighboarhoods';
-
-    /**
-     * route basic
-     *
-     * @var type
-     */
-    protected $route = 'panel.address.neighboarhoods';
+    protected $pathView = 'softemp.panel.address.neighboarhood';
+    protected $groupRoute = 'panel.address.neighboarhood';
     private $city;
 
     /**
@@ -36,18 +30,16 @@ class NeighboarhoodsController extends CrudController
      * @param NeighboarhoodValidator $validator
      * @param City $city
      */
-    public function __construct(Neighboarhood $model, Request $request, NeighboarhoodValidator $validator, City $city)
+    public function __construct(Neighboarhood $model, Request $request, City $city)
     {
-        $this->model = $model;
-        $this->request = $request;
-        $this->validator = $validator;
+//        $this->validator = $validator;
         $this->city = $city;
+
+        parent::__construct($model, $request, $this->groupRoute, $this->pathView);
     }
 
     public function getNeighboarhood()
     {
-        //dd($this->request->all());
-        $data = [];
         if ($this->request->has('city') && $this->request->has('neighboarhood')) {
             $city_id = $this->request->city;
             $search = $this->request->neighboarhood;
@@ -55,8 +47,18 @@ class NeighboarhoodsController extends CrudController
                 ->whereCityId($city_id)
                 ->where('name', 'LIKE', "%$search%")
                 ->get();
+
+            if (count($data)) {
+                return response()->json($data, 200);
+            }
         }
-        return response()->json($data);
+        $data = [
+            0=>[
+                'id'=>'new',
+                'name'=>'Bairro não encontrado'
+            ],
+        ];
+        return response()->json($data,200);
     }
 
     /**

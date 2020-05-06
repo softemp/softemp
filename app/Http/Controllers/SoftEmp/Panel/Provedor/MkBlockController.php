@@ -194,40 +194,48 @@ class MkBlockController extends Controller
         $arrayRbBloqueados = [];
 
         foreach ($this->nas->getNas() as $rb) {
-            //$this->arrayLog[] = date('Y-m-d H:i:s').' - entrando na RB - '.$rb->nasname;//adicionando ao log
-            $this->setLog('Acessando '.$rb->shortname.' - IP - '.$rb->nasname);
+//            if($rb->nasname == '192.168.7.38') {
+//            if($rb->nasname == '10.100.2.10') {
 
-            // buscando os cliente bloqueados no MkAuth
-            $mkAuthBloqueados = $this->getMkAuthBloquedos($rb->nasname);
+                //$this->arrayLog[] = date('Y-m-d H:i:s').' - entrando na RB - '.$rb->nasname;//adicionando ao log
+                $this->setLog('Acessando ' . $rb->shortname . ' - IP - ' . $rb->nasname);
 
-            // conenctando na RB pelo IP cadastrado no menu servidores no MkAuth
-            $rbConn = $this->rbConnection($rb->nasname);
+                // buscando os cliente bloqueados no MkAuth
+                $mkAuthBloqueados = $this->getMkAuthBloquedos($rb->nasname);
 
-            // verifica o status da conexão com os roteadores
-            if($rbConn->statusConnect() === true){
+                // conenctando na RB pelo IP cadastrado no menu servidores no MkAuth
+                $rbConn = $this->rbConnection($rb->nasname);
 
-                $objAddressList = $rbConn->ip()->firewall()->addressList();
+                // verifica o status da conexão com os roteadores
+                if ($rbConn->statusConnect() === true) {
 
-                $rbBloqueados = $this->getRbBloqueados($objAddressList);
+                    $objAddressList = $rbConn->ip()->firewall()->addressList();
 
-                if($rbBloqueados) {
-                    $this->deleteAddressList($objAddressList, $rbBloqueados);
+                    $rbBloqueados = $this->getRbBloqueados($objAddressList);
+
+                    if ($rbBloqueados) {
+                        $this->deleteAddressList($objAddressList, $rbBloqueados);
+                    }
+
+                    if (!count($mkAuthBloqueados) == 0) {
+                        $this->addBloqueioAddressList($objAddressList, $mkAuthBloqueados);
+                    }
+
+                    $arrayRbBloqueados[$rb->nasname] = $rbBloqueados;
+
+                } else {
+                    $result = date('Y-m-d H:i:s') . '-' . $rbConn->statusConnect() . ' ao Nas: ' . $rb->shortname . ' no IP: ' . $rb->nasname;
+                    $arrayRbBloqueados[$rb->nasname] = $result;
+
+                    $this->arrayLog[] = $result;
                 }
 
-                if(!count($mkAuthBloqueados) == 0){
-                    $this->addBloqueioAddressList($objAddressList,$mkAuthBloqueados);
-                }
+                $arrayMKAuthBloqueados[$rb->nasname] = $mkAuthBloqueados;
+//            }
 
-                $arrayRbBloqueados[$rb->nasname] = $rbBloqueados;
-
-            } else {
-                $result = date('Y-m-d H:i:s').'-'.$rbConn->statusConnect() .' ao Nas: '.$rb->shortname.' no IP: '.$rb->nasname;
-                $arrayRbBloqueados[$rb->nasname] = $result;
-
-                $this->arrayLog[] = $result;
-            }
-
-            $arrayMKAuthBloqueados[$rb->nasname] = $mkAuthBloqueados;
+//            echo '<pre>';
+//            var_dump($arrayMKAuthBloqueados, $arrayRbBloqueados);
+//            echo '</pre>';
         }
         dd($arrayMKAuthBloqueados, $arrayRbBloqueados);
     }

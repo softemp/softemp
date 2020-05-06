@@ -11,7 +11,7 @@
 //Route::get('/panel', 'HomeController@admin')->name('panel.index');
 Route::get('/panel/v2', 'HomeController@admin')->name('panel.index2');
 //
-//Route::get('/panel/pages/blank', 'SoftEmp\Panel\PageController@blank')->name('panel.pages.blank');
+Route::get('/panel/pages/blank', 'SoftEmp\Panel\PageController@blank')->name('panel.pages.blank');
 //Route::get('/panel/pages/tabela', 'SoftEmp\Panel\PageController@tabela')->name('panel.pages.tabela');
 //Route::get('/panel/pages/select2', 'SoftEmp\Panel\PageController@select2')->name('panel.pages.select2');
 //Route::get('/panel/pages/icheck', 'SoftEmp\Panel\PageController@icheck')->name('panel.pages.icheck');
@@ -54,12 +54,12 @@ Route::group(['namespace' => 'SoftEmp'], function () {
         Route::group(['prefix' => '/painel', 'as' => 'panel.'], function () {
 
             // Bloqueio de clientes do MkAuth
-            Route::group(['namespace' => 'Provedor','prefix' => '/provedor/mkblock/telegram', 'as' => 'provedor.mkblock.telegram.'], function () {
-//                Route::get('/', 'MkBlockController@sincLoginBlock')->name('sincLoginBlock');
-                Route::get('/unlockClient/{login}', 'MkBlockController@unlockClient')->name('unlockClient');
-                Route::get('/blockClient/{login}', 'MkBlockController@blockClient')->name('blockClient');
-                Route::get('/rebootClient/{login}', 'MkBlockController@rebootClient')->name('rebootClient');
-            });
+//            Route::group(['namespace' => 'Provedor','prefix' => '/provedor/mkblock/telegram', 'as' => 'provedor.mkblock.telegram.'], function () {
+////                Route::get('/', 'MkBlockController@sincLoginBlock')->name('sincLoginBlock');
+//                Route::get('/unlockClient/{login}', 'MkBlockController@unlockClient')->name('unlockClient');
+//                Route::get('/blockClient/{login}', 'MkBlockController@blockClient')->name('blockClient');
+//                Route::get('/rebootClient/{login}', 'MkBlockController@rebootClient')->name('rebootClient');
+//            });
             // end Bloqueio de clientes do MkAuth
 
             // Directory Core
@@ -115,33 +115,58 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                                     Route::put('/{role}/alterar', 'EmployeeController@update')->name('update');
                                     Route::delete('/{role}', 'EmployeeController@destroy')->name('destroy');
 
-                                    Route::put('{id}/define/employee', 'EmployeeController@defineEmployee')->name('define.employee');
+                                    Route::put('{id}/define/employee',
+                                        'EmployeeController@defineEmployee')->name('define.employee');
                                     Route::get('{person_id}/restore', 'EmployeeController@restore')->name('restore');
 
-                                    Route::delete('{email_id}/delete/email', 'EmployeeController@detroyEmail')->name('destroy.email');
-                                    Route::delete('{phone_id}/delete/phone', 'EmployeeController@detroyPhone')->name('destroy.phone');
+                                    Route::delete('{email_id}/delete/email',
+                                        'EmployeeController@detroyEmail')->name('destroy.email');
+                                    Route::delete('{phone_id}/delete/phone',
+                                        'EmployeeController@detroyPhone')->name('destroy.phone');
                                 });
                                 //Route::resource('employee', 'EmployeeController');
                                 // end Colaborador
 
                                 //profile
-                                Route::get('fisica/preferencias', 'PhysicalController@profile')->name('physical.profile');
+                                Route::get('fisica/preferencias',
+                                    'PhysicalController@profile')->name('physical.profile');
 
-                                Route::get('physical/autocomplete/name', 'PhysicalController@autocompleteName')->name('physical.autocomplete.name');
-                                Route::get('physical/autocomplete/document', 'PhysicalController@autocompleteDocument')->name('physical.autocomplete.document');
+                                Route::get('physical/autocomplete/name',
+                                    'PhysicalController@autocompleteName')->name('physical.autocomplete.name');
+                                Route::get('physical/autocomplete/document',
+                                    'PhysicalController@autocompleteDocument')->name('physical.autocomplete.document');
+
                                 Route::resource('physical', 'PhysicalController');
 
                             });
                             // end Directory pessoa física
 
                             // Directory pessoa jurídica
-                            Route::group(['namespace' => 'Legal'], function () {
+                            Route::namespace('Legal')->group(function () {
+                                Route::resource('legal', 'PhysicalController');
+                                Route::prefix('empresas')->name('company.')->group(function () {
+                                    // Autocompletar
+                                    Route::get('/auto-completar', 'CompanyController@autocomplete')->name('autocomplete');
+                                    // end Autocompletar
+                                });
                                 Route::resource('company', 'CompanyController');
                             });
                             // end Directory pessoa jurídica
 
                             // Fornecedores
-                            Route::resource('caterer', 'CatererController');
+                            Route::group(['prefix' => '/fornecedor', 'as' => 'caterer.'], function () {
+                                Route::get('/', 'CatererController@index')->name('index');
+                                Route::get('/cadastrar', 'CatererController@create')->name('create');
+                                Route::post('/salvar', 'CatererController@store')->name('store');
+                                Route::get('/show/{id}', 'CatererController@show')->name('show');
+                                Route::get('/{id}/editar', 'CatererController@edit')->name('edit');
+                                Route::put('/{id}/alterar', 'CatererController@update')->name('update');
+                                Route::delete('/{id}', 'EmployeeController@destroy')->name('destroy');
+                                //Route::resource('caterer', 'CatererController');
+
+                                Route::put('{id}/role/define', 'CatererController@defineRole')->name('role.define');
+
+                            });
                             // end Fornecedores
 
                             // Clientes
@@ -149,11 +174,25 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                             // end Clientes
                         });
                         Route::resource('people', 'PeopleController');
+
                     });
                     // end Directory pessoas
 
                     //Configuração
-                    //Route::group(['prefix' => 'configuracao', 'as' => 'configuration.'], function () {
+                    Route::group(['namespace' => 'Configuration', 'prefix' => 'configuracao', 'as' => 'configuration.'], function () {
+                        // Directory Companies
+                        Route::group(['namespace' => 'Company'], function () {
+                            // Company
+                            Route::group(['prefix' => 'empresa', 'as' => 'company.'], function () {
+                                    Route::get('/', 'CompanyController@index')->name('index');
+                                    Route::put('/update/data/{id}', 'CompanyController@updateData')->name('updateData');
+                                    Route::put('/update/address/{id}', 'CompanyController@updateAddress')->name('updateAddress');
+                            });
+                            // end Company
+                        });
+                        // end Directory Companies
+                    });
+
                     // Directory Contact
                     Route::group(['namespace' => 'Contact'], function () {
                         // Contato
@@ -241,36 +280,36 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                     // end Directory Access Control
 
                     #Address
-                    Route::group(['prefix' => '/address', 'as' => 'address.', 'namespace' => 'Address'], function () {
+                    Route::group(['prefix' => 'endereco', 'as' => 'address.', 'namespace' => 'Address'], function () {
                         #Continentes
-                        Route::resource('continents', 'ContinentsController');
+                        Route::resource('continent', 'ContinentController');
                         #Paises
-                        Route::group(['prefix' => '/countries', 'as' => 'countries.'], function () {
-                            Route::get('getCountrie', 'CountriesController@getCountrie')->name('get.countrie');
+                        Route::group(['prefix' => 'pais', 'as' => 'country.'], function () {
+                            Route::get('/getCountry', 'CountryController@getCountry')->name('getCountry');
                         });
-                        Route::resource('countries', 'CountriesController');
+                        Route::resource('country', 'CountryController');
                         #Estados
-                        Route::group(['prefix' => '/states', 'as' => 'states.'], function () {
-                            Route::get('getState', 'StatesController@getState')->name('get.state');
+                        Route::group(['prefix' => 'estado', 'as' => 'state.'], function () {
+                            Route::get('/getState', 'StateController@getState')->name('getState');
                         });
-                        Route::resource('states', 'StatesController');
+                        Route::resource('state', 'StateController');
                         #Cidades
-                        Route::group(['prefix' => '/cities', 'as' => 'cities.'], function () {
-                            Route::get('getCity', 'CitiesController@getCity')->name('get.city');
+                        Route::group(['prefix' => 'cidade', 'as' => 'city.'], function () {
+                            Route::get('getCity', 'CityController@getCity')->name('getCity');
                         });
-                        Route::resource('cities', 'CitiesController');
+                        Route::resource('city', 'CityController');
                         #Bairros
-                        Route::group(['prefix' => '/neighboarhoods', 'as' => 'neighboarhoods.'], function () {
-                            Route::get('getNeighboarhood', 'NeighboarhoodsController@getNeighboarhood')->name('get.neighboarhood');
+                        Route::group(['prefix' => 'bairro', 'as' => 'neighborhood.'], function () {
+                            Route::get('getNeighboarhood', 'NeighboarhoodController@getNeighboarhood')->name('getNeighboarhood');
                         });
-                        Route::resource('neighboarhoods', 'NeighboarhoodsController');
+                        Route::resource('neighboarhood', 'NeighboarhoodController');
                         #Logradouros
-                        Route::group(['prefix' => '/streets', 'as' => 'streets.'], function () {
-                            Route::get('getStreet', 'StreetsController@getStreet')->name('get.street');
+                        Route::group(['prefix' => 'logradouro', 'as' => 'street.'], function () {
+                            Route::get('getStreet', 'StreetController@getStreet')->name('getStreet');
                         });
-                        Route::resource('streets', 'StreetsController');
+                        Route::resource('street', 'StreetController');
                         #Endereço
-                        Route::group(['prefix' => '/address', 'as' => 'address.'], function () {
+                        Route::group(['prefix' => 'endereco', 'as' => 'address.'], function () {
                             Route::put('/{id}/status/disable', 'AddressController@statusDisable')->name('status.disable');
                             Route::put('/{id}/status/activate', 'AddressController@statusActivate')->name('status.activate');
                             Route::put('/{id}/main/define', 'AddressController@mainDefine')->name('main.define');
@@ -279,7 +318,7 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                         //Route::resource('address', 'AddressController')->only(['create','edit','update','destroy']);
                         Route::resource('address', 'AddressController');
                         #Tipo de Endereço
-                        Route::resource('types', 'AddressTypesController');
+                        Route::resource('type', 'AddressTypeController');
                     });
                     #end Address
 
@@ -315,12 +354,6 @@ Route::group(['namespace' => 'SoftEmp'], function () {
                             Route::get('/{client}', 'ClientController@show')->name('show');
                         });
                         // end CTOs
-
-                        // Support
-    //                    Route::group(['prefix' => '/suporte', 'as' => 'supports.', 'namespace' => 'Supports'], function () {
-    //                        Route::get('/', 'SupportsController@index')->name('index');
-    //
-    //                    });
                     });
                     //end Directoy MkAuth
 
