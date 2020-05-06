@@ -4,7 +4,7 @@ namespace App\Models\Core\Address;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Countrie extends Model
+class Country extends Model
 {
     protected $table = 'countries';
     /**
@@ -24,8 +24,8 @@ class Countrie extends Model
      *
      * @return type
      */
-    public function continents() {
-        return $this->belongsToMany(Continent::class,'continent_countrie','countrie_id','continent_id');
+    public function continent() {
+        return $this->belongsToMany(Continent::class,'continent_country','country_id','continent_id');
     }
 
     /**
@@ -35,7 +35,7 @@ class Countrie extends Model
      * @return type
      */
     public function addContinent(Continent $continent) {
-        return $this->continents()->save($continent);
+        return $this->continent()->save($continent);
     }
 
     /**
@@ -45,7 +45,7 @@ class Countrie extends Model
      * @return type
      */
     public function revokeContinent(Continent $continent) {
-        return $this->continents()->detach($continent);
+        return $this->continent()->detach($continent);
     }
 
     /**
@@ -56,13 +56,13 @@ class Countrie extends Model
      */
     public function hasContinent($continent) {
         if (is_string($continent)) {
-            return $this->continents->contains('name', $continent);
+            return $this->continent->contains('name', $continent);
         }
 
-        return $continent->intersect($this->continents)->count();
+        return $continent->intersect($this->continent)->count();
     }
 
-    public function states(){
-        return $this->hasMany(State::class,'countrie_id','id');
+    public function state(){
+        return $this->hasMany(State::class,'country_id','id');
     }
 }

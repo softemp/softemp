@@ -17,7 +17,8 @@ class Street extends Model
      */
     protected $fillable = ['name','zip_code','neighboarhood_id'];
 
-    public function neighboarhoods(){
-        return $this->belongsTo(Neighboarhood::class,'neighboarhood_id');
+    public function neighboarhood(){
+        return $this->belongsTo(Neighboarhood::class,'neighboarhood_id','id');
+//        return $this->hasOne(Neighboarhood::class,'id','neighboarhood_id');
     }
 }

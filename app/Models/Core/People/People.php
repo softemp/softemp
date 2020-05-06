@@ -3,6 +3,7 @@
 namespace App\Models\Core\People;
 
 use App\Models\Core\AccessControl\Role;
+use App\Models\Core\Address\Address;
 use App\Models\Core\Company\Company;
 use App\Models\Core\Contact\ContEmail;
 use App\Models\Core\Contact\ContPhone;
@@ -87,5 +88,46 @@ class People extends Model
         return $this->hasMany(ContEmail::class,'person_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function address(){
+        return $this->hasMany(Address::class,'person_id','id');
+    }
+
+    /**
+     * @param $address
+     * @return Model
+     */
+    public function addAddress($address){
+        return $this->address()->create($address);
+    }
+
+    /**
+     * Retorna os registros com roles como Fornecedores
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function getCaterers(){
+        $query = $this->query();
+        $value = 'caterer';
+        $query->whereHas('roles', function ($query2) use ($value) {
+            $query2->where('slug', $value);
+        });
+        return $query;
+    }
+
+//    /**
+//     * @param $value
+//     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\HasOne
+//     */
+//    public function searchCompany($value){
+//        return $this->company()
+//            ->select('id','fantasy_name','business_name','document')
+//            ->where('fantasy_name', 'LIKE', '%' . $value . '%')
+//            ->orWhere('business_name', 'LIKE', '%' . $value . '%')
+//            ->orWhere('document', 'LIKE', '%' . $value . '%');
+//            //->with('people');
+//    }
 
 }

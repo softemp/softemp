@@ -16,7 +16,7 @@ class Neighboarhood extends Model
      */
     protected $fillable = ['name','city_id'];
 
-    public function cities(){
+    public function city(){
         return $this->belongsTo(City::class,'city_id');
     }
 }

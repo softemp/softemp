@@ -17,15 +17,15 @@ class Continent extends Model
      */
     protected $fillable = ['name', 'initials'];
 
-    public function countries(){
-        return $this->belongsToMany(Countrie::class,'continent_countrie');
+    public function country(){
+        return $this->belongsToMany(Country::class,'continent_country');
     }
 
-    public function hasCountrie($countrie) {
-        if (is_string($countrie)) {
-            return $this->countries->contains('name', $countrie);
+    public function hasCountry($country) {
+        if (is_string($country)) {
+            return $this->country->contains('name', $country);
         }
 
-        return $countrie->intersect($this->countries)->count();
+        return $country->intersect($this->country)->count();
     }
 }

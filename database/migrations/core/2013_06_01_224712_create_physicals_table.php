@@ -17,8 +17,8 @@ class CreatePhysicalsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('document')->unique()->comment('CPF');
-            $table->string('document_2')->unique()->comment('RG');
-            $table->string('document_3')->unique()->comment('CNH');
+            $table->string('document_2')->nullable()->comment('RG');
+            $table->string('document_3')->nullable()->comment('CNH');
 
             $table->unsignedBigInteger('person_id');
             $table->foreign('person_id')->references('id')->on('people')->onDelete('restrict');

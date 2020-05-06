@@ -19,8 +19,8 @@ class CreateStatesTable extends Migration
             $table->string('initials',5);
 
             /*ligação do estado com o pais*/
-            $table->unsignedBigInteger('countrie_id');
-            $table->foreign('countrie_id')->references('id')->on('countries')->onDelete('restrict');
+            $table->unsignedBigInteger('country_id');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('restrict');
 
             $table->timestamps();
         });

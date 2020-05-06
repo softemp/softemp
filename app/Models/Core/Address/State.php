@@ -15,13 +15,13 @@ class State extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'initials','countrie_id'];
+    protected $fillable = ['name', 'initials','country_id'];
 
-    public function countries(){
-        return $this->belongsTo(Countrie::class,'countrie_id', 'id');
+    public function country(){
+        return $this->belongsTo(Country::class,'country_id', 'id');
     }
 
-    public function cities(){
-        return $this->hasMany(City::class,'states_id','id');
+    public function city(){
+        return $this->hasMany(City::class,'state_id','id');
     }
 }

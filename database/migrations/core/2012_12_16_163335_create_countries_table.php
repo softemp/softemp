@@ -24,12 +24,12 @@ class CreateCountriesTable extends Migration
         });
 
         /*relacionamento de muitos para muitos com a tabela de Continentes*/
-        Schema::create('continent_countrie', function (Blueprint $table) {
+        Schema::create('continent_country', function (Blueprint $table) {
             $table->unsignedBigInteger('continent_id');
             $table->foreign('continent_id')->references('id')->on('continents')->onDelete('restrict');
 
-            $table->unsignedBigInteger('countrie_id');
-            $table->foreign('countrie_id')->references('id')->on('countries')->onDelete('restrict');
+            $table->unsignedBigInteger('country_id');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('restrict');
 
             //$table->primary(['continent_id', 'countrie_id']);
         });
@@ -42,7 +42,7 @@ class CreateCountriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('continent_countrie');
+        Schema::dropIfExists('continent_country');
         Schema::dropIfExists('countries');
     }
 }

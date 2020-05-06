@@ -122,16 +122,26 @@ class Physical extends Model
         return str_replace(['.','-','/','(',')',' '], '', $param);
     }
 
+    /**
+     * Retorna os Tecnicos instalador
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function getInstallers(){
         $query = $this->query();
         $this->getOccupationInstaller($query);
         return $query;
     }
 
+    /**
+     * pega o registro baseado no codigo CBO2002
+     *
+     * @param $query
+     */
     private function getOccupationInstaller($query)
     {
-//        $value = $this->value;
-        $value = '7313-05';
+        //codigo de ocupação do ministerio do trabalho
+        $value = '7313-05';//Técnico Instalador de equipamentos de comunicação na Tabela occupations
 
         $query->whereHas('occupations', function ($query2) use ($value) {
             $query2->where('cbo2002', $value);

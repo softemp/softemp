@@ -22,15 +22,16 @@ class Address extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function addressTypes(){
+    public function addressType(){
         return $this->belongsTo(AddressType::class,'address_type_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function addressStreets()
+    public function addressStreet()
     {
-        return $this->belongsTo(Street::class,'street_id');
+        return $this->belongsTo(Street::class,'street_id', 'id');
+//        return $this->hasOne(Street::class,'id','street_id');
     }
 }
